@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.vita.erp.shiro.persistence.RoleMapper">
+
+    <resultMap id="roleResult" type="com.vita.erp.entity.sys.Role">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="role" column="role"/>
+        <result property="description" column="description"/>
+        <result property="show" column="is_show"/>
+        <collection property="resourcePermissions" ofType="RoleResourcePermission">
+            <id property="id" column="rrp_id"/>
+            <id property="roleId" column="role_id"/>
+            <id property="resourceId" column="resource_id"/>
+            <id property="permissionIds" column="permission_ids"/>
+        </collection>
+    </resultMap>
+
+  <select id="getResourcePermissions" parameterType="java.lang.Long" resultType="Role">
+    SELECT * FROM sys_role WHERE role_id = #{roleId}
+  </select>
+
+    <select id="getListRolesByRoleIds" parameterType="Map" resultMap="roleResult">
+        SELECT
+        r.id,r.name,r.role,r.description,r.is_show,rrp.id as rrp_id,rrp.role_id,rrp.resource_id,rrp.permission_ids
+        FROM sys_role as r
+        LEFT JOIN sys_role_resource_permission as rrp on r.id = rrp.role_id
+        WHERE r.id in
+        <foreach item="item" index="index" collection="roleIds"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="saveRole" parameterType="Role" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO
+        sys_role (name,role,description,is_show)
+      VALUES
+        (#{name},#{role},#{description},#{show})
+  </insert>
+
+    <update id="updateRole" parameterType="Role">
+      update sys_role set
+        name = #{name},
+        role = #{role},
+        description = #{description},
+        is_show = #{show}
+  </update>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.vita.erp.shiro.persistence.PermissionMapper">
+
+    <resultMap id="roleResult" type="com.vita.erp.entity.sys.Permission">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="role" column="role"/>
+        <result property="description" column="description"/>
+        <result property="show" column="is_show"/>
+    </resultMap>
+
+  <delete id="delete" parameterType="java.lang.Long" >
+    DELETE FROM sys_permission WHERE id = #{permissionId}
+  </delete>
+
+    <select id="getPermissionById" parameterType="java.lang.Long" resultType="Permission">
+    SELECT * FROM sys_permission WHERE id = #{permissionId}
+  </select>
+
+  <insert id="save" parameterType="Permission" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO
+        sys_permission (name,permission,description,is_show)
+      VALUES
+        (#{name},#{permission},#{description},#{show})
+  </insert>
+
+  <update id="update" parameterType="Permission">
+      update sys_role set
+        name = #{name},
+        permission = #{permission},
+        description = #{description},
+        is_show = #{show}
+  </update>
+
+</mapper>

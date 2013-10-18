@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.vita.erp.shiro.persistence.AuthMapper">
+
+    <resultMap id="roleResult" type="com.vita.erp.entity.sys.Auth">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="role" column="role"/>
+        <result property="description" column="description"/>
+        <result property="show" column="is_show"/>
+    </resultMap>
+
+
+  <insert id="save" parameterType="Auth" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO
+        sys_Auth (organization_id,user_id,role_ids,type)
+      VALUES
+        (#{organizationId},#{userId},#{roleIds},#{type})
+  </insert>
+
+  <update id="update" parameterType="Auth">
+      update sys_Auth set
+        <if test="organization_id != null">
+            organization_id = #{organizationId},
+        </if>
+        <if test="roleIds != null">
+            roleIds = #{roleIds},
+        </if>
+      where userId = #{userId}
+  </update>
+
+    <select id="findRoleIds" parameterType="java.util.Map" resultType="java.lang.String">
+        select role_ids from sys_auth where user_id = #{userId}
+        <if test="organizationId != null">
+            and organization_id = organizationId
+        </if>
+    </select>
+
+</mapper>
