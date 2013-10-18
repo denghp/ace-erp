@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.vita</groupId>
+    <groupId>com.ace</groupId>
     <artifactId>ace-erp</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ace-erp</name>
+    <name>ace</name>
 
     <properties>
         <spring.version>3.2.3.RELEASE</spring.version>
@@ -147,7 +147,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <db.name>smarterp</db.name>
+              <db.name>${name}</db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
@@ -157,7 +157,7 @@
                 </connection.url>
                 <connection.username>root</connection.username>
                 <connection.password>123456</connection.password>
-                <log.dir>./logs/smarterp</log.dir>
+                <log.dir>./logs/${name}</log.dir>
 
                 <shiro.uid.cookie.domain>localhost</shiro.uid.cookie.domain>
                 <shiro.uid.cookie.path>/</shiro.uid.cookie.path>
@@ -169,7 +169,7 @@
             <!--正式环境-->
             <id>production</id>
             <properties>
-                <db.name>smarterp</db.name>
+              <db.name>${name}</db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
@@ -179,7 +179,7 @@
                 </connection.url>
                 <connection.username>root</connection.username>
                 <connection.password>123456</connection.password>
-                <log.dir>./logs</log.dir>
+                <log.dir>./logs/${name}</log.dir>
 
                 <shiro.uid.cookie.domain>demi-panda.com</shiro.uid.cookie.domain>
                 <shiro.uid.cookie.path>/</shiro.uid.cookie.path>

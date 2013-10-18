@@ -33,7 +33,7 @@
 
     <bean id="onlineSessionFactory" class="org.apache.shiro.session.mgt.OnlineSessionFactory"/>
      -->
-    <bean id="myBatisRealm" class="com.vita.erp.shiro.realm.AuthenticationRealm"></bean>
+    <bean id="myBatisRealm" class="com.ace.erp.shiro.realm.AuthenticationRealm"></bean>
     <!-- manager -->
     <!-- Remembered vs Authenticated http://www.ituring.com.cn/article/287 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
@@ -74,7 +74,7 @@
 
     <!-- filter -->
     <!--替换默认的form 验证过滤器  表单上的用户名/密码 下次自动登录的参数名  -->
-    <bean id="formAuthenticationFilter" class="com.vita.erp.filter.authc.CustomFormAuthenticationFilter">
+    <bean id="formAuthenticationFilter" class="com.ace.erp.filter.authc.CustomFormAuthenticationFilter">
         <property name="defaultSuccessUrl" value="${shiro.default.success.url}"/>
         <property name="adminDefaultSuccessUrl" value="${shiro.admin.default.success.url}"/>
         <property name="usernameParam" value="username"/>
@@ -87,7 +87,7 @@
         <property name="redirectUrl" value="${shiro.logout.success.url}"/>
     </bean>
     <!--提取系统用户（User） 验证用户是否合法的过滤器（如是否删除了 是否锁定了）-->
-    <bean id="sysUserFilter" class="com.vita.erp.filter.user.SysUserFilter">
+    <bean id="sysUserFilter" class="com.ace.erp.filter.user.SysUserFilter">
         <property name="userBlockedUrl" value="${shiro.user.blocked.url}"/>
         <property name="userNotfoundUrl" value="${shiro.user.notfound.url}"/>
         <property name="userUnknownErrorUrl" value="${shiro.user.unknown.error.url}"/>
@@ -98,7 +98,7 @@
         <property name="onlineSessionDAO" ref="onlineSessionDAO"/>
     </bean>  -->
 
-    <bean id="jCaptchaValidateFilter" class="com.vita.erp.filter.jcaptcha.JCaptchaValidateFilter">
+    <bean id="jCaptchaValidateFilter" class="com.ace.erp.filter.jcaptcha.JCaptchaValidateFilter">
         <property name="jcaptchaEbabled" value="${shiro.jcaptcha.enable}"/>
         <property name="jcaptchaParam" value="jcaptchaCode"/>
         <property name="jcapatchaErrorUrl" value="${shiro.jcaptcha.error.url}"/>

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
             http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<display-name>vita</display-name>
+	<display-name>ace</display-name>
 
     <!-- Spring配置文件开始  -->
     <context-param>
@@ -58,7 +58,7 @@
     <!-- 验证码过滤器需要放到Shiro之后 因为Shiro将包装HttpSession 如果不 可能造成两次的sesison id 不一样 -->
     <filter>
         <filter-name>JCaptchaFilter</filter-name>
-        <filter-class>com.vita.erp.filter.jcaptcha.JCaptchaFilter</filter-class>
+        <filter-class>com.ace.erp.filter.jcaptcha.JCaptchaFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>JCaptchaFilter</filter-name>
