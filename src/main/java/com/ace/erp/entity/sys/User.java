@@ -5,13 +5,13 @@ import com.ace.erp.entity.LogicDeleteable;
 import com.ace.erp.utils.JsonUtils;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
-import java.util.Date;
 
 /**
  * Created with smart-erp.
@@ -57,8 +57,9 @@ public class User implements LogicDeleteable {
     /**
      * 创建时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createDate;
+    private DateTime createDate;
+
+    private DateTime modifyTime;
 
     private UserStatus status = UserStatus.normal;
 
@@ -78,6 +79,14 @@ public class User implements LogicDeleteable {
     private Long organizationId;
 
     public User() {
+    }
+
+    public DateTime getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(DateTime modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public Long getId() {
@@ -119,11 +128,11 @@ public class User implements LogicDeleteable {
         setSalt(RandomStringUtils.randomAlphanumeric(10));
     }
 
-    public Date getCreateDate() {
+    public DateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(DateTime createDate) {
         this.createDate = createDate;
     }
 

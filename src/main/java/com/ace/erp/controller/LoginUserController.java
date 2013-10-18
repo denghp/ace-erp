@@ -43,7 +43,6 @@ public class LoginUserController {
 
 
     @RequestMapping(value = {"/{login:login;?.*}"}) //spring3.2.2 bug see  http://jinnianshilongnian.iteye.com/blog/1831408
-    //@RequestMapping(value = "/userLogin")
     public String loginForm(HttpServletRequest request, ModelMap model) {
 
         //表示退出

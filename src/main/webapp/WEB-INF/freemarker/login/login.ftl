@@ -1,4 +1,4 @@
-<#import "/commons/showMessage.ftl" as show>
+<#import "../commons/showMessage.ftl" as show>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +70,7 @@
             </h4>
 
             <div class="space-6"></div>
-            <form id="loginForm" method="post" >
+            <form id="loginForm" method="post" action="${rc.getContextPath()}/login">
                 <fieldset>
                     <div class="form-group">
                         <label class="block clearfix">

@@ -2,6 +2,8 @@ package com.ace.erp.shiro.persistence;
 
 import com.ace.erp.entity.sys.User;
 
+import java.util.List;
+
 /**
  * Created with smart-erp.
  * User: denghp
@@ -24,4 +26,8 @@ public interface UserMapper {
     User getUserById(Long userId);
 
     void delete(Long userId);
+
+    List<User> getAllUsers();
+
+    int getAllCount();
 }

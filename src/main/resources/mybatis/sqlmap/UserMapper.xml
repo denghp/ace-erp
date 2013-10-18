@@ -9,22 +9,31 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="mobilePhoneNumber" column="mobile_phone_number"/>
-        <result property="createDate" column="create_date"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP" typeHandler="com.ace.erp.handler.JodaDateTimestampTypeHandler"/>
+        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP" typeHandler="com.ace.erp.handler.JodaDateTimestampTypeHandler"/>
         <result property="salt" column="salt"/>
         <result property="status" column="status"/>
         <result property="admin" column="admin"/>
         <result property="deleted" column="deleted"/>
     </resultMap>
 
-  <select id="getUserByName" parameterType="java.lang.String" resultType="User">
+  <select id="getUserByName" parameterType="java.lang.String" resultMap="userResult">
     SELECT * FROM sys_user WHERE username = #{username}
   </select>
 
-  <select id="getUserByEmail" parameterType="java.lang.String" resultType="User">
+  <select id="getUserByEmail" parameterType="java.lang.String" resultMap="userResult">
     SELECT * FROM sys_user WHERE email = #{email}
   </select>
 
-  <select id="getUserById" parameterType="java.lang.Long" resultType="User">
+   <select id="getAllUsers" resultMap="userResult">
+    SELECT * FROM sys_user limit 100;
+  </select>
+
+  <select id="getAllCount" resultType="int">
+    SELECT count(*) FROM sys_user;
+  </select>
+
+    <select id="getUserById" parameterType="java.lang.Long" resultType="User">
     SELECT * FROM sys_user WHERE id = #{userId}
   </select>
 
