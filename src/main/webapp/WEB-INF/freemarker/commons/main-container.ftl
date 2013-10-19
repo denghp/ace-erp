@@ -1,6 +1,9 @@
 <div class="main-container" id="main-container">
 <script type="text/javascript">
-    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+    try {
+        ace.settings.check('main-container', 'fixed')
+    } catch (e) {
+    }
 </script>
 
 <div class="main-container-inner">
@@ -10,7 +13,10 @@
 
 <div class="sidebar" id="sidebar">
 <script type="text/javascript">
-    try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+    try {
+        ace.settings.check('sidebar', 'fixed')
+    } catch (e) {
+    }
 </script>
 
 <div class="sidebar-shortcuts" id="sidebar-shortcuts">
@@ -41,22 +47,38 @@
 
         <span class="btn btn-danger"></span>
     </div>
-</div><!-- #sidebar-shortcuts -->
+</div>
+<!-- #sidebar-shortcuts -->
 
 <ul class="nav nav-list">
 <li class="active">
-    <a href="index.ftl">
+    <a href="${rc.getContextPath()}/index.do">
         <i class="icon-dashboard"></i>
         <span class="menu-text"> Dashboard </span>
     </a>
 </li>
-
+<#list menuList as menu>
 <li>
-    <a href="typography.html">
-        <i class="icon-text-width"></i>
-        <span class="menu-text"> Typography </span>
+    <a href="#" class="dropdown-toggle">
+        <i class="icon-list"></i>
+        <span class="menu-text"> ${menu.name} </span>
+
+        <b class="arrow icon-angle-down"></b>
     </a>
+
+    <ul class="submenu">
+        <#list menu.getChildren() as children >
+            <li>
+                <!-- <a href="jqgrid.html"> -->
+                <a href="${rc.getContextPath()}/admin/sys/user/list">
+                    <i class="icon-double-angle-right"></i>
+                ${children.name}
+                </a>
+            </li>
+        </#list>
+    </ul>
 </li>
+</#list>
 
 <li>
     <a href="#" class="dropdown-toggle">
@@ -225,7 +247,8 @@
 
 								<span class="menu-text">
 									Calendar
-									<span class="badge badge-transparent tooltip-error" title="2&nbsp;Important&nbsp;Events">
+									<span class="badge badge-transparent tooltip-error"
+                                          title="2&nbsp;Important&nbsp;Events">
 										<i class="icon-warning-sign red bigger-130"></i>
 									</span>
 								</span>
@@ -341,21 +364,28 @@
         </li>
     </ul>
 </li>
-</ul><!-- /.nav-list -->
+</ul>
+<!-- /.nav-list -->
 
 <div class="sidebar-collapse" id="sidebar-collapse">
     <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 </div>
 
 <script type="text/javascript">
-    try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+    try {
+        ace.settings.check('sidebar', 'collapsed')
+    } catch (e) {
+    }
 </script>
 </div>
 
 <div class="main-content">
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
-        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
     </script>
 
     <ul class="breadcrumb">
@@ -364,16 +394,19 @@
             <a href="#">Home</a>
         </li>
         <li class="active">Dashboard</li>
-    </ul><!-- .breadcrumb -->
+    </ul>
+    <!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
         <form class="form-search">
 								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
 									<i class="icon-search nav-search-icon"></i>
 								</span>
         </form>
-    </div><!-- #nav-search -->
+    </div>
+    <!-- #nav-search -->
 </div>
 
 <div class="page-content">
@@ -385,7 +418,8 @@
             overview &amp; stats
         </small>
     </h1>
-</div><!-- /.page-header -->
+</div>
+<!-- /.page-header -->
 
 <div class="row">
 <div class="col-xs-12">
@@ -418,6 +452,7 @@
 
         <div class="infobox-data">
             <span class="infobox-data-number">32</span>
+
             <div class="infobox-content">comments + 2 reviews</div>
         </div>
         <div class="stat stat-success">8%</div>
@@ -430,6 +465,7 @@
 
         <div class="infobox-data">
             <span class="infobox-data-number">11</span>
+
             <div class="infobox-content">new followers</div>
         </div>
 
@@ -446,6 +482,7 @@
 
         <div class="infobox-data">
             <span class="infobox-data-number">8</span>
+
             <div class="infobox-content">new orders</div>
         </div>
         <div class="stat stat-important">4%</div>
@@ -458,6 +495,7 @@
 
         <div class="infobox-data">
             <span class="infobox-data-number">7</span>
+
             <div class="infobox-content">experiments</div>
         </div>
     </div>
@@ -469,6 +507,7 @@
 
         <div class="infobox-data">
             <span class="infobox-data-number">6,251</span>
+
             <div class="infobox-content">pageviews</div>
         </div>
 
@@ -612,11 +651,16 @@
                         <h4 class="bigger pull-right">1,050</h4>
                     </div>
                 </div>
-            </div><!-- /widget-main -->
-        </div><!-- /widget-body -->
-    </div><!-- /widget-box -->
-</div><!-- /span -->
-</div><!-- /row -->
+            </div>
+            <!-- /widget-main -->
+        </div>
+        <!-- /widget-body -->
+    </div>
+    <!-- /widget-box -->
+</div>
+<!-- /span -->
+</div>
+<!-- /row -->
 
 <div class="hr hr32 hr-dotted"></div>
 
@@ -737,9 +781,12 @@
                         </tr>
                         </tbody>
                     </table>
-                </div><!-- /widget-main -->
-            </div><!-- /widget-body -->
-        </div><!-- /widget-box -->
+                </div>
+                <!-- /widget-main -->
+            </div>
+            <!-- /widget-body -->
+        </div>
+        <!-- /widget-box -->
     </div>
 
     <div class="col-sm-7">
@@ -760,9 +807,12 @@
             <div class="widget-body">
                 <div class="widget-main padding-4">
                     <div id="sales-charts"></div>
-                </div><!-- /widget-main -->
-            </div><!-- /widget-body -->
-        </div><!-- /widget-box -->
+                </div>
+                <!-- /widget-main -->
+            </div>
+            <!-- /widget-body -->
+        </div>
+        <!-- /widget-box -->
     </div>
 </div>
 
@@ -806,7 +856,7 @@
     <ul id="tasks" class="item-list">
         <li class="item-orange clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Answering customer questions</span>
             </label>
 
@@ -817,7 +867,7 @@
 
         <li class="item-red clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Fixing bugs</span>
             </label>
 
@@ -842,7 +892,7 @@
 
         <li class="item-default clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Adding new features</span>
             </label>
 
@@ -873,28 +923,28 @@
 
         <li class="item-blue clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Upgrading scripts used in template</span>
             </label>
         </li>
 
         <li class="item-grey clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Adding new skins</span>
             </label>
         </li>
 
         <li class="item-green clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Updating server software up</span>
             </label>
         </li>
 
         <li class="item-pink clearfix">
             <label class="inline">
-                <input type="checkbox" class="ace" />
+                <input type="checkbox" class="ace"/>
                 <span class="lbl"> Cleaning up</span>
             </label>
         </li>
@@ -905,7 +955,7 @@
 <div class="clearfix">
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Bob Doe's avatar" src="${rc.getContextPath()}/assets/avatars/user.jpg" />
+        <img alt="Bob Doe's avatar" src="${rc.getContextPath()}/assets/avatars/user.jpg"/>
     </div>
 
     <div class="body">
@@ -958,7 +1008,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Joe Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png" />
+        <img alt="Joe Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png"/>
     </div>
 
     <div class="body">
@@ -1011,7 +1061,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Jim Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png" />
+        <img alt="Jim Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png"/>
     </div>
 
     <div class="body">
@@ -1064,7 +1114,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Alex Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar5.png" />
+        <img alt="Alex Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar5.png"/>
     </div>
 
     <div class="body">
@@ -1085,7 +1135,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Bob Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png" />
+        <img alt="Bob Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png"/>
     </div>
 
     <div class="body">
@@ -1106,7 +1156,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Susan's avatar" src="${rc.getContextPath()}/assets/avatars/avatar3.png" />
+        <img alt="Susan's avatar" src="${rc.getContextPath()}/assets/avatars/avatar3.png"/>
     </div>
 
     <div class="body">
@@ -1127,7 +1177,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Phil Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar4.png" />
+        <img alt="Phil Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar4.png"/>
     </div>
 
     <div class="body">
@@ -1148,7 +1198,7 @@
 
 <div class="itemdiv memberdiv">
     <div class="user">
-        <img alt="Alexa Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png" />
+        <img alt="Alexa Doe's avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png"/>
     </div>
 
     <div class="body">
@@ -1179,13 +1229,14 @@
 </div>
 
 <div class="hr hr-double hr8"></div>
-</div><!-- member-tab -->
+</div>
+<!-- member-tab -->
 
 <div id="comment-tab" class="tab-pane">
     <div class="comments">
         <div class="itemdiv commentdiv">
             <div class="user">
-                <img alt="Bob Doe's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png" />
+                <img alt="Bob Doe's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png"/>
             </div>
 
             <div class="body">
@@ -1200,7 +1251,8 @@
 
                 <div class="text">
                     <i class="icon-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor
+                    facilisis &hellip;
                 </div>
             </div>
 
@@ -1241,7 +1293,7 @@
 
         <div class="itemdiv commentdiv">
             <div class="user">
-                <img alt="Jennifer's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png" />
+                <img alt="Jennifer's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png"/>
             </div>
 
             <div class="body">
@@ -1256,7 +1308,8 @@
 
                 <div class="text">
                     <i class="icon-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor
+                    facilisis &hellip;
                 </div>
             </div>
 
@@ -1275,7 +1328,7 @@
 
         <div class="itemdiv commentdiv">
             <div class="user">
-                <img alt="Joe's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png" />
+                <img alt="Joe's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar2.png"/>
             </div>
 
             <div class="body">
@@ -1290,7 +1343,8 @@
 
                 <div class="text">
                     <i class="icon-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor
+                    facilisis &hellip;
                 </div>
             </div>
 
@@ -1309,7 +1363,7 @@
 
         <div class="itemdiv commentdiv">
             <div class="user">
-                <img alt="Rita's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar3.png" />
+                <img alt="Rita's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar3.png"/>
             </div>
 
             <div class="body">
@@ -1324,7 +1378,8 @@
 
                 <div class="text">
                     <i class="icon-quote-left"></i>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis &hellip;
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor
+                    facilisis &hellip;
                 </div>
             </div>
 
@@ -1357,10 +1412,14 @@
     <div class="hr hr-double hr8"></div>
 </div>
 </div>
-</div><!-- /widget-main -->
-</div><!-- /widget-body -->
-</div><!-- /widget-box -->
-</div><!-- /span -->
+</div>
+<!-- /widget-main -->
+</div>
+<!-- /widget-body -->
+</div>
+<!-- /widget-box -->
+</div>
+<!-- /span -->
 
 <div class="col-sm-6">
     <div class="widget-box ">
@@ -1376,7 +1435,7 @@
                 <div class="dialogs">
                     <div class="itemdiv dialogdiv">
                         <div class="user">
-                            <img alt="Alexa's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png" />
+                            <img alt="Alexa's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png"/>
                         </div>
 
                         <div class="body">
@@ -1388,7 +1447,9 @@
                             <div class="name">
                                 <a href="#">Alexa</a>
                             </div>
-                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo
+                                massa sed ipsum porttitor facilisis.
+                            </div>
 
                             <div class="tools">
                                 <a href="#" class="btn btn-minier btn-info">
@@ -1400,7 +1461,7 @@
 
                     <div class="itemdiv dialogdiv">
                         <div class="user">
-                            <img alt="John's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png" />
+                            <img alt="John's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar.png"/>
                         </div>
 
                         <div class="body">
@@ -1424,7 +1485,7 @@
 
                     <div class="itemdiv dialogdiv">
                         <div class="user">
-                            <img alt="Bob's Avatar" src="${rc.getContextPath()}/assets/avatars/user.jpg" />
+                            <img alt="Bob's Avatar" src="${rc.getContextPath()}/assets/avatars/user.jpg"/>
                         </div>
 
                         <div class="body">
@@ -1437,7 +1498,9 @@
                                 <a href="#">Bob</a>
                                 <span class="label label-info arrowed arrowed-in-right">admin</span>
                             </div>
-                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo massa sed ipsum porttitor facilisis.</div>
+                            <div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque commodo
+                                massa sed ipsum porttitor facilisis.
+                            </div>
 
                             <div class="tools">
                                 <a href="#" class="btn btn-minier btn-info">
@@ -1449,7 +1512,7 @@
 
                     <div class="itemdiv dialogdiv">
                         <div class="user">
-                            <img alt="Jim's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar4.png" />
+                            <img alt="Jim's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar4.png"/>
                         </div>
 
                         <div class="body">
@@ -1473,7 +1536,7 @@
 
                     <div class="itemdiv dialogdiv">
                         <div class="user">
-                            <img alt="Alexa's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png" />
+                            <img alt="Alexa's Avatar" src="${rc.getContextPath()}/assets/avatars/avatar1.png"/>
                         </div>
 
                         <div class="body">
@@ -1499,9 +1562,11 @@
                 <form>
                     <div class="form-actions">
                         <div class="input-group">
-                            <input placeholder="Type your message here ..." type="text" class="form-control" name="message" />
+                            <input placeholder="Type your message here ..." type="text" class="form-control"
+                                   name="message"/>
 																<span class="input-group-btn">
-																	<button class="btn btn-sm btn-info no-radius" type="button">
+																	<button class="btn btn-sm btn-info no-radius"
+                                                                            type="button">
                                                                         <i class="icon-share-alt"></i>
                                                                         Send
                                                                     </button>
@@ -1509,17 +1574,26 @@
                         </div>
                     </div>
                 </form>
-            </div><!-- /widget-main -->
-        </div><!-- /widget-body -->
-    </div><!-- /widget-box -->
-</div><!-- /span -->
-</div><!-- /row -->
+            </div>
+            <!-- /widget-main -->
+        </div>
+        <!-- /widget-body -->
+    </div>
+    <!-- /widget-box -->
+</div>
+<!-- /span -->
+</div>
+<!-- /row -->
 
 <!-- PAGE CONTENT ENDS -->
-</div><!-- /.col -->
-</div><!-- /.row -->
-</div><!-- /.page-content -->
-</div><!-- /.main-content -->
+</div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</div>
+<!-- /.page-content -->
+</div>
+<!-- /.main-content -->
 
 <div class="ace-settings-container" id="ace-settings-container">
     <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
@@ -1540,35 +1614,37 @@
         </div>
 
         <div>
-            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar"/>
             <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
         </div>
 
         <div>
-            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar"/>
             <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
         </div>
 
         <div>
-            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs"/>
             <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
         </div>
 
         <div>
-            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl"/>
             <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
         </div>
 
         <div>
-            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+            <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container"/>
             <label class="lbl" for="ace-settings-add-container">
                 Inside
                 <b>.container</b>
             </label>
         </div>
     </div>
-</div><!-- /#erp-settings-container -->
-</div><!-- /.main-container-inner -->
+</div>
+<!-- /#erp-settings-container -->
+</div>
+<!-- /.main-container-inner -->
 
 <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
     <i class="icon-double-angle-up icon-only bigger-110"></i>

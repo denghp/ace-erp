@@ -27,6 +27,7 @@ public class Permission {
 
     /**
      * 是否显示 也表示是否可用 为了统一 都使用这个
+     * 0 - 表示不可用  1- 表示可用
      */
     private Boolean show = Boolean.FALSE;
 

@@ -19,12 +19,12 @@
     SELECT * FROM sys_resource WHERE id = #{resourceId}
   </select>
 
-    <select id="getAllResource" resultType="Resource">
-    SELECT * FROM sys_resource;
+    <select id="getAllResource" resultMap="resourceResult">
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show FROM sys_resource;
   </select>
 
-  <select id="getAllWithSort" parameterType="java.lang.String" resultType="Resource">
-    SELECT * FROM sys_resource ORDER by #{sort};
+  <select id="getAllWithSort" parameterType="java.lang.String" resultMap="resourceResult">
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show FROM sys_resource ORDER by #{sort};
   </select>
 
     <insert id="save" parameterType="Resource" useGeneratedKeys="true" keyProperty="id">

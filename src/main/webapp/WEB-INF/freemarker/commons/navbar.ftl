@@ -253,7 +253,7 @@
         <li class="divider"></li>
 
         <li>
-            <a href="#">
+            <a href="${rc.getContextPath()}/logout">
                 <i class="icon-off"></i>
                 Logout
             </a>

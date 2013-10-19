@@ -3,7 +3,7 @@
 
 <mapper namespace="com.ace.erp.shiro.persistence.PermissionMapper">
 
-    <resultMap id="roleResult" type="com.ace.erp.entity.sys.Permission">
+    <resultMap id="permissionResult" type="com.ace.erp.entity.sys.Permission">
         <result property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="role" column="role"/>
@@ -15,7 +15,7 @@
     DELETE FROM sys_permission WHERE id = #{permissionId}
   </delete>
 
-    <select id="getPermissionById" parameterType="java.lang.Long" resultType="Permission">
+    <select id="getPermissionById" parameterType="java.lang.Long" resultMap="permissionResult">
     SELECT * FROM sys_permission WHERE id = #{permissionId}
   </select>
 

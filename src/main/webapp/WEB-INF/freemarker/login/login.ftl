@@ -70,12 +70,12 @@
             </h4>
 
             <div class="space-6"></div>
-            <form id="loginForm" method="post" action="${rc.getContextPath()}/login">
+            <form id="loginForm"  method="post" >
                 <fieldset>
                     <div class="form-group">
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="username" class="form-control"
+															<input type="text" name="username" value="admin" class="form-control"
                                                                    placeholder="Username"/>
 															<i class="icon-user"></i>
 														</span>
@@ -84,7 +84,7 @@
                     <div class="form-group">
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="password" class="form-control"
+															<input type="password" name="password" value="123456" class="form-control"
                                                                    placeholder="Password"/>
 															<i class="icon-lock"></i>
 														</span>

@@ -7,7 +7,9 @@
 
 package com.ace.erp.controller;
 
+import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.common.Constants;
+import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -43,7 +45,7 @@ public class LoginUserController {
 
 
     @RequestMapping(value = {"/{login:login;?.*}"}) //spring3.2.2 bug see  http://jinnianshilongnian.iteye.com/blog/1831408
-    public String loginForm(HttpServletRequest request, ModelMap model) {
+    public String loginForm(@CurrentUser User user,HttpServletRequest request, ModelMap model) {
 
         //表示退出
         if (!StringUtils.isEmpty(request.getParameter("logout"))) {

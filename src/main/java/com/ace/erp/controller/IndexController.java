@@ -5,12 +5,17 @@
  */
 package com.ace.erp.controller;
 
+import com.ace.erp.annotation.CurrentUser;
+import com.ace.erp.entity.sys.Menu;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.ServletRequest;
+import java.util.List;
 
 /**
  * Created with ace-erp.
@@ -26,12 +31,9 @@ public class IndexController {
     private ResourceService resourceService;
 
     @RequestMapping(value = {"/{index:index;?.*}"})
-    public String index(User user, Model model) {
-
-        //List<Menu> menus = resourceService.findMenus(user);
-        //model.addAttribute("menus", menus);
-
-        //pushApi.offline(user.getId());
+    public String index(@CurrentUser User user,Model model) {
+        List<Menu> menuList = resourceService.findMenus(user);
+        model.addAttribute("menuList", menuList);
 
         return "/admin/index";
     }

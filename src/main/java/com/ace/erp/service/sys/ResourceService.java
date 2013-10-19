@@ -88,12 +88,14 @@ public class ResourceService {
     }
 
     public List<Menu> findMenus(User user) {
+       /**
         Searchable searchable =
                 Searchable.newSearchable()
                         .addSearchFilter("show", SearchOperator.eq, true)
                         .addSort(new Sort(Sort.Direction.DESC, "parentId", "weight"));
-
-        List<Resource> resources = resourceMapper.getAllWithSort(searchable.toString());
+        **/
+        String order = "parent_id desc,weight desc";
+        List<Resource> resources = resourceMapper.getAllWithSort(order);
 
         Set<String> userPermissions = userAuthService.findStringPermissions(user);
 
@@ -114,7 +116,8 @@ public class ResourceService {
         }
 
         for (String permission : userPermissions) {
-            if (hasPermission(permission, actualResourceIdentity)) {
+            boolean bool = hasPermission(permission, actualResourceIdentity);
+            if (bool) {
                 return true;
             }
         }
@@ -148,7 +151,7 @@ public class ResourceService {
             return Collections.EMPTY_LIST;
         }
 
-        Menu root = convertToMenu(resources.remove(resources.size() - 1));
+        Menu root = convertToMenu(resources.remove(0));
 
         recursiveMenu(root, resources);
         List<Menu> menus = root.getChildren();
@@ -173,7 +176,7 @@ public class ResourceService {
     private static void recursiveMenu(Menu menu, List<Resource> resources) {
         for (int i = resources.size() - 1; i >= 0; i--) {
             Resource resource = resources.get(i);
-            if (resource.getParentId().equals(menu.getId())) {
+            if (resource.getParentId() != null && resource.getParentId().equals(menu.getId())) {
                 menu.getChildren().add(convertToMenu(resource));
                 resources.remove(i);
             }
