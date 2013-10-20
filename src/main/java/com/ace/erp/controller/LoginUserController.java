@@ -11,7 +11,7 @@ import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.common.Constants;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.UserService;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;

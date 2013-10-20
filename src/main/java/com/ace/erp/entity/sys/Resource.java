@@ -216,4 +216,17 @@ public class Resource implements Treeable<Long> {
         return "ztree_file";
     }
 
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                ", url='" + url + '\'' +
+                ", isHasChildren='" + hasChildren + '\'' +
+                ", parentId =" + parentId +
+                ", parentIds = " + parentIds +
+                '}';
+    }
+
 }

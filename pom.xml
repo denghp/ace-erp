@@ -8,10 +8,11 @@
     <name>ace</name>
 
     <properties>
+	<ehcache.core.version>2.6.5</ehcache.core.version>
         <spring.version>3.2.3.RELEASE</spring.version>
-        <mysql.version>5.1.26</mysql.version>
+        <mysql.version>5.1.9</mysql.version>
         <shiro.version>1.2.2</shiro.version>
-        <jetty.port>8080</jetty.port>
+        <jetty.port>9090</jetty.port>
         <jetty.stopPort>8888</jetty.stopPort>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.commons.annotaions.version>4.0.2.Final</hibernate.commons.annotaions.version>
@@ -147,7 +148,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-              <db.name>es</db.name>
+              <db.name>${name}</db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
@@ -321,18 +322,25 @@
             </exclusions>
         </dependency>
 
-        <!-- utils 相关jar包 -->
+        <!-- utils 相关jar包  -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <!--
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${common-collections.version}</version>
         </dependency>
-
+        -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -353,26 +361,38 @@
 
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+       <dependency>
+           <groupId>org.apache.shiro</groupId>
+           <artifactId>shiro-ehcache</artifactId>
+           <version>${shiro.version}</version>
 
+       </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
+            <artifactId>shiro-web</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.core.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- aspectj相关jar包-->
         <dependency>
@@ -396,17 +416,23 @@
             <artifactId>joda-time</artifactId>
             <version>2.2</version>
         </dependency>
-
+        <!--
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
             <version>1.0.2</version>
         </dependency>
-
+        -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.20</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.rapid-framework</groupId>
+            <artifactId>rapid-core</artifactId>
+            <version>4.0.5</version>
         </dependency>
 
     </dependencies>

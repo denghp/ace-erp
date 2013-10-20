@@ -46,7 +46,7 @@
 
     <!-- 菜单缓存  没必要过期 -->
     <cache name="sys-menuCache"
-           maxEntriesLocalHeap="10000"
+           maxEntriesLocalHeap="1"
            overflowToDisk="false"
            eternal="false"
            diskPersistent="false"

@@ -1,20 +1,18 @@
 package com.ace.erp.service.sys;
 
-import com.ace.erp.entity.sys.Searchable;
 import com.ace.erp.entity.sys.Menu;
 import com.ace.erp.entity.sys.Resource;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.shiro.persistence.ResourceMapper;
-import com.ace.erp.utils.SearchOperator;
+import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.permission.WildcardPermission;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Project_Name: smart-erp
@@ -24,8 +22,9 @@ import java.util.Set;
  * Time: 6:11 PM
  * Description:
  */
+@Service
 public class ResourceService {
-
+    private static Logger logger = LoggerFactory.getLogger(ResourceService.class);
     @Autowired
     private UserAuthService userAuthService;
 
@@ -38,12 +37,13 @@ public class ResourceService {
 
     /**
      * 得到真实的资源标识  即 父亲:儿子
+     *
      * @param resource
      * @return
      */
     public String findActualResourceIdentity(Resource resource) {
 
-        if(resource == null) {
+        if (resource == null) {
             return null;
         }
 
@@ -52,8 +52,8 @@ public class ResourceService {
         boolean hasResourceIdentity = !StringUtils.isEmpty(resource.getIdentity());
 
         Resource parent = resourceMapper.getResourceById(resource.getParentId());
-        while(parent != null) {
-            if(!StringUtils.isEmpty(parent.getIdentity())) {
+        while (parent != null) {
+            if (!StringUtils.isEmpty(parent.getIdentity())) {
                 s.insert(0, parent.getIdentity() + ":");
                 hasResourceIdentity = true;
             }
@@ -61,51 +61,54 @@ public class ResourceService {
         }
 
         //如果用户没有声明 资源标识  且父也没有，那么就为空
-        if(!hasResourceIdentity) {
+        if (!hasResourceIdentity) {
             return "";
         }
 
 
         //如果最后一个字符是: 因为不需要，所以删除之
         int length = s.length();
-        if(length > 0 && s.lastIndexOf(":") == length - 1) {
+        if (length > 0 && s.lastIndexOf(":") == length - 1) {
             s.deleteCharAt(length - 1);
         }
 
         //如果有儿子 最后拼一个*
         boolean hasChildren = false;
-        for(Resource r : resourceMapper.getAllResource()) {
-            if(resource.getId().equals(r.getParentId())) {
+        for (Resource r : resourceMapper.getAllResource()) {
+            if (resource.getId().equals(r.getParentId())) {
                 hasChildren = true;
                 break;
             }
         }
-        if(hasChildren) {
+        if (hasChildren) {
             s.append(":*");
         }
 
         return s.toString();
     }
 
+    /**
+     * 根据登录用户获取菜单权限列表
+     * 需要使用缓存实现,不然会影响性能
+     * @param user
+     * @return
+     */
     public List<Menu> findMenus(User user) {
-       /**
-        Searchable searchable =
-                Searchable.newSearchable()
-                        .addSearchFilter("show", SearchOperator.eq, true)
-                        .addSort(new Sort(Sort.Direction.DESC, "parentId", "weight"));
-        **/
-        String order = "parent_id desc,weight desc";
-        List<Resource> resources = resourceMapper.getAllWithSort(order);
+        String sort = "parent_id desc,weight desc";
+        Map<String, Object> params = new HashMap<String,Object>();
+        params.put("sort",sort);
+        List<Resource> resources = resourceMapper.getAllWithSort(params);
 
-        Set<String> userPermissions = userAuthService.findStringPermissions(user);
+       if (!user.getAdmin()) {
+            Set<String> userPermissions = userAuthService.findStringPermissions(user);
 
-        Iterator<Resource> iter = resources.iterator();
-        while (iter.hasNext()) {
-            if (!hasPermission(iter.next(), userPermissions)) {
-                iter.remove();
+            Iterator<Resource> iter = resources.iterator();
+            while (iter.hasNext()) {
+                if (!hasPermission(iter.next(), userPermissions)) {
+                    iter.remove();
+                }
             }
         }
-
         return convertToMenus(resources);
     }
 
@@ -131,7 +134,7 @@ public class ResourceService {
         String permissionResourceIdentity = permission.substring(0, permission.lastIndexOf(":"));
 
         //如果权限字符串中的资源 是 以资源为前缀 则有权限 如a:b 具有a:b的权限
-        if(permissionResourceIdentity.startsWith(actualResourceIdentity)) {
+        if (permissionResourceIdentity.startsWith(actualResourceIdentity)) {
             return true;
         }
 
@@ -143,15 +146,19 @@ public class ResourceService {
         return p1.implies(p2) || p2.implies(p1);
     }
 
-
-    @SuppressWarnings("unchecked")
+    /**
+     * 转换成Menu对象集合
+     * @param resources
+     * @return
+     */
     public static List<Menu> convertToMenus(List<Resource> resources) {
 
         if (resources.size() == 0) {
             return Collections.EMPTY_LIST;
         }
 
-        Menu root = convertToMenu(resources.remove(0));
+        //获取根节点,并从集合中移除根节点
+        Menu root = convertToMenu(resources.remove(resources.size() - 1));
 
         recursiveMenu(root, resources);
         List<Menu> menus = root.getChildren();

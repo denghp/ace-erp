@@ -3,6 +3,7 @@ package com.ace.erp.shiro.persistence;
 import com.ace.erp.entity.sys.Resource;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Project_Name: smart-erp
@@ -23,5 +24,6 @@ public interface ResourceMapper {
 
     public List<Resource> getAllResource();
 
-    public List<Resource> getAllWithSort(String sort);
+    public List<Resource> getAllWithSort(Map<String,Object> params);
+
 }

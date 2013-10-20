@@ -1,4 +1,4 @@
-package com.ace.erp;
+package com.ace.erp.dao;
 
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.UserService;

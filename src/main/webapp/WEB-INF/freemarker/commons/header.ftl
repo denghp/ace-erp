@@ -42,4 +42,5 @@
     <script src="${rc.getContextPath()}/assets/js/html5shiv.js"></script>
     <script src="${rc.getContextPath()}/assets/js/respond.min.js"></script>
     <![endif]-->
+
 </head>

@@ -43,4 +43,8 @@ public class RoleService {
         return roleMapper.getListRolesByRoleIds(params);
     }
 
+    public List<Role> getAllRoles() {
+       return roleMapper.getAllRoles();
+    }
+
 }

@@ -35,6 +35,8 @@ public class IndexController {
         List<Menu> menuList = resourceService.findMenus(user);
         model.addAttribute("menuList", menuList);
 
+
+
         return "/admin/index";
     }
 

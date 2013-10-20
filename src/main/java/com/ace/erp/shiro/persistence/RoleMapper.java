@@ -44,4 +44,10 @@ public interface RoleMapper {
      */
     public List<Role> getListRolesByRoleIds(Map<String, Object> params);
 
+
+    /**
+     * 获取所有的角色
+     * @return
+     */
+    public List<Role> getAllRoles();
 }

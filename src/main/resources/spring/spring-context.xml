@@ -24,6 +24,14 @@
         </property>
     </bean>
 
+    <!-- 扫描注解Bean 对切入类的方法进行缓存处理-->
+    <context:component-scan base-package="com.ace.**.service,com.ace.**.extra">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${erp.driverClassName}"/>
         <property name="jdbcUrl" value="${erp.jdbc.url}"/>
@@ -51,8 +59,6 @@
             <tx:method name="doClear*" propagation="REQUIRES_NEW"/>
             <tx:method name="doSend*" propagation="REQUIRES_NEW"/>
             <tx:method name="doBatchSave*" propagation="REQUIRES_NEW"/>
-
-            <!--hibernate4必须配置为开启事务 否则 getCurrentSession()获取不到-->
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
@@ -60,18 +66,12 @@
             <tx:method name="*" propagation="REQUIRED"/>
         </tx:attributes>
     </tx:advice>
-    <!--
-    <aop:config proxy-target-class="true">
-        <aop:pointcut id="interceptorPointCuts" expression="execution(* com.ace.*.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="interceptorPointCuts"/>
-    </aop:config>
-    -->
+
+    <!-- 只对业务逻辑层实施事务 -->
     <aop:config expose-proxy="true" proxy-target-class="true">
-        <!-- 只对业务逻辑层实施事务 -->
-        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service.*+.*(..))"/>
+        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service..*+.*(..))"/>
         <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
-
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>

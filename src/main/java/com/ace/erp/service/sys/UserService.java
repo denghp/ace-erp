@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * Time: 1:11 AM
  * Description:
  */
+@Service
 public class UserService {
 
     private Logger logger = LoggerFactory.getLogger(UserService.class);
@@ -60,6 +62,13 @@ public class UserService {
 
     }
 
+    public User getUserByEmail(String email) {
+        return userMapper.getUserByEmail(email);
+    }
+
+    public User getUserByMobilePhoneNumber(String mobilePhone) {
+        return userMapper.getByMobilePhoneNumber(mobilePhone);
+    }
 
     public User getUser(String userName) {
         return userMapper.getUserByName(userName);
