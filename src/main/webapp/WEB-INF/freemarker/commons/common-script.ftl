@@ -20,7 +20,7 @@
 
 <!--[if IE]>
 <script type="text/javascript">
-window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+    window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
 
@@ -33,7 +33,7 @@ window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/j
 <!-- page specific plugin scripts -->
 
 <!--[if lte IE 8]>
-  <script src="${rc.getContextPath()}/assets/js/excanvas.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/excanvas.min.js"></script>
 <![endif]-->
 
 <script src="${rc.getContextPath()}/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
@@ -41,12 +41,12 @@ window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/j
 <script src="${rc.getContextPath()}/assets/js/jquery.slimscroll.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jquery.easy-pie-chart.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jquery.sparkline.min.js"></script>
+<!--
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.pie.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.resize.min.js"></script>
-
-<!-- erp scripts -->
+    -->
+<!-- ace scripts -->
 
 <script src="${rc.getContextPath()}/assets/js/ace-elements.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/ace.min.js"></script>
-

@@ -37,157 +37,54 @@
     </div>
     <!-- #sidebar-shortcuts -->
 
-<ul class="nav nav-list">
-    <li class="active">
-        <a href="${rc.getContextPath()}/admin/index">
-            <i class="icon-dashboard"></i>
-            <span class="menu-text"> Dashboard </span>
-        </a>
-    </li>
-<#if menuList?exists>
-    <#list menuList as menu>
-        <li id="menu-${menu.id}">
-            <a href="#" class="dropdown-toggle">
-                <#if menu.icon??>
-                    <i class="${menu.icon} "></i>
-                <#else>
-                    <i class="background: url(${rc.getContextPath()}/assets/img/F1050_B.png) center center no-repeat;"></i>
-                </#if>
-                <span class="menu-text"> ${menu.name}  </span>
-                <b class="arrow icon-angle-down"></b>
+    <ul class="nav nav-list">
+        <li class="active">
+            <a href="${rc.getContextPath()}/admin/index">
+                <i class="icon-dashboard"></i>
+                <span class="menu-text"> Dashboard </span>
             </a>
-
-            <ul class="submenu">
-                <#list menu.getChildren() as children >
-                    <#if (children.url?length > 0) && children.url == "/admin/sys/permission/role" >
-                    <li id="menu-${children.id}" class="active">
-                    <script type="text/javascript">
-                        window.document.getElementById("menu-")
-                    </script>
-                    <#else>
-                    <li id="menu-${children.id}" >
-                    </#if>
-                        <!-- <a href="jqgrid.html"> -->
-                        <#if (children.url?length > 0) >
-                        <a href="${rc.getContextPath()}${children.url}">
-                        <#else>
-                        <a href="#" class="dropdown-toggle">
-                        </#if>
-                        <i class="icon-double-angle-right"></i>
-                            ${children.name}
-                        <#if (children.children?size > 0) >
-                            <b class="arrow icon-angle-down"></b>
-                        </#if>
-                    </a>
-                        <ul class="submenu">
-                            <#list children.getChildren() as threeChildren>
-                                <#if (threeChildren.url?length > 0) && threeChildren.url == "/admin/sys/permission/role" >
-                                <li id="menu-${threeChildren.id}" class="active">
-                                <#else>
-                                <li id="${threeChildren.id}">
-                                </#if>
-                                    <a href="${rc.getContextPath()}${threeChildren.url}" class="dropdown-toggle">
-                                        <i class="icon-double-angle-right"></i>
-                                    ${threeChildren.name}
-                                    </a>
-                                </li>
-                            </#list>
-                        </ul>
-                    </li>
-                </#list>
-            </ul>
         </li>
-    </#list>
-    <li>
-        <a href="#" class="dropdown-toggle">
-            <i class="icon-desktop"></i>
-            <span class="menu-text"> UI Elements </span>
-
-            <b class="arrow icon-angle-down"></b>
-        </a>
-
-        <ul class="submenu">
-            <li>
-                <a href="${rc.getContextPath()}/elements.html">
-                    <i class="icon-double-angle-right"></i>
-                    Elements
-                </a>
-            </li>
-
-            <li>
-                <a href="${rc.getContextPath()}/buttons.html">
-                    <i class="icon-double-angle-right"></i>
-                    Buttons &amp; Icons
-                </a>
-            </li>
-
-            <li>
-                <a href="${rc.getContextPath()}/treeview.html">
-                    <i class="icon-double-angle-right"></i>
-                    Treeview
-                </a>
-            </li>
-
-            <li>
-                <a href="${rc.getContextPath()}/jquery-ui.html">
-                    <i class="icon-double-angle-right"></i>
-                    jQuery UI
-                </a>
-            </li>
-
-            <li>
-                <a href="${rc.getContextPath()}/nestable-list.html">
-                    <i class="icon-double-angle-right"></i>
-                    Nestable Lists
-                </a>
-            </li>
-
+    <#if menuList?exists>
+        <#list menuList as menu>
             <li>
                 <a href="#" class="dropdown-toggle">
-                    <i class="icon-double-angle-right"></i>
-
-                    Three Level Menu
+                    <i class="${menu.icon} "></i>
+                    <span class="menu-text"> ${menu.name}  </span>
                     <b class="arrow icon-angle-down"></b>
                 </a>
-
                 <ul class="submenu">
-                    <li>
-                        <a href="#">
-                            <i class="icon-leaf"></i>
-                            Item #1
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="dropdown-toggle">
-                            <i class="icon-pencil"></i>
-
-                            4th level
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-
-                        <ul class="submenu">
+                        <#list menu.getChildren() as children >
                             <li>
-                                <a href="${rc.getContextPath()}/">
-                                    <i class="icon-plus"></i>
-                                    Add Product
-                                </a>
+                                <#if (children.children?size > 0) >
+                                    <a href="#" class="dropdown-toggle">
+                                        <i class="icon-double-angle-right"></i>
+                                        ${children.name}
+                                        <b class="arrow icon-angle-down"></b>
+                                    </a>
+                                    <ul class="submenu">
+                                        <#list children.getChildren() as threeChildren>
+                                            <li>
+                                                <a href="${rc.getContextPath()}${threeChildren.url}" target="main">
+                                                    <i class="icon-double-angle-right"></i>
+                                                ${threeChildren.name}
+                                                </a>
+                                            </li>
+                                        </#list>
+                                    </ul>
+                                <#else>
+                                        <a href="${rc.getContextPath()}/${children.url}" >
+                                        <i class="icon-double-angle-right"></i>
+                                        ${children.name}
+                                    </a>
+                                </#if>
                             </li>
-
-                            <li>
-                                <a href="${rc.getContextPath()}/">
-                                    <i class="icon-eye-open"></i>
-                                    View Products
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        </#list>
                 </ul>
             </li>
-        </ul>
-    </li>
-</ul>
-</#if>
+        </#list>
+    </#if>
+    </ul>
+
     <!-- /.nav-list -->
 
 

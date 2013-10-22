@@ -250,7 +250,6 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
   values (81, 75, '0/1/71/75/', 6, '账户管理', 'account', '/admin/company/account', true);;
 
 
-
 delete from `sys_permission` where id>=1 and id<=1000;;
 insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_show`) values (1, '所有', '*', '所有数据操作的权限', 1);;
 insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_show`) values (2, '新增', 'create', '新增数据操作的权限', 1);;

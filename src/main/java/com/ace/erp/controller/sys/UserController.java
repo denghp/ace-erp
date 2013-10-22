@@ -31,7 +31,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = {"/{list:list;?.*}"})
+        @RequestMapping(value = {"/{main:main;?.*}"})
     public String index(User user, Model model) {
 
         List<User> userList = userService.getAllUsers();

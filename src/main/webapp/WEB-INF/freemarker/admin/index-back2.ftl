@@ -2,39 +2,89 @@
 <html lang="en">
 <#include "../commons/header.ftl" >
 
-<body >
+<body>
 <#include "../commons/navbar.ftl" >
 
 <div class="main-container" id="main-container">
-    <script type="text/javascript">
-        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
-    </script>
+<script type="text/javascript">
+    try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+</script>
 
-    <div class="main-container-inner">
-        <a class="menu-toggler" id="menu-toggler" href="#">
-            <span class="menu-text"></span>
-        </a>
+<div class="main-container-inner">
+<a class="menu-toggler" id="menu-toggler" href="#">
+    <span class="menu-text"></span>
+</a>
 
-    <#include "../commons/sidebar.ftl" >
+<#include "../commons/sidebar.ftl" >
 
-        <div class="main-content" style="height: 100%">
-            <iframe id="mainframe" frameborder="0" name="main"
-                    style="width:100%;height:100%;" scrolling="yes"
-                    border="0" src="${rc.getContextPath()}/main.html">
-                    </iframe>
-        </div><!-- /.main-content -->
+<div class="main-content" style="height: 100%">
+    <iframe id="mainframe" frameborder="0" name="main" style="width:100%;height:100%;" scrolling="no" border="0" src="${rc.getContextPath()}/main.html"></iframe>
+</div><!-- /.main-content -->
 
 
-    </div><!-- /.main-container-inner -->
+</div><!-- /.main-container-inner -->
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="icon-double-angle-up icon-only bigger-110"></i>
-    </a>
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
 </div><!-- /.main-container -->
 
-<#include "../commons/common-script.ftl" >
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='${rc.getContextPath()}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="${rc.getContextPath()}/assets/js/bootstrap.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/typeahead-bs2.min.js"></script>
+
+<!-- page specific plugin scripts -->
+
+<!--[if lte IE 8]>
+<script src="${rc.getContextPath()}/assets/js/excanvas.min.js"></script>
+<![endif]-->
+
+<script src="${rc.getContextPath()}/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.slimscroll.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.easy-pie-chart.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.sparkline.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.pie.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.resize.min.js"></script>
+
+<!-- ace scripts -->
+
+<script src="${rc.getContextPath()}/assets/js/ace-elements.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/ace.min.js"></script>
+
 <!-- inline scripts related to this page -->
- <!--
+
+<!-- inline scripts related to this page -->
+
 <script type="text/javascript">
     jQuery(function($) {
         $('.easy-pie-chart.percentage').each(function(){
@@ -58,6 +108,8 @@
             var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
             $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
         });
+
+
 
 
         var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
@@ -228,6 +280,6 @@
 
     })
 </script>
-       -->
+
 </body>
 </html>

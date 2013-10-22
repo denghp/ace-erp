@@ -40,8 +40,8 @@ public class RoleController {
         List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("roleList",roleList);
 
-        List<Menu> menuList = resourceService.findMenus(user);
-        model.addAttribute("menuList",menuList);
+        //List<Menu> menuList = resourceService.findMenus(user);
+        //model.addAttribute("menuList",menuList);
         return "/admin/sys/permission/role/index";
     }
 
