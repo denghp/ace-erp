@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -34,7 +35,6 @@ public class IndexController {
     public String index(@CurrentUser User user,Model model) {
         List<Menu> menuList = resourceService.findMenus(user);
         model.addAttribute("menuList", menuList);
-
 
 
         return "/admin/index";

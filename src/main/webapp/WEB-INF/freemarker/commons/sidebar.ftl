@@ -46,20 +46,27 @@
     </li>
 <#if menuList?exists>
     <#list menuList as menu>
-        <li id="${menu.id}">
+        <li id="menu-${menu.id}">
             <a href="#" class="dropdown-toggle">
                 <#if menu.icon??>
                     <i class="${menu.icon} "></i>
                 <#else>
                     <i class="background: url(${rc.getContextPath()}/assets/img/F1050_B.png) center center no-repeat;"></i>
                 </#if>
-                <span class="menu-text"> ${menu.name} </span>
+                <span class="menu-text"> ${menu.name}  </span>
                 <b class="arrow icon-angle-down"></b>
             </a>
 
             <ul class="submenu">
                 <#list menu.getChildren() as children >
-                    <li id="${children.id}">
+                    <#if (children.url?length > 0) && children.url == "/admin/sys/permission/role" >
+                    <li id="menu-${children.id}" class="active">
+                    <script type="text/javascript">
+                        window.document.getElementById("menu-")
+                    </script>
+                    <#else>
+                    <li id="menu-${children.id}" >
+                    </#if>
                         <!-- <a href="jqgrid.html"> -->
                         <#if (children.url?length > 0) >
                         <a href="${rc.getContextPath()}${children.url}">
@@ -67,14 +74,18 @@
                         <a href="#" class="dropdown-toggle">
                         </#if>
                         <i class="icon-double-angle-right"></i>
-                    ${children.name}
+                            ${children.name}
                         <#if (children.children?size > 0) >
                             <b class="arrow icon-angle-down"></b>
                         </#if>
                     </a>
                         <ul class="submenu">
                             <#list children.getChildren() as threeChildren>
-                                <li>
+                                <#if (threeChildren.url?length > 0) && threeChildren.url == "/admin/sys/permission/role" >
+                                <li id="menu-${threeChildren.id}" class="active">
+                                <#else>
+                                <li id="${threeChildren.id}">
+                                </#if>
                                     <a href="${rc.getContextPath()}${threeChildren.url}" class="dropdown-toggle">
                                         <i class="icon-double-angle-right"></i>
                                     ${threeChildren.name}
