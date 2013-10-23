@@ -38,7 +38,7 @@
     <!-- #sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-        <li class="active">
+        <li >
             <a href="${rc.getContextPath()}/admin/index">
                 <i class="icon-dashboard"></i>
                 <span class="menu-text"> Dashboard </span>

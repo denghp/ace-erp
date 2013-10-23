@@ -1,9 +1,3 @@
-<head>
-    <meta charset="utf-8" />
-    <title>Dashboard - Ace Admin</title>
-
-    <meta name="description" content="overview &amp; stats" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- basic styles -->
 
@@ -42,5 +36,3 @@
     <script src="${rc.getContextPath()}/assets/js/html5shiv.js"></script>
     <script src="${rc.getContextPath()}/assets/js/respond.min.js"></script>
     <![endif]-->
-
-</head>

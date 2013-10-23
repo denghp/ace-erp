@@ -125,17 +125,19 @@
         <property name="freemarkerVariables">
             <map>
                 <entry key="xml_escape" value-ref="fmXmlEscape" />
+                <!-- freemarker 继承模板
                 <entry key="block" value-ref="block" />
                 <entry key="override" value-ref="override" />
                 <entry key="extends" value-ref="extends" />
+                -->
             </map>
         </property>
     </bean>
-    <!-- freemarker 继承扩展包 -->
+    <!-- freemarker 继承扩展包
     <bean id="block" class="cn.org.rapid_framework.freemarker.directive.BlockDirective" />
     <bean id="override" class="cn.org.rapid_framework.freemarker.directive.OverrideDirective" />
     <bean id="extends" class="cn.org.rapid_framework.freemarker.directive.ExtendsDirective" />
-
+    -->
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
     <!--
   View resolvers can also be configured with ResourceBundles or XML files. If you need
