@@ -38,7 +38,7 @@
     <!-- #sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-        <li >
+        <li class="active">
             <a href="${rc.getContextPath()}/admin/index">
                 <i class="icon-dashboard"></i>
                 <span class="menu-text"> Dashboard </span>
@@ -72,7 +72,7 @@
                                         </#list>
                                     </ul>
                                 <#else>
-                                        <a href="${rc.getContextPath()}/${children.url}" >
+                                        <a href="${rc.getContextPath()}${children.url}" target="main">
                                         <i class="icon-double-angle-right"></i>
                                         ${children.name}
                                     </a>

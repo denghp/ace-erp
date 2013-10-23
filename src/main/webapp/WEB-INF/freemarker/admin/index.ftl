@@ -19,7 +19,7 @@
 
         <div class="main-content" style="height: 100%">
             <iframe id="mainframe" frameborder="0" name="main"
-                    style="width:100%;height:100%;" scrolling="yes"
+                    style="width:100%;height:100%;" scrolling="no"
                     border="0" src="${rc.getContextPath()}/main.html">
                     </iframe>
         </div><!-- /.main-content -->
