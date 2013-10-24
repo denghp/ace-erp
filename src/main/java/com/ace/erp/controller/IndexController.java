@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +26,6 @@ import java.util.List;
  * Time: 9:47 PM
  */
 @Controller
-@RequestMapping("/admin")
 public class IndexController {
 
     @Autowired
@@ -37,7 +37,14 @@ public class IndexController {
         model.addAttribute("menuList", menuList);
 
 
-        return "/admin/index";
+        return "/index";
+    }
+
+    @RequestMapping("/{main:main;?.*}")
+    public String main(@CurrentUser User user,Model model) {
+
+
+        return "/main";
     }
 
 

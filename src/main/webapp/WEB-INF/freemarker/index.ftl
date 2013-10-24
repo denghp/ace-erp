@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<#include "../commons/header.ftl" >
+<#include "commons/header.ftl" >
 
 <body >
-<#include "../commons/navbar.ftl" >
+<#include "commons/navbar.ftl" >
 
 <div class="main-container" id="main-container">
     <script type="text/javascript">
@@ -15,13 +15,14 @@
             <span class="menu-text"></span>
         </a>
 
-    <#include "../commons/sidebar.ftl" >
+    <#include "commons/sidebar.ftl" >
 
         <div class="main-content" style="height: 100%">
             <iframe id="mainframe" frameborder="0" name="main"
                     style="width:100%;height:100%;" scrolling="no"
-                    border="0" src="${rc.getContextPath()}/main.html">
+                    border="0" src="${rc.getContextPath()}/main">
                     </iframe>
+
         </div><!-- /.main-content -->
 
 
@@ -32,7 +33,7 @@
     </a>
 </div><!-- /.main-container -->
 
-<#include "../commons/common-script.ftl" >
+<#include "commons/common-script.ftl" >
 <!-- inline scripts related to this page -->
  <!--
 <script type="text/javascript">

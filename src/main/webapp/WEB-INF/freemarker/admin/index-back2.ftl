@@ -18,7 +18,7 @@
 <#include "../commons/sidebar.ftl" >
 
 <div class="main-content" style="height: 100%">
-    <iframe id="mainframe" frameborder="0" name="main" style="width:100%;height:100%;" scrolling="no" border="0" src="${rc.getContextPath()}/main.html"></iframe>
+    <iframe id="mainframe" frameborder="0" name="main" style="width:100%;height:100%;" scrolling="no" border="0" src="${rc.getContextPath()}/WEB-INF/freemarker/main.ftl"></iframe>
 </div><!-- /.main-content -->
 
 

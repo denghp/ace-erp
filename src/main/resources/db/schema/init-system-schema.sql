@@ -3,6 +3,7 @@
 
 drop table if exists `sys_user`;;
 drop table if exists `sys_organization`;;
+drop table if exists `sys_user_organization`;;
 drop table if exists `sys_resource`;;
 drop table if exists `sys_permission`;;
 drop table if exists `sys_role`;;
@@ -51,6 +52,14 @@ create table `sys_organization`(
   index `idx_sys_organization_type` (`type`)
 ) charset=utf8 ENGINE=InnoDB;;
 alter table `sys_organization` auto_increment=10000;;
+
+create table `sys_user_organization`(
+  `id`         bigint not null auto_increment,
+  `user_id`      bigint not null,
+  `organization_id`      bigint NOT NULL,
+  constraint `pk_sys_user_organization` primary key(`id`)
+) charset=utf8 ENGINE=InnoDB;;
+
 
 create table `sys_resource`(
   `id`         bigint not null auto_increment,

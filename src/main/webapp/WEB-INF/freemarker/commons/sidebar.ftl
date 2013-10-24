@@ -39,7 +39,7 @@
 
     <ul class="nav nav-list">
         <li class="active">
-            <a href="${rc.getContextPath()}/admin/index">
+            <a href="${rc.getContextPath()}/index">
                 <i class="icon-dashboard"></i>
                 <span class="menu-text"> Dashboard </span>
             </a>
