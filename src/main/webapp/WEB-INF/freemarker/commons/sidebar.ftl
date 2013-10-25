@@ -39,7 +39,7 @@
 
     <ul class="nav nav-list">
         <li class="active">
-            <a href="${rc.getContextPath()}/index">
+            <a href="javascript:void(0);" id="nav-dashboard" onclick="loadPage('${rc.getContextPath()}/main')">
                 <i class="icon-dashboard"></i>
                 <span class="menu-text"> Dashboard </span>
             </a>
@@ -64,7 +64,10 @@
                                     <ul class="submenu">
                                         <#list children.getChildren() as threeChildren>
                                             <li>
+                                                <!--
                                                 <a href="${rc.getContextPath()}${threeChildren.url}" target="main">
+                                                -->
+                                                <a href="javascript:void(0);" onclick="loadPage('${rc.getContextPath()}${threeChildren.url}')"  >
                                                     <i class="icon-double-angle-right"></i>
                                                 ${threeChildren.name}
                                                 </a>
@@ -72,7 +75,10 @@
                                         </#list>
                                     </ul>
                                 <#else>
+                                        <!--
                                         <a href="${rc.getContextPath()}${children.url}" target="main">
+                                        -->
+                                        <a href="javascript:void(0);" onclick="loadPage('${rc.getContextPath()}${children.url}')"  >
                                         <i class="icon-double-angle-right"></i>
                                         ${children.name}
                                     </a>

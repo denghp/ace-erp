@@ -17,14 +17,12 @@
 
     <#include "commons/sidebar.ftl" >
 
-        <div class="main-content" id="main-content" style="height: 100%">
-            <!--
+        <div class="main-content" style="height: 100%">
             <iframe id="mainframe" frameborder="0" name="main"
                     style="width:100%;height:100%;" scrolling="no"
                     border="0" src="${rc.getContextPath()}/main">
                     </iframe>
-            -->
-            <#include "./main.ftl">
+
         </div><!-- /.main-content -->
 
 
@@ -36,20 +34,6 @@
 </div><!-- /.main-container -->
 
 <#include "commons/common-script.ftl" >
-
-<script type="text/javascript">
-    /**
-    $(document).ready(function(id, url) {
-        $("#element").click(function() {
-            console.log("load...");
-            $("#main-content").load("./main.ftl");
-        });
-    });
-     **/
-    function loadPage(url) {
-        $("#main-content").load(url);
-    }
-</script>
 <!-- inline scripts related to this page -->
  <!--
 <script type="text/javascript">
