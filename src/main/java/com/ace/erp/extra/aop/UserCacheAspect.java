@@ -145,7 +145,7 @@ public class UserCacheAspect extends BaseCacheAspect {
         if (isIdKey == true) {
             user = get(key);
         } else {
-            Long id = get(key);
+            Integer id = get(key);
             if (id != null) {
                 key = idKey(String.valueOf(id));
                 user = get(key);
@@ -192,7 +192,7 @@ public class UserCacheAspect extends BaseCacheAspect {
         if (user == null) {
             return;
         }
-        Long id = user.getId();
+        int id = user.getId();
         //username email mobilePhoneNumber ---> id
         put(usernameKey(user.getUsername()), id);
         put(emailKey(user.getEmail()), id);
@@ -210,7 +210,7 @@ public class UserCacheAspect extends BaseCacheAspect {
         if (user == null) {
             return;
         }
-        Long id = user.getId();
+        int id = user.getId();
         evict(idKey(String.valueOf(id)));
         evict(usernameKey(user.getUsername()));
         evict(emailKey(user.getEmail()));

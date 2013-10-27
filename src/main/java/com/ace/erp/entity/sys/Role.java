@@ -14,7 +14,7 @@ import java.util.List;
  * Description:
  */
 public class Role {
-    private Long id;
+    private Integer id;
     /**
      * 前端显示名称
      */
@@ -37,11 +37,11 @@ public class Role {
      */
     private Boolean show = Boolean.FALSE;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

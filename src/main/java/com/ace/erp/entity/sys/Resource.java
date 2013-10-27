@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
  * Date: 10/16/13
  * Time: 1:02 AM
  */
-public class Resource implements Treeable<Long> {
-    private Long id;
+public class Resource implements Treeable<Integer> {
+    private Integer id;
     /**
      * 标题
      */
@@ -31,7 +31,7 @@ public class Resource implements Treeable<Long> {
     /**
      * 父路径
      */
-    private Long parentId;
+    private Integer parentId;
 
     private String parentIds;
 
@@ -78,11 +78,11 @@ public class Resource implements Treeable<Long> {
         this.url = url;
     }
 
-    public Long getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
@@ -94,11 +94,11 @@ public class Resource implements Treeable<Long> {
         this.parentIds = parentIds;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

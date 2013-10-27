@@ -18,11 +18,13 @@ public class BaseUserTest extends BaseTest {
     @Autowired
     protected UserService userService;
 
-    protected String username = "__z__deng123";
-    protected String email = "denghp@163.com";
-    protected String mobilePhoneNumber = "15612345678";
+    private long id = 16l;
+    protected String username = "deng123";
+    protected String email = "dengh11p@163.com";
+    protected String mobilePhoneNumber = "156123456782";
     protected String password = "123456";
-
+    private Boolean admin = false;
+    private Boolean deleted = true;
     protected User user;
 
     @Before
@@ -32,6 +34,8 @@ public class BaseUserTest extends BaseTest {
         user.setEmail(email);
         user.setMobilePhoneNumber(mobilePhoneNumber);
         user.setPassword(password);
+        user.setAdmin(admin);
+        user.setDeleted(deleted);
     }
 
 

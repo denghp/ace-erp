@@ -27,42 +27,42 @@ package com.ace.erp.entity.sys;
  */
 public class Auth {
 
-    private Long id;
+    private Integer id;
     /**
      * 组织机构  organization_id
      */
-    private Long organizationId = 0L;
+    private Integer organizationId = 0;
 
     /**
      * 用户ID
      */
-    private Long userId = 0L;
+    private Integer userId = 0;
 
     private String roleIds;
 
     private AuthType type;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getOrganizationId() {
+    public Integer getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Long organizationId) {
+    public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

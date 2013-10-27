@@ -31,7 +31,7 @@ public class ResourceService {
     @Autowired
     private ResourceMapper resourceMapper;
 
-    public Resource getResourceById(Long resourceId) {
+    public Resource getResourceById(Integer resourceId) {
         return resourceMapper.getResourceById(resourceId);
     }
 

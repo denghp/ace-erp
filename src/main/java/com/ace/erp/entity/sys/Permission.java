@@ -10,7 +10,7 @@ package com.ace.erp.entity.sys;
  */
 public class Permission {
 
-    private Long id;
+    private Integer id;
     /**
      * 前端显示名称
      */
@@ -31,11 +31,11 @@ public class Permission {
      */
     private Boolean show = Boolean.FALSE;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -20,25 +20,25 @@ import java.util.List;
  * Time: 2:53 PM
  */
 public class Menu implements Serializable {
-    private Long id;
+    private Integer id;
     private String name;
     private String icon;
     private String url;
 
     private List<Menu> children;
 
-    public Menu(Long id, String name, String icon, String url) {
+    public Menu(Integer id, String name, String icon, String url) {
         this.id = id;
         this.name = name;
         this.icon = icon;
         this.url = url;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

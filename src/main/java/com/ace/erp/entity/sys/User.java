@@ -30,7 +30,7 @@ public class User implements LogicDeleteable {
     public static final int PASSWORD_MIN_LENGTH = 5;
     public static final int PASSWORD_MAX_LENGTH = 50;
 
-    private Long id;
+    private Integer id;
 
     @NotNull(message = "{not.null}")
     @Pattern(regexp = USERNAME_PATTERN, message = "{user.username.not.valid}")
@@ -57,7 +57,8 @@ public class User implements LogicDeleteable {
     /**
      * 创建时间
      */
-    private DateTime createDate;
+    private DateTime createTime;
+    private String createTimeStr;
 
     private DateTime modifyTime;
 
@@ -81,6 +82,7 @@ public class User implements LogicDeleteable {
     public User() {
     }
 
+
     public DateTime getModifyTime() {
         return modifyTime;
     }
@@ -89,11 +91,11 @@ public class User implements LogicDeleteable {
         this.modifyTime = modifyTime;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -128,12 +130,20 @@ public class User implements LogicDeleteable {
         setSalt(RandomStringUtils.randomAlphanumeric(10));
     }
 
-    public DateTime getCreateDate() {
-        return createDate;
+    public DateTime getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(DateTime createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(DateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateTimeStr() {
+        return createTimeStr;
+    }
+
+    public void setCreateTimeStr(String createTimeStr) {
+        this.createTimeStr = createTimeStr;
     }
 
     public UserStatus getStatus() {

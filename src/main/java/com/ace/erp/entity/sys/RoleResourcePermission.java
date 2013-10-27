@@ -10,16 +10,16 @@ package com.ace.erp.entity.sys;
  */
 public class RoleResourcePermission {
 
-    private Long id;
+    private Integer id;
     /**
      * 角色id
      */
-    private Long roleId;
+    private Integer roleId;
 
     /**
      * 资源id
      */
-    private Long resourceId;
+    private Integer resourceId;
 
     /**
      * 权限id列表
@@ -30,28 +30,28 @@ public class RoleResourcePermission {
     public RoleResourcePermission() {
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
-    public Long getResourceId() {
+    public Integer getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(Long resourceId) {
+    public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
     }
 

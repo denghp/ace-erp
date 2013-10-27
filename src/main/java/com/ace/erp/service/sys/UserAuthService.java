@@ -41,7 +41,7 @@ public class UserAuthService {
 
     public List<Role> findRoles(User user) {
 
-        Long userId = user.getId();
+        int userId = user.getId();
 
         //过滤工作职务 仅获取目前可用的工作职务数据
 

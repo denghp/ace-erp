@@ -26,14 +26,14 @@ public class AuthService {
     @Autowired
     private AuthMapper authMapper;
 
-    public void addUserAuth(Long[] userIds, Auth m) {
+    public void addUserAuth(Integer[] userIds, Auth m) {
 
         if (ArrayUtils.isEmpty(userIds)) {
             logger.warn("addUserAuth userIds is null.");
             return;
         }
 
-        for (Long userId : userIds) {
+        for (Integer userId : userIds) {
             //获取用户,如果用户不存在,则循环下个用户
             User user = userService.getUserById(userId);
             if (user == null) {
@@ -63,7 +63,7 @@ public class AuthService {
      * @param organizationId    可选
      * @return
      */
-    public String findRoleIds(Long userId, Long organizationId) {
+    public String findRoleIds(Integer userId, Long organizationId) {
 
         Map<String, Object> params = new HashMap<String,Object>();
         //StringBuilder hql = new StringBuilder("select roleIds from Auth where ");

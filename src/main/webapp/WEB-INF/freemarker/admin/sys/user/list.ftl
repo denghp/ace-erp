@@ -12,7 +12,7 @@
         <li>
             <a href="#">Tables</a>
         </li>
-        <li class="active">jqGrid plugin</li>
+        <li class="active">用户列表</li>
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
@@ -54,7 +54,7 @@
             <div id="grid-pager"></div>
 
             <script type="text/javascript">
-                var $path_base = "/";//this will be used in gritter alerts containing images
+                var $path_base = "${rc.getContextPath()}";//this will be used in gritter alerts containing images
             </script>
 
             <!-- PAGE CONTENT ENDS -->
@@ -64,67 +64,42 @@
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
-var grid_data =
-        [
-            {id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
-        ];
-
-
+eval('debugger;');
 jQuery(function($) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
 
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:'/ace/admin/sys/user/getAllUsers',
+        url:$path_base+'/admin/sys/user',
         datatype: "json",
-        data: grid_data,
+        mtype: 'GET',
+        //data: grid_data,
         //datatype: "local",
-        height: 250,
-        colNames:[' ', 'ID','Last Sales','Name', 'Stock', 'Ship via','Notes'],
+        height: 350,
+        colNames:[' ', 'ID','用户名','邮箱', '手机号码','创建时间', '状态','是否管理员'],
         colModel:[
             {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-
-                    delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback}
-                    //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+                    delOptions:{url:$path_base+"/admin/sys/user/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    //editformbutton:true,
+                    //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                 }
             },
-            {name:'id',index:'id', width:60, sorttype:"int", editable: true},
-            {name:'createDate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
-            {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-            {name:'status',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
-            {name:'mobilePhoneNumber',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-            {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
+            {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
+            {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'email',index:'email', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'mobilePhoneNumber',index:'phone', width:90, editable: true,editoptions:{size:"11",maxlength:"11"}},
+            {name:'createTimeStr',index:'cdate',width:90, editable:true,sorttype:"date", unformat: pickDate},
+            {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
+            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", formatter:"checkbox", editoptions:{value:"true:Yes;false:No"},unformat: aceSwitch}
         ],
 
         viewrecords : true,
-        rowNum:10,
-        rowList:[10,20,30],
+        rowNum:20,
+        rowList:[20,40,60],
         pager : pager_selector,
         altRows: true,
         //toppager: true,
@@ -144,9 +119,8 @@ jQuery(function($) {
             }, 0);
         },
 
-        editurl: $path_base+"/dummy.html",//nothing is saved
-        caption: "jqGrid with inline editing",
-
+        editurl: $path_base+"/admin/sys/user/update",//nothing is saved
+        //caption: "jqGrid with inline editing",
 
         autowidth: true
 
@@ -164,6 +138,7 @@ jQuery(function($) {
                     .after('<span class="lbl"></span>');
         }, 0);
     }
+
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
@@ -192,15 +167,27 @@ jQuery(function($) {
             {
                 //edit record form
                 //closeAfterEdit: true,
+                url:$path_base+"/admin/sys/user/update",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                },
+                afterComplete: function (response, postdata, formid) {
+                    response = eval("(" + response.responseText + ")");
+                    var selrow = $("#grid_" + o.id).jqGrid("getGridParam", "selrow");
+                    $("#grid_" + o.id).jqGrid("delRowData", selrow);
+                    if (response.error == 0) {
+                        $.openDialog("info", "Successfully deleted " + postdata.database + ".");
+                    } else {
+                        $.openDialog("info", "And error occured - " + response.msg + ".");
+                    }
                 }
             },
             {
                 //new record form
+                url:$path_base+"/admin/sys/user/add",
                 closeAfterAdd: true,
                 recreateForm: true,
                 viewPagerButtons: false,
@@ -208,10 +195,14 @@ jQuery(function($) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                },
+                onClick : function(e) {
+                    alert("addClick");
                 }
             },
             {
                 //delete record form
+                url:$path_base+"/admin/sys/user/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -228,6 +219,7 @@ jQuery(function($) {
             },
             {
                 //search form
+                url:$path_base+"/admin/sys/user/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);
@@ -250,6 +242,7 @@ jQuery(function($) {
                 beforeShowForm: function(e){
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                    console.log("refush");
                 }
             }
     )
@@ -258,8 +251,8 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-                .end().find('input[name=stock]')
+        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+                .end().find('input[name=status]').end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
         //update buttons classes
@@ -298,7 +291,6 @@ jQuery(function($) {
     function beforeDeleteCallback(e) {
         var form = $(e[0]);
         if(form.data('styled')) return false;
-
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
         style_delete_form(form);
 

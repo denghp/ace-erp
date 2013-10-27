@@ -90,6 +90,7 @@
 														</span>
                         </label>
                     </div>
+                    <#if jcaptchaEbabled ? string('true','false') == 'true'>
                     <label class="block clearfix">
                                 <span class="block input-icon input-icon-right">
                                 <input type="text" id="jcaptchaCode" name="jcaptchaCode"
@@ -99,7 +100,7 @@
                                      src="${rc.getContextPath()}/jcaptcha.jpg" title="点击更换验证码">
                                 </span>
                     </label>
-
+                    </#if>
                     <div class="space"></div>
 
                     <div class="clearfix">
@@ -333,25 +334,6 @@
         jQuery('#' + id).addClass('visible');
     }
 </script>
-<!--
-<script type="text/javascript">
-    $(function () {
-        $(".jcaptcha-btn").click(function () {
-            var img = $(".jcaptcha-img");
-            var imageSrc = img.attr("src");
-            if (imageSrc.indexOf("?") > 0) {
-                imageSrc = imageSrc.substr(0, imageSrc.indexOf("?"));
-            }
-            imageSrc = imageSrc + "?" + new Date().getTime();
-            img.attr("src", imageSrc);
-        });
-        $.validationEngineLanguage.allRules.ajaxJcaptchaCall = {
-            "url": "${rc.getContextPath()}/jcaptcha-validate",
-            "alertTextLoad": "* 正在验证，请稍等。。。"
-        };
-    });
-</script>
--->
 <script type="text/javascript">
     $(document).ready(function () {
         $(".jcaptcha-btn").click(function () {

@@ -20,7 +20,7 @@ public interface ResourceMapper {
 
     public void update(Resource resource);
 
-    public Resource getResourceById(Long resourceId);
+    public Resource getResourceById(Integer resourceId);
 
     public List<Resource> getAllResource();
 

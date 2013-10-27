@@ -8,6 +8,7 @@ import com.ace.erp.utils.Md5Utils;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,16 +51,17 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public boolean saveUser(User user) {
-
+    public User save(User user) {
         user.randomSalt();
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
-        int id = userMapper.saveUser(user);
-        System.out.print("id : " + id);
-        if (id > 0) {
-            return true;
+        if (user.getCreateTimeStr() == null ) {
+            user.setCreateTime(new DateTime(new Date()));
+        } else {
+            user.setCreateTime(new DateTime(user.getCreateTimeStr()));
         }
-        return false;
+        userMapper.saveUser(user);
+        logger.info("insert successfully, user {}", user);
+        return user;
 
     }
 
@@ -104,12 +107,16 @@ public class UserService {
         return userMapper.getUserByName(username);
     }
 
-    public User getUserById(Long userId) {
+    public User getUserById(Integer userId) {
         return userMapper.getUserById(userId);
     }
 
-    public void deleteById(Long userId) {
-        userMapper.delete(userId);
+    public boolean deleteById(Integer userId) {
+        int status = userMapper.delete(userId);
+        if (status > 0) {
+            return true;
+        }
+        return false;
     }
 
     public List<User> getAllUsers() {
@@ -137,6 +144,12 @@ public class UserService {
         } else {
             clearLoginRecordCache(username);
         }
+    }
+
+    public User update(User user) {
+        userMapper.update(user);
+        logger.info("update successfully, user {}", user);
+        return user;
     }
 
     public boolean matches(User user, String newPassword) {

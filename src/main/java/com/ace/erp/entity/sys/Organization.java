@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Organization {
 
-    private Long id;
+    private Integer id;
     private String name;
     private String type;
     private String icon;
@@ -36,11 +36,11 @@ public class Organization {
         this.userList = userList;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

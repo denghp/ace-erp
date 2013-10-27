@@ -19,13 +19,13 @@ public interface UserMapper {
 
     User getUserByEmail(String email);
 
-    boolean update(User user);
+    int update(User user);
 
     User getByMobilePhoneNumber(String mobilePhoneNumber);
 
-    User getUserById(Long userId);
+    User getUserById(Integer userId);
 
-    void delete(Long userId);
+    int delete(Integer userId);
 
     List<User> getAllUsers();
 

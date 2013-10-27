@@ -70,12 +70,12 @@ public class ResourceMenuCacheAspect extends BaseCacheAspect {
     }
 
 
-    public void evict(Long userId) {
+    public void evict(Integer userId) {
         evict(menusKey(userId));
     }
 
 
-    private String menusKey(Long userId) {
+    private String menusKey(Integer userId) {
         return this.menusKeyPrefix + userId;
     }
 

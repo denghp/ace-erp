@@ -31,7 +31,7 @@ public class UserDaoTest {
         user.setUsername("admianaab");
         user.setPassword("123");
         user.setEmail("aadenghaap@126.com");
-        userService.saveUser(user);
+        userService.save(user);
     }
 
     @Test
