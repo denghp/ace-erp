@@ -54,5 +54,6 @@
 <!-- page specific plugin scripts -->
 
 <script src="${rc.getContextPath()}/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/date-time/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jqGrid/i18n/grid.locale-cn.js"></script>

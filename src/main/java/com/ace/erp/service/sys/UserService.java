@@ -57,7 +57,7 @@ public class UserService {
         if (user.getCreateTimeStr() == null ) {
             user.setCreateTime(new DateTime(new Date()));
         } else {
-            user.setCreateTime(new DateTime(user.getCreateTimeStr()));
+            user.setCreateTime(DateTime.parse("2013-10-17"));
         }
         userMapper.saveUser(user);
         logger.info("insert successfully, user {}", user);

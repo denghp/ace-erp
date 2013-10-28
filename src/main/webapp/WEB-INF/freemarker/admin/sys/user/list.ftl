@@ -94,7 +94,7 @@ jQuery(function($) {
             {name:'mobilePhoneNumber',index:'phone', width:90, editable: true,editoptions:{size:"11",maxlength:"11"}},
             {name:'createTimeStr',index:'cdate',width:90, editable:true,sorttype:"date", unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
-            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", formatter:"checkbox", editoptions:{value:"true:Yes;false:No"},unformat: aceSwitch}
+            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
         ],
 
         viewrecords : true,
@@ -122,7 +122,11 @@ jQuery(function($) {
         editurl: $path_base+"/admin/sys/user/update",//nothing is saved
         //caption: "jqGrid with inline editing",
 
-        autowidth: true
+        autowidth: true,
+        afterSubmit: function (response, postdata) {
+            var result = jQuery.parseJSON(response.responseText);
+            return [result.success, result.message, result.id];
+        }
 
     });
 
@@ -133,8 +137,8 @@ jQuery(function($) {
     function aceSwitch( cellvalue, options, cell ) {
         setTimeout(function(){
             $(cell) .find('input[type=checkbox]')
-                    .wrap('<label class="inline" />')
                     .addClass('ace ace-switch ace-switch-5')
+                    .wrap('<label class="inline" />')
                     .after('<span class="lbl"></span>');
         }, 0);
     }
@@ -143,7 +147,7 @@ jQuery(function($) {
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
             $(cell) .find('input[type=text]')
-                    .datepicker({format:'yyyy-mm-dd' , autoclose:true});
+                    .datepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
         }, 0);
     }
 
@@ -195,10 +199,24 @@ jQuery(function($) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+
                 },
-                onClick : function(e) {
-                    alert("addClick");
+                afterSubmit: function(response, postdata) {
+                    console.log("postdata : " + postdata);
+                    console.log(response.responseText);
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
+                /**
+                errorTextFormat: function (response) {
+                    return '<span class="ui-icon ui-icon-alert" ' +
+                            'style="float:left; margin-right:.3em;"></span>' +
+                            response.responseText;
+                }
+                 **/
+
             },
             {
                 //delete record form
@@ -213,8 +231,10 @@ jQuery(function($) {
 
                     form.data('styled', true);
                 },
-                onClick : function(e) {
-                    alert(1);
+                errorTextFormat: function (response) {
+                    return '<span class="ui-icon ui-icon-alert" ' +
+                            'style="float:left; margin-right:.3em;"></span>' +
+                            response.responseText;
                 }
             },
             {
@@ -251,8 +271,8 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-                .end().find('input[name=status]').end().find('input[name=admin]')
+        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+                .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
         //update buttons classes

@@ -7,6 +7,7 @@ package com.ace.erp.controller.sys;
 
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.UserService;
+import com.mysql.jdbc.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +51,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<User> getAllUsers(User user,HttpServletRequest request, HttpServletResponse response) {
+    public List<User> getAllUsers(User user, HttpServletRequest request, HttpServletResponse response) {
         logger.info("search- form : " + user);
         List<User> userList = userService.getAllUsers();
 
@@ -60,30 +62,56 @@ public class UserController {
     @ResponseBody
     public String addUser(User user, Model model) {
         logger.info(user.toString());
-        userService.save(user);
-        return HttpStatus.OK.name();
+        try {
+            userService.save(user);
+            return HttpStatus.OK.name();
+        } catch (Exception ex) {
+            logger.error("add user error , exception : {}", ex);
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
     }
 
-    @RequestMapping(value = "/delete")
+
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public String delete(User user, Model model) {
-        logger.info("deleteUser : " + user.toString());
-        userService.deleteById(user.getId());
-        return HttpStatus.OK.name();
+    public String deleteM(@RequestParam("oper") String oper,
+                         @RequestParam("id") String ids,
+                         Model model) {
+        logger.info("oper : {} delete ids : {}" + oper, ids);
+        try {
+            if (!StringUtils.isNullOrEmpty(ids) && oper.equalsIgnoreCase("del")) {
+                String[] idItems = ids.split(",");
+                for (String id : idItems) {
+                    userService.deleteById(Integer.parseInt(id));
+                }
+                return HttpStatus.OK.name();
+            }
+            return HttpStatus.BAD_REQUEST.name();
+        } catch (Exception ex) {
+            logger.error("delete user faild {}", ex);
+        }
+
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
     }
 
     @RequestMapping(value = "/update")
     @ResponseBody
-    public User update(User user, Model model) {
-        logger.info("update user :"+ user.toString());
-        userService.update(user);
-        return userService.getUserById(user.getId());
+    public String update(User user, Model model) {
+        logger.info("update user :" + user.toString());
+        try {
+            userService.update(user);
+            return HttpStatus.OK.name();
+        } catch (Exception ex) {
+            logger.error("update user error, exception : {}",ex);
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+        //return userService.getUserById(user.getId());
     }
 
     @RequestMapping(value = "/getUser")
     @ResponseBody
     public User getUser(User user, Model model) {
-        logger.info("update user :"+ user.toString());
+        logger.info("update user :" + user.toString());
         return userService.getUserById(user.getId());
     }
 

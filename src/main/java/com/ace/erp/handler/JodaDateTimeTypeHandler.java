@@ -5,9 +5,11 @@
  */
 package com.ace.erp.handler;
 
-import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedTypes;
+import org.apache.ibatis.type.TypeHandler;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.sql.*;
 
@@ -17,41 +19,45 @@ import java.sql.*;
  * Date: 10/19/13
  * Time: 12:24 AM
  */
-public class JodaDateTimeTypeHandler extends BaseTypeHandler {
+@MappedTypes(DateTime.class)
+public class JodaDateTimeTypeHandler implements TypeHandler {
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
-        DateTime dateTime = (DateTime) parameter;
-        ps.setTime(i, new Time(dateTime.getMillis()));
+    public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
+        if (parameter != null) {
+            ps.setTimestamp(i, new Timestamp(((DateTime) parameter).getMillis()));
+        } else {
+            ps.setTimestamp(i, null);
+        }
     }
 
     @Override
-    public Object getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        DateTime dateTime = null;
-        Time time = rs.getTime(columnName);
-        if (time != null) {
-            dateTime = new DateTime(time.getTime());
+    public Object getResult(ResultSet rs, String columnName) throws SQLException {
+        Timestamp ts = rs.getTimestamp(columnName);
+        if (ts != null) {
+            return new DateTime(ts.getTime(), DateTimeZone.UTC);
+        } else {
+            return null;
         }
-        return dateTime;
     }
 
     @Override
-    public Object getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        DateTime dateTime = null;
-        Time time = cs.getTime(columnIndex);
-        if (time != null) {
-            dateTime = new DateTime(time.getTime());
+    public Object getResult(ResultSet resultSet, int columnIndex) throws SQLException {
+        Timestamp ts = resultSet.getTimestamp(columnIndex);
+        if (ts != null) {
+            return new DateTime(ts.getTime(), DateTimeZone.UTC);
+        } else {
+            return null;
         }
-        return dateTime;
     }
 
-    //    @Override
-    public Object getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        DateTime dateTime = null;
-        Time time = rs.getTime(columnIndex);
-        if (time != null) {
-            dateTime = new DateTime(time.getTime());
+    @Override
+    public Object getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        Timestamp ts = cs.getTimestamp(columnIndex);
+        if (ts != null) {
+            return new DateTime(ts.getTime(), DateTimeZone.UTC);
+        } else {
+            return null;
         }
-        return dateTime;
     }
 }
 

@@ -2,6 +2,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.BaseTest;
 import com.ace.erp.entity.sys.User;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ace.erp.service.sys.UserService;
@@ -36,6 +37,7 @@ public class BaseUserTest extends BaseTest {
         user.setPassword(password);
         user.setAdmin(admin);
         user.setDeleted(deleted);
+        user.setCreateTime(DateTime.parse("2013-07-22"));
     }
 
 

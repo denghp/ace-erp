@@ -9,8 +9,8 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="mobilePhoneNumber" column="mobile_phone_number"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" typeHandler="com.ace.erp.handler.JodaDateTimestampTypeHandler"/>
-        <result property="modifyTime" column="modify_time" jdbcType="TIMESTAMP" typeHandler="com.ace.erp.handler.JodaDateTimestampTypeHandler"/>
+        <result property="createTime" column="create_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
+        <result property="modifyTime" column="modify_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
         <result property="createTimeStr" column="createTimeStr" />
         <result property="salt" column="salt"/>
         <result property="status" column="status"/>
@@ -51,13 +51,13 @@
            now(),
         </if>
        <if test="createTime != null">
-           #{createTime},
+           #{createTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
        </if>
       <if test="modifyTime == null">
           now(),
       </if>
       <if test="modifyTime != null">
-          #{modifyTime},
+          #{modifyTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
       </if>
       #{status},#{deleted},#{admin})
   </insert>
@@ -80,7 +80,7 @@
         salt = #{salt},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime},
+        create_time = #{createTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
       </if>
       <if test="status != null">
         status = #{status},
