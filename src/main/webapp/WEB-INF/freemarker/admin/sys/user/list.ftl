@@ -102,7 +102,7 @@ jQuery(function($) {
             {name:'mobilePhoneNumber',index:'phone', width:90, editable: true,editoptions:{size:"11",maxlength:"11"}},
             {name:'createTimeStr',index:'cdate',width:90, editable:true,sorttype:"date", unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
-            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
+            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", editoptions:{value:"true:false"},unformat: aceSwitch}
         ],
 
         viewrecords : true,
@@ -140,8 +140,8 @@ jQuery(function($) {
     function aceSwitch( cellvalue, options, cell ) {
         setTimeout(function(){
             $(cell) .find('input[type=checkbox]')
-                    .addClass('ace ace-switch ace-switch-5')
                     .wrap('<label class="inline" />')
+                    .addClass('ace ace-switch ace-switch-5')
                     .after('<span class="lbl"></span>');
         }, 0);
     }
@@ -172,8 +172,8 @@ jQuery(function($) {
             },
             {
                 //edit record form
-                //closeAfterEdit: true,
                 url:$path_base+"/admin/sys/user/update",
+                closeAfterEdit:true,
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -268,7 +268,6 @@ jQuery(function($) {
                 beforeShowForm: function(e){
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-                    console.log("refush");
                 }
             }
     )

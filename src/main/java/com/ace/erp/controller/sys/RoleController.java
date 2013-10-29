@@ -16,7 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -40,9 +43,14 @@ public class RoleController {
         List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("roleList",roleList);
 
-        //List<Menu> menuList = resourceService.findMenus(user);
-        //model.addAttribute("menuList",menuList);
-        return "/admin/sys/permission/role/index";
+        return "/admin/sys/permission/role/list";
     }
 
+    @RequestMapping(value = "/roleList",method= RequestMethod.GET)
+    @ResponseBody
+    public List<Role> roleList(HttpServletRequest request, HttpServletResponse response) {
+        List<Role> roleList = roleService.getAllRoles();
+
+        return roleList;
+    }
 }

@@ -1,60 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>jqGrid - Ace Admin</title>
-
-    <meta name="description" content="Dynamic tables and grids using jqGrid plugin" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- basic styles -->
-
-    <link href="${rc.getContextPath()}/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/font-awesome.min.css" />
-
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/font-awesome-ie7.min.css" />
-    <![endif]-->
-
-    <!-- page specific plugin styles -->
-
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/jquery-ui-1.10.3.full.min.css" />
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/datepicker.css" />
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ui.jqgrid.css" />
-
-    <!-- fonts -->
-
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
-
-    <!-- ace styles -->
-
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace.min.css" />
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-skins.min.css" />
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-ie.min.css" />
-    <![endif]-->
-
-    <!-- inline styles related to this page -->
-
-    <!-- ace settings handler -->
-
-    <script src="${rc.getContextPath()}/assets/js/ace-extra.min.js"></script>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-    <!--[if lt IE 9]>
-    <script src="${rc.getContextPath()}/assets/js/html5shiv.js"></script>
-    <script src="${rc.getContextPath()}/assets/js/respond.min.js"></script>
-    <![endif]-->
-
-
-</head>
-
-
-
-<body>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -67,9 +10,9 @@
         </li>
 
         <li>
-            <a href="#">Tables</a>
+            <a href="#">系统设置</a>
         </li>
-        <li class="active">Simple &amp; Dynamic</li>
+        <li class="active">角色列表</li>
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
@@ -97,7 +40,7 @@
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
-            <div class="alert alert-info">
+            <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
 
                 Please note that demo server is not configured to save the changes, therefore you may get an error message.
@@ -111,113 +54,57 @@
             <div id="grid-pager"></div>
 
             <script type="text/javascript">
-                var $path_base = "/";//this will be used in gritter alerts containing images
+                var $path_base = "${rc.getContextPath()}";//this will be used in gritter alerts containing images
             </script>
 
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
     </div><!-- /.row -->
 </div><!-- /.page-content -->
-
-<!-- basic scripts -->
-
-<!--[if !IE]> -->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<![endif]-->
-
-<!--[if !IE]> -->
-
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-</script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='${rc.getContextPath()}/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-
-<script type="text/javascript">
-    if("ontouchend" in document) document.write("<script src='${rc.getContextPath()}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-</script>
-<script src="${rc.getContextPath()}/assets/js/bootstrap.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/typeahead-bs2.min.js"></script>
-
-<!-- page specific plugin scripts -->
-
-<script src="${rc.getContextPath()}/assets/js/date-time/bootstrap-datepicker.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-
-<!-- ace scripts -->
-
-<script src="${rc.getContextPath()}/assets/js/ace-elements.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/ace.min.js"></script>
-
 <!-- inline scripts related to this page -->
-<script type="text/javascript">
-var grid_data =
-        [
-            {id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-            {id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-            {id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-            {id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-            {id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-            {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-            {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
-        ];
 
+<script type="text/javascript">
+eval('debugger;');
 jQuery(function($) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
-
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-
-        data: grid_data,
-        datatype: "local",
+        url:$path_base+'/admin/sys/permission/role/roleList',
+        datatype: "json",
+        mtype: 'GET',
+        //data: grid_data,
+        //datatype: "local",
         height: 350,
-        colNames:[' ', 'ID','Last Sales','Name', 'Stock', 'Ship via','Notes'],
+        colNames:[' ', 'ID','角色名','角色', '描述','创建时间','修改时间', '是否可用'],
         colModel:[
             {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-
-                    delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
-                    //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+                    delOptions:{url:$path_base+"/admin/sys/user/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    //editformbutton:true,
+                    //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
+                    onSuccess: function(response) {
+                        console.log("response > " + response.responseText);
+                        if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                            return [true];
+                        }
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ response.responseText
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
+                        return [false];
+                    }
                 }
             },
-            {name:'id',index:'id', width:60, sorttype:"int", editable: true},
-            {name:'sdate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
-            {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-            {name:'stock',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
-            {name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-            {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
+            {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
+            {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'role',index:'role', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'description',index:'desc', width:190, editable: true,editoptions:{size:"11",maxlength:"11"}},
+            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
+            {name:'modifyTime',index:'mdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
+            {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
+
+
         ],
 
         viewrecords : true,
@@ -242,12 +129,10 @@ jQuery(function($) {
             }, 0);
         },
 
-        editurl: $path_base+"/dummy.html",//nothing is saved
+        editurl: $path_base+"/admin/sys/user/update",//nothing is saved
         caption: "jqGrid with inline editing",
 
-
         autowidth: true
-
     });
 
     //enable search/filter toolbar
@@ -262,14 +147,20 @@ jQuery(function($) {
                     .after('<span class="lbl"></span>');
         }, 0);
     }
+
+    //format date
+    function dateFormatter(cellvalue, options, rowObject) {
+        return dateFormat(cellvalue, "isoDate");
+    }
+
+
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
-            $(cell) .find('input[type=text]')
-                    .datepicker({format:'yyyy-mm-dd' , autoclose:true});
+            $(cell).find('input[type=text]')
+                    .datetimepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
         }, 0);
     }
-
 
     //navButtons
     jQuery(grid_selector).jqGrid('navGrid',pager_selector,
@@ -290,15 +181,23 @@ jQuery(function($) {
             {
                 //edit record form
                 //closeAfterEdit: true,
+                url:$path_base+"/admin/sys/user/update",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                },
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
             },
             {
                 //new record form
+                url:$path_base+"/admin/sys/user/add",
                 closeAfterAdd: true,
                 recreateForm: true,
                 viewPagerButtons: false,
@@ -306,10 +205,28 @@ jQuery(function($) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+
+                },
+                afterSubmit: function(response, postdata) {
+                    console.log("postdata : " + postdata);
+                    console.log(response.responseText);
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
+                /**
+                 errorTextFormat: function (response) {
+                    return '<span class="ui-icon ui-icon-alert" ' +
+                            'style="float:left; margin-right:.3em;"></span>' +
+                            response.responseText;
+                }
+                 **/
+
             },
             {
                 //delete record form
+                url:$path_base+"/admin/sys/user/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -320,12 +237,23 @@ jQuery(function($) {
 
                     form.data('styled', true);
                 },
-                onClick : function(e) {
-                    alert(1);
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
+                /**
+                 errorTextFormat: function (response) {
+                    return '<span class="ui-icon ui-icon-alert" ' +
+                            'style="float:left; margin-right:.3em;"></span>' +
+                            response.responseText;
+                }
+                 **/
             },
             {
                 //search form
+                url:$path_base+"/admin/sys/user/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);
@@ -348,6 +276,7 @@ jQuery(function($) {
                 beforeShowForm: function(e){
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                    console.log("refush");
                 }
             }
     )
@@ -356,8 +285,8 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-                .end().find('input[name=stock]')
+        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+                .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
         //update buttons classes
@@ -396,7 +325,6 @@ jQuery(function($) {
     function beforeDeleteCallback(e) {
         var form = $(e[0]);
         if(form.data('styled')) return false;
-
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
         style_delete_form(form);
 
@@ -474,6 +402,3 @@ jQuery(function($) {
 
 });
 </script>
-
-</body>
-</html>

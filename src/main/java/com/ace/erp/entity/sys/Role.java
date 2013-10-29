@@ -1,6 +1,7 @@
 package com.ace.erp.entity.sys;
 
 import com.ace.erp.utils.JsonUtils;
+import org.joda.time.DateTime;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +37,26 @@ public class Role {
      * 是否显示 也表示是否可用 为了统一 都使用这个
      */
     private Boolean show = Boolean.FALSE;
+
+    private DateTime createTime;
+
+    private DateTime modifyTime;
+
+    public DateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(DateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public DateTime getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(DateTime modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 
     public Integer getId() {
         return id;
@@ -88,6 +109,7 @@ public class Role {
     @Override
     public String toString() {
         try {
+
             return JsonUtils.mapper.writeValueAsString(this);
         } catch (IOException e) {
             //ignoe

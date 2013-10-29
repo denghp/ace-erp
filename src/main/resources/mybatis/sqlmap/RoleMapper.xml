@@ -9,6 +9,8 @@
         <result property="role" column="role"/>
         <result property="description" column="description"/>
         <result property="show" column="is_show"/>
+        <result property="createTime" column="create_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
+        <result property="modifyTime" column="modify_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
         <collection property="resourcePermissions" ofType="RoleResourcePermission">
             <id property="id" column="rrp_id"/>
             <id property="roleId" column="role_id"/>
@@ -35,7 +37,11 @@
 
     <select id="getAllRoles" resultMap="roleResult">
         SELECT
-        r.id,r.name,r.role,r.description,r.is_show,rrp.id as rrp_id,rrp.role_id,rrp.resource_id,rrp.permission_ids
+        r.id,r.name,r.role,r.description,r.is_show,r.create_time,r.modify_time,
+        rrp.id as rrp_id,
+        rrp.role_id,
+        rrp.resource_id,
+        rrp.permission_ids
         FROM sys_role as r
         LEFT JOIN sys_role_resource_permission as rrp on r.id = rrp.role_id limit 100;
     </select>
