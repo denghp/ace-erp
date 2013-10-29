@@ -256,7 +256,7 @@ jQuery(function($) {
                     style_search_filters($(this));
                 }
                 ,
-                multipleSearch: true,
+                multipleSearch: true
                 /**
                  multipleGroup:true,
                  showQuery: true

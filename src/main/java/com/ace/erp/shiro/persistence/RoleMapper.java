@@ -21,14 +21,14 @@ public interface RoleMapper {
      * @param role
      * @return roleId
      */
-    public int saveRole(Role role);
+    public int save(Role role);
 
     /**
      * 更新角色信息
      * @param role
      * @return  true
      */
-    public boolean updateRole(Role role);
+    public int update(Role role);
 
     /**
      * 根据 roleId获取相关的ResourcePermission
@@ -50,4 +50,24 @@ public interface RoleMapper {
      * @return
      */
     public List<Role> getAllRoles();
+
+    /**
+     * 根据ids删除多条role
+     * @param params key : ids value: [1,2,3]
+     * @return
+     */
+    public int deleteByIds(Map<String, Object> params);
+
+    /**
+     * 根据ID删除
+     * @param id
+     * @return
+     */
+    public int deleteById(int id);
+    /**
+     * 根据ID获取role
+     * @param id
+     * @return
+     */
+    public Role getRoleById(int id);
 }

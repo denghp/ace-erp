@@ -47,4 +47,35 @@ public class RoleService {
        return roleMapper.getAllRoles();
     }
 
+    public Role add(Role role) {
+        int result = roleMapper.save(role);
+        return role;
+    }
+
+    public boolean deleteById(Integer id) {
+        if (id == null) {
+            logger.warn("delete role ids is empty.");
+            return false;
+        }
+        roleMapper.deleteById(id);
+        return true;
+    }
+
+    public boolean deleteByIds(List<String> list) {
+        if (list == null) {
+            logger.warn("delete role ids is empty.");
+            return false;
+        }
+        Map<String,Object> params = new HashMap<String, Object>();
+        params.put("list",list);
+        roleMapper.deleteByIds(params);
+        return true;
+    }
+
+    public Role update(Role role) {
+        //update
+        int result = roleMapper.update(role);
+        return roleMapper.getRoleById(role.getId());
+    }
+
 }

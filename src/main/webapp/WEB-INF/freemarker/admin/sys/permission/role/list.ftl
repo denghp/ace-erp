@@ -70,7 +70,7 @@ jQuery(function($) {
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:$path_base+'/admin/sys/permission/role/roleList',
+        url:$path_base+'/admin/sys/permission/role',
         datatype: "json",
         mtype: 'GET',
         //data: grid_data,
@@ -82,7 +82,7 @@ jQuery(function($) {
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/user/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
@@ -96,12 +96,12 @@ jQuery(function($) {
                     }
                 }
             },
-            {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
-            {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'role',index:'role', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'description',index:'desc', width:190, editable: true,editoptions:{size:"11",maxlength:"11"}},
-            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
-            {name:'modifyTime',index:'mdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
+            {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
+            {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'description',index:'desc', width:200, editable: true,editoptions:{size:"11",maxlength:"11"}},
+            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
+            {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
             {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
 
 
@@ -129,7 +129,7 @@ jQuery(function($) {
             }, 0);
         },
 
-        editurl: $path_base+"/admin/sys/user/update",//nothing is saved
+        editurl: $path_base+"/admin/sys/permission/role/update",//nothing is saved
         caption: "jqGrid with inline editing",
 
         autowidth: true
@@ -153,7 +153,6 @@ jQuery(function($) {
         return dateFormat(cellvalue, "isoDate");
     }
 
-
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
@@ -176,12 +175,12 @@ jQuery(function($) {
                 refresh: true,
                 refreshicon : 'icon-refresh green',
                 view: true,
-                viewicon : 'icon-zoom-in grey',
+                viewicon : 'icon-zoom-in grey'
             },
             {
                 //edit record form
                 //closeAfterEdit: true,
-                url:$path_base+"/admin/sys/user/update",
+                url:$path_base+"/admin/sys/permission/role/update",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -197,7 +196,7 @@ jQuery(function($) {
             },
             {
                 //new record form
-                url:$path_base+"/admin/sys/user/add",
+                url:$path_base+"/admin/sys/permission/role/add",
                 closeAfterAdd: true,
                 recreateForm: true,
                 viewPagerButtons: false,
@@ -226,7 +225,7 @@ jQuery(function($) {
             },
             {
                 //delete record form
-                url:$path_base+"/admin/sys/user/delete",
+                url:$path_base+"/admin/sys/permission/role/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -253,7 +252,7 @@ jQuery(function($) {
             },
             {
                 //search form
-                url:$path_base+"/admin/sys/user/search",
+                url:$path_base+"/admin/sys/permission/role/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);
@@ -264,7 +263,7 @@ jQuery(function($) {
                     style_search_filters($(this));
                 }
                 ,
-                multipleSearch: true,
+                multipleSearch: true
                 /**
                  multipleGroup:true,
                  showQuery: true
@@ -285,10 +284,9 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
-                .end().find('input[name=admin]')
+        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+                .end().find('input[name=show]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
