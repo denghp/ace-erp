@@ -40,7 +40,7 @@
         <div class="col-xs-12">
             <!-- PAGE CONTENT BEGINS -->
 
-            <div class="alert alert-info">
+            <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
 
                 Please note that demo server is not configured to save the changes, therefore you may get an error message.
@@ -68,7 +68,6 @@ eval('debugger;');
 jQuery(function($) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
-
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
         url:$path_base+'/admin/sys/user',
@@ -86,6 +85,15 @@ jQuery(function($) {
                     delOptions:{url:$path_base+"/admin/sys/user/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
+                    onSuccess: function(response) {
+                        console.log("response > " + response.responseText);
+                        if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                            return [true];
+                        }
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ response.responseText
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
+                        return [false];
+                    }
                 }
             },
             {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
@@ -120,14 +128,9 @@ jQuery(function($) {
         },
 
         editurl: $path_base+"/admin/sys/user/update",//nothing is saved
-        //caption: "jqGrid with inline editing",
+        caption: "jqGrid with inline editing",
 
-        autowidth: true,
-        afterSubmit: function (response, postdata) {
-            var result = jQuery.parseJSON(response.responseText);
-            return [result.success, result.message, result.id];
-        }
-
+        autowidth: true
     });
 
     //enable search/filter toolbar
@@ -150,7 +153,6 @@ jQuery(function($) {
                     .datepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
         }, 0);
     }
-
 
     //navButtons
     jQuery(grid_selector).jqGrid('navGrid',pager_selector,
@@ -178,15 +180,11 @@ jQuery(function($) {
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
                 },
-                afterComplete: function (response, postdata, formid) {
-                    response = eval("(" + response.responseText + ")");
-                    var selrow = $("#grid_" + o.id).jqGrid("getGridParam", "selrow");
-                    $("#grid_" + o.id).jqGrid("delRowData", selrow);
-                    if (response.error == 0) {
-                        $.openDialog("info", "Successfully deleted " + postdata.database + ".");
-                    } else {
-                        $.openDialog("info", "And error occured - " + response.msg + ".");
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
                     }
+                    return [false,response.responseText];
                 }
             },
             {
@@ -231,11 +229,19 @@ jQuery(function($) {
 
                     form.data('styled', true);
                 },
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
+                }
+                /**
                 errorTextFormat: function (response) {
                     return '<span class="ui-icon ui-icon-alert" ' +
                             'style="float:left; margin-right:.3em;"></span>' +
                             response.responseText;
                 }
+                 **/
             },
             {
                 //search form

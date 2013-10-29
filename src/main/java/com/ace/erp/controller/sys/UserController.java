@@ -74,7 +74,7 @@ public class UserController {
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public String deleteM(@RequestParam("oper") String oper,
+    public String delete(@RequestParam("oper") String oper,
                          @RequestParam("id") String ids,
                          Model model) {
         logger.info("oper : {} delete ids : {}" + oper, ids);
