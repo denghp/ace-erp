@@ -1,8 +1,10 @@
 package com.ace.erp.shiro.persistence;
 
+import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with smart-erp.
@@ -28,6 +30,14 @@ public interface UserMapper {
     int delete(Integer userId);
 
     List<User> getAllUsers();
+
+    /**
+     * 分页获取用户数据
+     * @param params
+     * @return
+     */
+    public List<User> getUserPages(Map<String, Object> params);
+
 
     int getAllCount();
 }

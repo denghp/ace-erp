@@ -29,6 +29,10 @@
     SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time  FROM sys_user limit 100;
   </select>
 
+  <select id="getUserPages" parameterType="java.util.Map" resultMap="userResult">
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time  FROM sys_user limit #{offset},#{limit};
+  </select>
+
   <select id="getAllCount" resultType="int">
     SELECT count(*) FROM sys_user;
   </select>

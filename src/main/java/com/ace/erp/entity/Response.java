@@ -21,41 +21,54 @@ import java.util.List;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Response implements Serializable {
     private static final long serialVersionUID = 3056471023678709706l;
-    private Integer numFound;
-    private Integer start;
-    private List<User> userList;
-    private User user;
+    private int records;
+    private int total;
+    private int page;
+    private List<?> rows;
 
-    public List<User> getUserList() {
-        return userList;
+    public Response() {}
+
+    public Response(int total, int page, int records) {
+        this.total = total;
+        this.page = page;
+        this.records = records;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public Response(int total, int page, int records, List<?> rows) {
+        this(total,page,records);
+        this.rows = rows;
     }
 
-    public User getUser() {
-        return user;
+    public int getRecords() {
+        return records;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRecords(int records) {
+        this.records = records;
     }
 
-    public Integer getNumFound() {
-        return numFound;
+    public int getTotal() {
+        return total;
     }
 
-    public void setNumFound(Integer numFound) {
-        this.numFound = numFound;
+    public void setTotal(int total) {
+        this.total = total;
     }
 
-    public Integer getStart() {
-        return start;
+    public int getPage() {
+        return page;
     }
 
-    public void setStart(Integer start) {
-        this.start = start;
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public List<?> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<?> rows) {
+        this.rows = rows;
     }
 
     @Override

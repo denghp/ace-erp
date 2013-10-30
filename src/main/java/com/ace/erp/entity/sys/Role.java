@@ -42,6 +42,18 @@ public class Role {
 
     private String modifyTime;
 
+    public Role(){}
+
+    public Role(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Role(int id, String name,String role) {
+        this(id,name);
+        this.role = role;
+    }
+
     public String getCreateTime() {
         return createTime;
     }

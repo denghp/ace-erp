@@ -1,6 +1,7 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.common.Constants;
+import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserStatus;
 import com.ace.erp.exception.AceException;
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with smart-erp.
@@ -148,6 +151,24 @@ public class UserService {
             clearLoginRecordCache(username);
         }
     }
+
+    public int getAllCount() {
+        return userMapper.getAllCount();
+    }
+
+    /**
+     * 分页获取用户数据
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public List<User> getUserPages(int offset, int limit) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("offset",offset);
+        params.put("limit", limit);
+        return userMapper.getUserPages(params);
+    }
+
 
     public User update(User user) {
         userMapper.update(user);

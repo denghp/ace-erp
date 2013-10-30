@@ -64,6 +64,7 @@
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
+
 eval('debugger;');
 jQuery(function($) {
     var grid_selector = "#grid-table";
@@ -103,11 +104,12 @@ jQuery(function($) {
             {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date",formatter:dateFormatter, unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
             {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", editoptions:{value:"true:false"},unformat: aceSwitch}
+
         ],
 
         viewrecords : true,
-        rowNum:20,
-        rowList:[20,40,60],
+        rowNum:10,
+        rowList:[10,20,30],
         pager : pager_selector,
         altRows: true,
         //toppager: true,

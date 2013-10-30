@@ -96,7 +96,7 @@ jQuery(function($) {
                     }
                 }
             },
-            {name:'id',index:'id', width:30, editable:true,sorttype:"int"},
+            {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
             {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'description',index:'desc', width:200, editable: true,editoptions:{rows:"2",cols:"10"}},
@@ -187,7 +187,7 @@ jQuery(function($) {
             },
             {
                 //edit record form
-                //closeAfterEdit: true,
+                closeAfterEdit: true,
                 url:$path_base+"/admin/sys/permission/role/update",
                 recreateForm: true,
                 beforeShowForm : function(e) {
@@ -207,6 +207,7 @@ jQuery(function($) {
                 url:$path_base+"/admin/sys/permission/role/add",
                 closeAfterAdd: true,
                 recreateForm: true,
+                modal:true,
                 viewPagerButtons: false,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -214,16 +215,10 @@ jQuery(function($) {
                     style_edit_form(form);
 
                 },
-                beforeSubmit: function(postdata, formid) {
-                    //移除add form id value is "_empty"
-                    if (postdata["grid-table_id"] == "_empty") {
-//                        delete postdata["grid-table_id"]
-                        postdata["grid-table_id"] = '0';
-                    }
-
-                    return[true,''];
+                serializeEditData: function(data){
+                    //新增数据的时候把默认的id='_empty'设置为id='0'
+                    return $.param($.extend({},data,{id:0}));
                 },
-                closeAfterAdd:true,
                 afterSubmit: function(response, postdata) {
                     console.log("postdata : " + postdata);
                     console.log(response.responseText);

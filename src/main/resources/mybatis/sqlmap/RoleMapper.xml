@@ -49,6 +49,25 @@
         LEFT JOIN sys_role_resource_permission as rrp on r.id = rrp.role_id where r.id = #{id};
     </select>
 
+    <select id="getCount" resultType="int">
+        select count(*) from sys_role;
+    </select>
+
+    <select id="getRolePages" resultMap="roleResult" parameterType="java.util.Map">
+        SELECT
+        r.id,r.name,r.role,r.description,r.is_show,r.create_time,r.modify_time,
+        rrp.id as rrp_id,
+        rrp.role_id,
+        rrp.resource_id,
+        rrp.permission_ids
+        FROM
+          sys_role as r
+        LEFT JOIN
+          sys_role_resource_permission as rrp on r.id = rrp.role_id
+        group by r.id
+        limit #{offset},#{limit};
+    </select>
+
     <select id="getAllRoles" resultMap="roleResult">
         SELECT
         r.id,r.name,r.role,r.description,r.is_show,r.create_time,r.modify_time,

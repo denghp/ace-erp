@@ -47,6 +47,17 @@ public class RoleService {
        return roleMapper.getAllRoles();
     }
 
+    public int getCount() {
+        return roleMapper.getCount();
+    }
+
+    public List<Role> getRolePages(int offset, int limit) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("offset",offset);
+        params.put("limit",limit);
+        return roleMapper.getRolePages(params);
+    }
+
     public Role add(Role role) {
         int result = roleMapper.save(role);
         return role;

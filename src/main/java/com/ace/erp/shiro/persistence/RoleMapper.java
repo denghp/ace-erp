@@ -51,6 +51,7 @@ public interface RoleMapper {
      */
     public List<Role> getAllRoles();
 
+
     /**
      * 根据ids删除多条role
      * @param params key : ids value: [1,2,3]
@@ -70,4 +71,14 @@ public interface RoleMapper {
      * @return
      */
     public Role getRoleById(int id);
+
+    /**
+     * 分页获取用户数据
+     * @param params
+     * @return
+     */
+    public List<Role> getRolePages(Map<String, Object> params);
+
+
+    int getCount();
 }
