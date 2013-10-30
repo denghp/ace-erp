@@ -100,7 +100,7 @@ jQuery(function($) {
             {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'email',index:'email', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'mobilePhoneNumber',index:'phone', width:90, editable: true,editoptions:{size:"11",maxlength:"11"}},
-            {name:'createTimeStr',index:'cdate',width:90, editable:true,sorttype:"date", unformat: pickDate},
+            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date",formatter:dateFormatter, unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
             {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", editoptions:{value:"true:false"},unformat: aceSwitch}
         ],
@@ -145,6 +145,10 @@ jQuery(function($) {
                     .after('<span class="lbl"></span>');
         }, 0);
     }
+    //format date
+    function dateFormatter(cellvalue, options, rowObject) {
+        return cellvalue.split(" ")[0];
+    }
 
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
@@ -168,7 +172,7 @@ jQuery(function($) {
                 refresh: true,
                 refreshicon : 'icon-refresh green',
                 view: true,
-                viewicon : 'icon-zoom-in grey',
+                viewicon : 'icon-zoom-in grey'
             },
             {
                 //edit record form
@@ -276,7 +280,7 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTimeStr]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
                 .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 

@@ -1,10 +1,12 @@
 package com.ace.erp.service.sys;
 
+import com.ace.erp.common.Constants;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserStatus;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.shiro.persistence.UserMapper;
 import com.ace.erp.utils.Md5Utils;
+import com.ace.erp.utils.TimeUtils;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -54,10 +57,10 @@ public class UserService {
     public User save(User user) {
         user.randomSalt();
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
-        if (user.getCreateTimeStr() == null ) {
-            user.setCreateTime(new DateTime(new Date()));
+        if (user.getCreateTime() == null ) {
+            user.setCreateTime(DateTime.now().toString(TimeUtils.DATETIME_NORMAL_FORMAT));
         } else {
-            user.setCreateTime(DateTime.parse("2013-10-17"));
+            user.setCreateTime("2013-10-17");
         }
         userMapper.saveUser(user);
         logger.info("insert successfully, user {}", user);

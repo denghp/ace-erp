@@ -96,10 +96,10 @@ jQuery(function($) {
                     }
                 }
             },
-            {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
+            {name:'id',index:'id', width:30, editable:true,sorttype:"int"},
             {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'description',index:'desc', width:200, editable: true,editoptions:{size:"11",maxlength:"11"}},
+            {name:'description',index:'desc', width:200, editable: true,editoptions:{rows:"2",cols:"10"}},
             {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
             {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
             {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
@@ -150,14 +150,22 @@ jQuery(function($) {
 
     //format date
     function dateFormatter(cellvalue, options, rowObject) {
-        return dateFormat(cellvalue, "isoDate");
+        return cellvalue.split(" ")[0];
     }
+
+    function formatShow(cellvalue, options, rowObject) {
+        if (cellvalue) {
+            return "Yes";
+        }
+        return "No";
+    }
+
 
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
             $(cell).find('input[type=text]')
-                    .datetimepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
+                    .datepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
         }, 0);
     }
 
@@ -206,22 +214,24 @@ jQuery(function($) {
                     style_edit_form(form);
 
                 },
+                beforeSubmit: function(postdata, formid) {
+                    //移除add form id value is "_empty"
+                    if (postdata["grid-table_id"] == "_empty") {
+//                        delete postdata["grid-table_id"]
+                        postdata["grid-table_id"] = '0';
+                    }
+
+                    return[true,''];
+                },
+                closeAfterAdd:true,
                 afterSubmit: function(response, postdata) {
                     console.log("postdata : " + postdata);
                     console.log(response.responseText);
                     if (response.responseText.toLocaleLowerCase() == "ok" ) {
-                        return [true,response.responseText];
+                        return [true,response.responseText,''];
                     }
                     return [false,response.responseText];
                 }
-                /**
-                 errorTextFormat: function (response) {
-                    return '<span class="ui-icon ui-icon-alert" ' +
-                            'style="float:left; margin-right:.3em;"></span>' +
-                            response.responseText;
-                }
-                 **/
-
             },
             {
                 //delete record form

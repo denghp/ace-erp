@@ -57,10 +57,9 @@ public class User implements LogicDeleteable {
     /**
      * 创建时间
      */
-    private DateTime createTime;
-    private String createTimeStr;
+    private String createTime;
 
-    private DateTime modifyTime;
+    private String modifyTime;
 
     private UserStatus status = UserStatus.normal;
 
@@ -80,15 +79,6 @@ public class User implements LogicDeleteable {
     private Long organizationId;
 
     public User() {
-    }
-
-
-    public DateTime getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(DateTime modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     public Integer getId() {
@@ -130,20 +120,20 @@ public class User implements LogicDeleteable {
         setSalt(RandomStringUtils.randomAlphanumeric(10));
     }
 
-    public DateTime getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(DateTime createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public String getCreateTimeStr() {
-        return createTimeStr;
+    public String getModifyTime() {
+        return modifyTime;
     }
 
-    public void setCreateTimeStr(String createTimeStr) {
-        this.createTimeStr = createTimeStr;
+    public void setModifyTime(String modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public UserStatus getStatus() {

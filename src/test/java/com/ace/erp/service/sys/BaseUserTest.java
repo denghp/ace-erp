@@ -37,7 +37,7 @@ public class BaseUserTest extends BaseTest {
         user.setPassword(password);
         user.setAdmin(admin);
         user.setDeleted(deleted);
-        user.setCreateTime(DateTime.parse("2013-07-22"));
+        user.setCreateTime("2013-07-22");
     }
 
 

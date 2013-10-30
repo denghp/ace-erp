@@ -9,10 +9,10 @@
         <result property="role" column="role"/>
         <result property="description" column="description"/>
         <result property="show" column="is_show"/>
-        <result property="createTime" column="create_time" javaType="org.joda.time.DateTime"
-                typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
-        <result property="modifyTime" column="modify_time" javaType="org.joda.time.DateTime"
-                typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
+        <result property="createTime" column="create_time" javaType="java.lang.String"
+                typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+        <result property="modifyTime" column="modify_time" javaType="java.lang.String"
+                typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <collection property="resourcePermissions" ofType="RoleResourcePermission">
             <id property="id" column="rrp_id"/>
             <id property="roleId" column="role_id"/>
@@ -46,7 +46,7 @@
         rrp.resource_id,
         rrp.permission_ids
         FROM sys_role as r
-        LEFT JOIN sys_role_resource_permission as rrp on r.id = rrp.role_id where id = #{id};
+        LEFT JOIN sys_role_resource_permission as rrp on r.id = rrp.role_id where r.id = #{id};
     </select>
 
     <select id="getAllRoles" resultMap="roleResult">
@@ -64,7 +64,20 @@
       INSERT INTO
         sys_role (name,role,description,is_show,create_time,modify_time)
       VALUES
-        (#{name},#{role},#{description},#{show},#{createTime},#{modifyTime})
+        (#{name},#{role},#{description},#{show},
+        <if test="createTime == null">
+            now(),
+        </if>
+        <if test="createTime != null">
+            #{createTime},
+        </if>
+        <if test="modifyTime == null">
+            now()
+        </if>
+        <if test="modifyTime != null">
+            #{modifyTime}
+        </if>
+        )
   </insert>
 
     <delete id="deleteByIds" parameterType="map" >
@@ -94,13 +107,13 @@
             is_show = #{show},
         </if>
         <if test="createTime != null">
-            create_time = #{createTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
+            create_time = #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
         </if>
         <if test="createTime == null">
             create_time = now(),
         </if>
         <if test="modifyTime != null">
-            modify_time = #{modifyTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
+            modify_time = #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
         </if>
         <if test="modifyTime == null">
             modify_time = now()

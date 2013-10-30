@@ -9,9 +9,8 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="mobilePhoneNumber" column="mobile_phone_number"/>
-        <result property="createTime" column="create_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
-        <result property="modifyTime" column="modify_time" javaType="org.joda.time.DateTime" typeHandler="com.ace.erp.handler.JodaDateTimeTypeHandler"/>
-        <result property="createTimeStr" column="createTimeStr" />
+        <result property="createTime" column="create_time" javaType="java.lang.String" typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+        <result property="modifyTime" column="modify_time" javaType="java.lang.String" typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="salt" column="salt"/>
         <result property="status" column="status"/>
         <result property="admin" column="admin"/>
@@ -19,15 +18,15 @@
     </resultMap>
 
   <select id="getUserByName" parameterType="java.lang.String" resultMap="userResult">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time,DATE_FORMAT(create_time, '%Y-%m-%d') as createTimeStr FROM sys_user WHERE username = #{username}
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time FROM sys_user WHERE username = #{username}
   </select>
 
   <select id="getUserByEmail" parameterType="java.lang.String" resultMap="userResult">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time,DATE_FORMAT(create_time, '%Y-%m-%d') as createTimeStr FROM sys_user WHERE email = #{email}
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time  FROM sys_user WHERE email = #{email}
   </select>
 
    <select id="getAllUsers" resultMap="userResult">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time,DATE_FORMAT(create_time, '%Y-%m-%d') as createTimeStr FROM sys_user limit 100;
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time  FROM sys_user limit 100;
   </select>
 
   <select id="getAllCount" resultType="int">
@@ -35,11 +34,11 @@
   </select>
 
     <select id="getUserById" parameterType="java.lang.Long" resultMap="userResult">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time,DATE_FORMAT(create_time, '%Y-%m-%d') as createTimeStr FROM sys_user WHERE id = #{userId}
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time  FROM sys_user WHERE id = #{userId}
   </select>
 
   <select id="getByMobilePhoneNumber" parameterType="java.lang.String" resultMap="userResult">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time,DATE_FORMAT(create_time, '%Y-%m-%d') as createTimeStr FROM sys_user WHERE mobile_phone_number = #{mobilePhoneNumber}
+    SELECT id,username,password,email,mobile_phone_number,salt,status,organization_id,organization_name,deleted,admin,create_time,modify_time FROM sys_user WHERE mobile_phone_number = #{mobilePhoneNumber}
   </select>
 
   <insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
@@ -51,13 +50,13 @@
            now(),
         </if>
        <if test="createTime != null">
-           #{createTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
+           #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
        </if>
       <if test="modifyTime == null">
           now(),
       </if>
       <if test="modifyTime != null">
-          #{modifyTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
+          #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
       </if>
       #{status},#{deleted},#{admin})
   </insert>
@@ -80,7 +79,7 @@
         salt = #{salt},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,typeHandler=com.ace.erp.handler.JodaDateTimeTypeHandler},
+        create_time = #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
       </if>
       <if test="status != null">
         status = #{status},

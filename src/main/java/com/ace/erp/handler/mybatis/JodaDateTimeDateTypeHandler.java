@@ -3,7 +3,7 @@
  *
  * Licensed 
  */
-package com.ace.erp.handler;
+package com.ace.erp.handler.mybatis;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;

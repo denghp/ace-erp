@@ -38,23 +38,23 @@ public class Role {
      */
     private Boolean show = Boolean.FALSE;
 
-    private DateTime createTime;
+    private String createTime;
 
-    private DateTime modifyTime;
+    private String modifyTime;
 
-    public DateTime getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(DateTime createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public DateTime getModifyTime() {
+    public String getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(DateTime modifyTime) {
+    public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
     }
 
