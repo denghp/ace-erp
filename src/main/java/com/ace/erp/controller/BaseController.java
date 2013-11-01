@@ -7,9 +7,11 @@
 
 package com.ace.erp.controller;
 
+import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.service.sys.BaseService;
 import com.ace.erp.utils.ReflectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,7 @@ import java.io.Serializable;
  * Date: 11/1/13
  * Time: 5:33 PM
  */
-public abstract class BaseController<M extends Serializable>  {
+public abstract class BaseController<M extends Serializable> implements InitializingBean {
 
     protected BaseService<M> baseService;
     /**
@@ -131,5 +133,12 @@ public abstract class BaseController<M extends Serializable>  {
         return currentViewPrefix;
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if(this.entityClass != null) {
+            InjectBaseDependencyHelper.findAndInjectBaseServiceDependency(this);
+            Assert.notNull(baseService, "BaseService required, Class is:" + getClass());
+        }
+    }
 
 }

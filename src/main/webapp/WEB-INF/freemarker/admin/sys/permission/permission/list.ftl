@@ -97,10 +97,10 @@ jQuery(function($) {
                 }
             },
             {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
-            {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'permission',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'description',index:'desc', width:200, editable: true,editoptions:{rows:"2",cols:"10"}},
-            {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
+            {name:'name',index:'name', width:100,editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'permission',index:'role', width:100, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'description',index:'desc', width:180, editable: true,editoptions:{rows:"2",cols:"10"}},
+            {name:'show',index:'show', width:40, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
 
 
         ],
@@ -146,17 +146,6 @@ jQuery(function($) {
         }, 0);
     }
 
-    //format date
-    function dateFormatter(cellvalue, options, rowObject) {
-        return cellvalue.split(" ")[0];
-    }
-
-    function formatShow(cellvalue, options, rowObject) {
-        if (cellvalue) {
-            return "Yes";
-        }
-        return "No";
-    }
 
     function getColumnIndexByName(grid, columnName) {
         var cm = jQuery(grid).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
@@ -294,8 +283,8 @@ jQuery(function($) {
 
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
-                .end().find('input[name=show]')
+        //form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+                form.find('input[name=show]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');

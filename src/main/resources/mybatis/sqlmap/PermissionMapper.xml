@@ -11,11 +11,19 @@
         <result property="show" column="is_show"/>
     </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long" >
+  <delete id="delete" parameterType="java.lang.Integer" >
     DELETE FROM sys_permission WHERE id = #{permissionId}
   </delete>
 
-    <select id="getPermissionById" parameterType="java.lang.Long" resultMap="permissionResult">
+  <delete id="deleteByIds" parameterType="java.util.Map" >
+    DELETE FROM sys_permission WHERE id in
+      <foreach item="item" index="index" collection="list"
+               open="(" separator="," close=")">
+          ${item}
+      </foreach>
+  </delete>
+
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="permissionResult">
     SELECT * FROM sys_permission WHERE id = #{permissionId}
   </select>
 
@@ -47,7 +55,7 @@
         select count(*) from sys_permission;
     </select>
 
-    <select id="getPermissionPages" resultMap="permissionResult" parameterType="java.util.Map">
+    <select id="getPageList" resultMap="permissionResult" parameterType="java.util.Map">
         SELECT
         id,name,permission,description,is_show
         FROM sys_permission

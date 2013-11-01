@@ -7,7 +7,15 @@
 
 package com.ace.erp.service.sys;
 
+import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
+import com.ace.erp.common.mybatis.BaseMapper;
+import com.ace.erp.entity.LogicDeleteable;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
+
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +25,22 @@ import java.util.Map;
  * Date: 11/1/13
  * Time: 4:47 PM
  */
-public class BaseService<M> {
+public class BaseService<M extends Serializable> implements InitializingBean {
+
+    private BaseMapper<M> baseMapper;
+
+    public void setBaseMapper(BaseMapper<M> baseMapper) {
+        this.baseMapper = baseMapper;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+
+        InjectBaseDependencyHelper.findAndInjectBaseRepositoryDependency(this);
+
+        Assert.notNull(baseMapper, "BaseRepository required, Class is:" + getClass());
+
+    }
 
     public static enum RdbParams {
 
@@ -64,8 +87,17 @@ public class BaseService<M> {
      *
      * @param id 主键
      */
-    public void delete(int id) {
-        //baseRepository.delete(id);
+    public void delete(final int id) {
+        baseMapper.delete(id);
+    }
+
+    public void delete(final List<String> list) {
+        if (list == null && list.size() <= 0) {
+            return ;
+        }
+        Map<String,Object> params = new HashMap<String, Object>();
+        params.put("list",list);
+        baseMapper.deleteByIds(params);
     }
 
     /**
@@ -74,7 +106,75 @@ public class BaseService<M> {
      * @param m 实体
      */
     public void delete(M m) {
-       // baseRepository.delete(m);
+        if (m == null) {
+            return;
+        }
+        if (m instanceof LogicDeleteable) {
+            ((LogicDeleteable) m).markDeleted();
+            baseMapper.save(m);
+        } else {
+            baseMapper.delete(m);
+        }
+    }
+    /**
+     * 按照主键查询
+     *
+     * @param id 主键
+     * @return 返回id对应的实体
+     */
+    public M getOne(Integer id) {
+        return baseMapper.getOne(id);
+    }
+
+    /**
+     * 统计实体总数
+     *
+     * @return 实体总数
+     */
+    public int count() {
+        return baseMapper.getCount();
+    }
+
+    public List<M> getPageList(Integer offset, Integer limit) {
+         if (offset == null || limit == null) {
+             return null;
+         }
+        Map<String, Object> params = initParams(offset,limit);
+        return baseMapper.getPageList(params);
+    }
+    /**
+    public M update(M m) {
+        if (m == null) {
+            return null;
+        }
+        baseMapper.update(m);
+        return baseMapper.getOne(m);
+    }
+     **/
+
+    public boolean update(M m) {
+        if (m == null) {
+            return false;
+        }
+        int status = baseMapper.update(m);
+        if (status != 1) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 保存单个实体
+     *
+     * @param m 实体
+     * @return 返回保存的实体
+     */
+    public M save(M m) {
+        if (m == null) {
+            return null;
+        }
+        baseMapper.save(m);
+        return m;
     }
 
 }

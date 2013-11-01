@@ -7,6 +7,8 @@
 
 package com.ace.erp.controller.sys;
 
+import com.ace.erp.annotation.BaseComponent;
+import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.controller.BaseController;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.sys.Permission;
@@ -35,11 +37,12 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/sys/permission/permission")
-public class PermissionController extends BaseController<Permission>{
+public class PermissionController extends BaseCRUDController<Permission> {
 
     private Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
     @Autowired
+    @BaseComponent
     private PermissionService permissionService;
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
@@ -53,7 +56,7 @@ public class PermissionController extends BaseController<Permission>{
         if (StringUtils.isNullOrEmpty(rows)) {
             rows = "10";
         }
-        int totalRecord = permissionService.getCount();
+        int totalRecord = permissionService.count();
 
         int totalPage = totalRecord % Integer.parseInt(rows) == 0 ? totalRecord
                 / Integer.parseInt(rows) : totalRecord / Integer.parseInt(rows)
@@ -61,7 +64,7 @@ public class PermissionController extends BaseController<Permission>{
         //计算开始位置
         int start = (Integer.parseInt(page) - 1) * Integer.parseInt(rows); // 开始记录数
         int pageSize = Integer.parseInt(rows);
-        List<Permission> roleList = permissionService.getPermissionPages(start, pageSize);
+        List<Permission> roleList = permissionService.getPageList(start, pageSize);
 
         Response responseJson = new Response();
         responseJson.setRows(roleList);

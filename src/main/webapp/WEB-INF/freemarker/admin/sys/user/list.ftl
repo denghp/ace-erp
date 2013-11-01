@@ -59,6 +59,7 @@
 
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
+
     </div><!-- /.row -->
 </div><!-- /.page-content -->
 <!-- inline scripts related to this page -->

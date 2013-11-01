@@ -73,4 +73,13 @@ public class Permission implements Serializable {
         this.show = show;
     }
 
+    @Override
+    public String toString() {
+      return "{id:"+id +
+              ", name:" + name +
+              ", permission:"+ permission +
+              ", description:" + description +
+              ", is_show:" + show +
+              "}";
+    }
 }

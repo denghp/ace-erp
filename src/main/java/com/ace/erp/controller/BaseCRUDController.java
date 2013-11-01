@@ -7,17 +7,24 @@
 
 package com.ace.erp.controller;
 
+import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.controller.permission.PermissionList;
+import com.ace.erp.entity.sys.Role;
 import com.ace.erp.service.sys.BaseService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Project_Name: ace
@@ -26,11 +33,13 @@ import java.io.Serializable;
  * Date: 11/1/13
  * Time: 6:22 PM
  */
-public class BaseCRUDController<M extends Serializable> extends BaseController<M>  {
+public class BaseCRUDController<M extends Serializable> extends BaseController<M> implements InitializingBean {
+    private Logger logger = LoggerFactory.getLogger(BaseCRUDController.class);
 
     protected BaseService<M> baseService;
 
     protected PermissionList permissionList = null;
+
     /**
      * 设置基础service
      *
@@ -38,6 +47,12 @@ public class BaseCRUDController<M extends Serializable> extends BaseController<M
      */
     public void setBaseService(BaseService<M> baseService) {
         this.baseService = baseService;
+    }
+
+    @Override
+    public void afterPropertiesSet() {
+        InjectBaseDependencyHelper.findAndInjectBaseServiceDependency(this);
+        Assert.notNull(baseService, "BaseService required, Class is:" + getClass());
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -56,17 +71,59 @@ public class BaseCRUDController<M extends Serializable> extends BaseController<M
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     public String delete(
-            @PathVariable("id") M m,
-            RedirectAttributes redirectAttributes) {
-
+            @RequestParam("oper") String oper,
+            @RequestParam("id") String ids,
+            Model model) {
 
         if (permissionList != null) {
             this.permissionList.assertHasDeletePermission();
         }
 
-        baseService.delete(m);
-        return "OK";
+        try {
+            if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
+                String[] idItems = ids.split(",");
+                baseService.delete(Arrays.asList(idItems));
+                return HttpStatus.OK.name();
+            }
+            return HttpStatus.BAD_REQUEST.name();
+        } catch (Exception ex) {
+            logger.error("delete role error , exception : {}", ex);
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+    }
+
+
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public String update(
+            Model model, M m, BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (permissionList != null) {
+            this.permissionList.assertHasUpdatePermission();
+        }
+        try {
+            baseService.update(m);
+            return HttpStatus.OK.name();
+        } catch (Exception ex) {
+            logger.error("update Role error, exception :", ex);
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+    }
+
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public String save(M m, BindingResult bindingResult, Model model) {
+        try {
+            baseService.save(m);
+            return HttpStatus.OK.name();
+        } catch (Exception ex) {
+            logger.error("save {} error, exception : {}", m, ex);
+        }
+        return HttpStatus.INTERNAL_SERVER_ERROR.name();
     }
 
 }
