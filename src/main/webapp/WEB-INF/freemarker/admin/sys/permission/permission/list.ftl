@@ -12,7 +12,7 @@
         <li>
             <a href="#">系统设置</a>
         </li>
-        <li class="active">角色列表</li>
+        <li class="active">权限列表</li>
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
@@ -70,19 +70,19 @@ jQuery(function($) {
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:$path_base+'/admin/sys/permission/role',
+        url:$path_base+'/admin/sys/permission/permission/list',
         datatype: "json",
         mtype: 'GET',
         //data: grid_data,
         //datatype: "local",
         height: 350,
-        colNames:[' ', 'ID','角色名','角色', '描述','创建时间','修改时间', '是否可用'],
+        colNames:[' ', 'ID','权限名称','权限标识', '详细描述', '是否可用'],
         colModel:[
             {name:'myac',index:'', width:120, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    delOptions:{url:$path_base+"/admin/sys/permission/permission/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
@@ -98,10 +98,8 @@ jQuery(function($) {
             },
             {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
             {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'permission',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'description',index:'desc', width:200, editable: true,editoptions:{rows:"2",cols:"10"}},
-            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
-            {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
             {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
 
 
@@ -129,7 +127,7 @@ jQuery(function($) {
             }, 0);
         },
 
-        editurl: $path_base+"/admin/sys/permission/role/update",//nothing is saved
+        editurl: $path_base+"/admin/sys/permission/permission/update",//nothing is saved
         caption: "jqGrid with inline editing",
 
         autowidth: true
@@ -196,7 +194,7 @@ jQuery(function($) {
             {
                 //edit record form
                 closeAfterEdit: true,
-                url:$path_base+"/admin/sys/permission/role/update",
+                url:$path_base+"/admin/sys/permission/permission/update",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -212,7 +210,7 @@ jQuery(function($) {
             },
             {
                 //new record form
-                url:$path_base+"/admin/sys/permission/role/add",
+                url:$path_base+"/admin/sys/permission/permission/add",
                 closeAfterAdd: true,
                 recreateForm: true,
                 modal:true,
@@ -238,7 +236,7 @@ jQuery(function($) {
             },
             {
                 //delete record form
-                url:$path_base+"/admin/sys/permission/role/delete",
+                url:$path_base+"/admin/sys/permission/permission/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -265,7 +263,7 @@ jQuery(function($) {
             },
             {
                 //search form
-                url:$path_base+"/admin/sys/permission/role/search",
+                url:$path_base+"/admin/sys/permission/permission/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);

@@ -2,6 +2,9 @@ package com.ace.erp.shiro.persistence;
 
 import com.ace.erp.entity.sys.Permission;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Project_Name: smart-erp
  * File: PermissionMapper
@@ -13,11 +16,15 @@ import com.ace.erp.entity.sys.Permission;
  */
 public interface PermissionMapper {
 
-    public int save(Permission permission);
+    public Permission save(Permission permission);
 
     public boolean update(Permission permission);
 
-    public boolean delete(Long permissionId);
+    public boolean delete(Integer permissionId);
 
-    public Permission getPermissionById(Long permissionId);
+    public Permission getPermissionById(Integer permissionId);
+
+    public int getCount();
+
+    public List<Permission> getPermissionPages(Map<String, Object> params);
 }

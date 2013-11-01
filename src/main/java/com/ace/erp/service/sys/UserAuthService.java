@@ -97,7 +97,7 @@ public class UserAuthService {
                 if (StringUtils.isNotBlank(rrp.getPermissionIds())) {
                     String[] permissionIds = rrp.getPermissionIds().split(",");
                     for (String permissionId : permissionIds) {
-                        Permission permission = permissionService.getPermissionById(Long.valueOf(permissionId));
+                        Permission permission = permissionService.getPermissionById(Integer.valueOf(permissionId));
                         //不可用
                         if (permission == null || Boolean.FALSE.equals(permission.getShow())) {
                             continue;

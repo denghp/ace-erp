@@ -1,5 +1,7 @@
 package com.ace.erp.entity.sys;
 
+import java.io.Serializable;
+
 /**
  * Project_Name: smart-erp
  * File: Permission
@@ -8,7 +10,7 @@ package com.ace.erp.entity.sys;
  * Time: 4:41 PM
  * Description: 权限表
  */
-public class Permission {
+public class Permission implements Serializable {
 
     private Integer id;
     /**

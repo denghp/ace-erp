@@ -27,11 +27,33 @@
   </insert>
 
   <update id="update" parameterType="Permission">
-      update sys_role set
+      update sys_permission set
+        <if test="name != null">
         name = #{name},
+        </if>
+        <if test="permission != null">
         permission = #{permission},
+        </if>
+        <if test="description != null">
         description = #{description},
+        </if>
+        <if test="show != null">
         is_show = #{show}
+        </if>
+      where id = #{id}
   </update>
+
+    <select id="getCount" resultType="int">
+        select count(*) from sys_permission;
+    </select>
+
+    <select id="getPermissionPages" resultMap="permissionResult" parameterType="java.util.Map">
+        SELECT
+        id,name,permission,description,is_show
+        FROM sys_permission
+        order by id
+        limit #{offset},#{limit};
+    </select>
+
 
 </mapper>
