@@ -7,6 +7,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.BaseTest;
 import com.ace.erp.annotation.BaseComponent;
+import com.ace.erp.entity.sys.Permission;
 import com.ace.erp.shiro.persistence.PermissionMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,5 +29,13 @@ public class PermissionServiceTest<M extends Serializable> extends BaseTest {
     @Test
     public void getCountTest() {
         System.out.println(permissionService.count());
+    }
+
+    @Test
+    public void testM() {
+        Permission permission = new Permission();
+        permission.setId(7);
+        permission.setName("测试");
+        permissionService.update(permission);
     }
 }

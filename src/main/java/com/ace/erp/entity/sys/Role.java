@@ -4,6 +4,7 @@ import com.ace.erp.utils.JsonUtils;
 import org.joda.time.DateTime;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ import java.util.List;
  * Time: 10:49 AM
  * Description:
  */
-public class Role {
+public class Role implements Serializable {
     private Integer id;
     /**
      * 前端显示名称

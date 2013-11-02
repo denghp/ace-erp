@@ -29,7 +29,7 @@ public class ResourceServiceTest extends BaseTest {
     private UserService userService;
     @Test
     public void findMenusTest() {
-        User user = userService.getUserById(1);
+        User user = userService.getOne(1);
         List<Menu> menuList = resourceService.findMenus(user);
         for(Menu menu : menuList) {
             System.out.println(">>>>>>>Menu : " + menu.getId() + " name :" + menu.getName() + " icon : " + menu.getIcon() + " url : "  + menu.getUrl());

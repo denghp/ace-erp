@@ -32,12 +32,6 @@ public class AuthenticationRealm extends AuthorizingRealm {
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private AuthService authService;
-
-    @Autowired
     private UserAuthService userAuthService;
 
     @Override

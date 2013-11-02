@@ -33,7 +33,7 @@ public class UserServiceTest extends BaseUserTest {
 
     @Test
     public void getUsers() throws AceException {
-        List<User> userList = userService.getAllUsers();
+        List<User> userList = userService.getAllUser();
         for (User user : userList) {
             System.out.println(user);
         }

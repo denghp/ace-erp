@@ -15,6 +15,6 @@ import java.util.Map;
  * Time: 5:14 PM
  * Description:
  */
-public interface PermissionMapper extends BaseMapper<Permission> {
+public interface PermissionMapper extends BaseMapper<Permission, Integer> {
 
 }

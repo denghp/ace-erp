@@ -57,4 +57,6 @@
 <script src="${rc.getContextPath()}/assets/js/date-time/bootstrap-datepicker.zh-CN.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jqGrid/i18n/grid.locale-cn.js"></script>
-<script src="${rc.getContextPath()}/assets/js/ace.time.js"></script>
+
+<script src="${rc.getContextPath()}/assets/js/bootstrap-modal.js"></script>
+<script src="${rc.getContextPath()}/assets/js/bootstrap-modalmanager.js"></script>

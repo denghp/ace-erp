@@ -8,8 +8,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<!-- basic styles -->
-
+<!--
 		<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+-->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
 
 		<!--[if IE 7]>
@@ -20,6 +22,8 @@
 
 		<link rel="stylesheet" href="../assets/css/jquery-ui-1.10.3.custom.min.css" />
 		<link rel="stylesheet" href="../assets/css/jquery.gritter.css" />
+<link rel="stylesheet" href="../assets/css/bootstrap-modal.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap-modal-bs3patch.css" />
 
 		<!-- fonts -->
 
@@ -54,6 +58,19 @@
 				position: static;
 				margin-bottom: 5px;
 			}
+ .text-center { 
+    text-align: center; 
+  }
+
+  .marketing h1 {
+    font-size: 50px;
+    font-weight: lighter;
+    line-height: 1;
+  }
+
+  .marketing p {
+    font-size: 18px;
+  }
 		</style>
 
 		<!-- ace settings handler -->
@@ -886,7 +903,25 @@
                     <a href="#">Messages</a>
                 </li>
             </ul>
+ <div class="ajax" style="position: relative; overflow: hidden">
+        <h3>AJAX (via jQuery.load)</h3>
+  				  <pre class="pre-scrollable prettyprint linenums" data-source="#ajax">
+  				  </pre>
+        <div class="text-center">
+            <button class="demo btn btn-primary btn-large" data-toggle="modal">View Demo</button>
         </div>
+    </div>
+ <div class="stackable">
+            <h3>Stackable</h3>
+            <pre class="pre-scrollable prettyprint linenums" data-source="#stack1, #stack2, #stack3">         
+            </pre>
+            <div class="text-center">
+            <button class="demo btn btn-primary btn-lg" data-toggle="modal" href="#stack1">View Demo</button>
+            </div>
+          </div>
+          <br />
+        </div>
+
     </div>
 
     <script type="text/javascript">
@@ -901,9 +936,10 @@
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!--		
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+-->
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -911,11 +947,12 @@
 <![endif]-->
 
 		<!--[if !IE]> -->
-
+		<!--
 		<script type="text/javascript">
 			window.jQuery || document.write("<script src='../assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
 		</script>
-
+-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -923,7 +960,7 @@
  window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
-
+		
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
@@ -947,7 +984,8 @@
 
 		<script src="../assets/js/ace-elements.min.js"></script>
 		<script src="../assets/js/ace.min.js"></script>
-
+<script src="../assets/js/bootstrap-modal.js"></script>
+<script src="../assets/js/bootstrap-modalmanager.js"></script>
 		<!-- inline scripts related to this page -->
 
 		<script type="text/javascript">
@@ -1191,5 +1229,33 @@
 			
 			});
 		</script>
+<script id="ajax" type="text/javascript">
+
+    var $modal = $('#ajax-modal');
+
+    $('.ajax .demo').on('click', function(){
+        // create the backdrop and wait for next modal to be triggered
+        $('body').modalmanager('loading');
+
+        setTimeout(function(){
+            $modal.load('modal_ajax_test.html', '', function(){
+                $modal.modal();
+            });
+        }, 1000);
+    });
+
+    $modal.on('click', '.update', function(){
+        $modal.modal('loading');
+        setTimeout(function(){
+            $modal
+                    .modal('loading')
+                    .find('.modal-body')
+                    .prepend('<div class="alert alert-info fade in">' +
+                            'Updated!<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                            '</div>');
+        }, 1000);
+    });
+
+</script>
 	</body>
 </html>

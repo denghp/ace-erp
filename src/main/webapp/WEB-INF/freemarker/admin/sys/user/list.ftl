@@ -72,7 +72,7 @@ jQuery(function($) {
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:$path_base+'/admin/sys/user',
+        url:$path_base+'/admin/sys/user/list',
         datatype: "json",
         mtype: 'GET',
         //data: grid_data,
@@ -101,10 +101,10 @@ jQuery(function($) {
             {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
             {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'email',index:'email', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'mobilePhoneNumber',index:'phone', width:90, editable: true,editoptions:{size:"11",maxlength:"11"}},
-            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date",formatter:dateFormatter, unformat: pickDate},
+            {name:'mobilePhoneNumber',index:'phone', width:90, editable: true, editoptions:{size:"11",maxlength:"11"}},
+            {name:'createTime',index:'createTime',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
-            {name:'admin',index:'admin', width:70, editable: true, edittype:"checkbox", editoptions:{value:"true:false"},unformat: aceSwitch}
+            {name:'admin',index:'admin', width:70, editable: true,edittype:"checkbox", editoptions:{value:"Yes:No"}, unformat:aceSwitch}
 
         ],
 
@@ -206,6 +206,10 @@ jQuery(function($) {
                     style_edit_form(form);
 
                 },
+                beforeSubmit: function(posdata,formid) {
+                    console.log(posdata);
+                  return [true,''];
+                },
                 afterSubmit: function(response, postdata) {
                     console.log("postdata : " + postdata);
                     console.log(response.responseText);
@@ -214,14 +218,6 @@ jQuery(function($) {
                     }
                     return [false,response.responseText];
                 }
-                /**
-                errorTextFormat: function (response) {
-                    return '<span class="ui-icon ui-icon-alert" ' +
-                            'style="float:left; margin-right:.3em;"></span>' +
-                            response.responseText;
-                }
-                 **/
-
             },
             {
                 //delete record form
@@ -242,13 +238,6 @@ jQuery(function($) {
                     }
                     return [false,response.responseText];
                 }
-                /**
-                errorTextFormat: function (response) {
-                    return '<span class="ui-icon ui-icon-alert" ' +
-                            'style="float:left; margin-right:.3em;"></span>' +
-                            response.responseText;
-                }
-                 **/
             },
             {
                 //search form
@@ -282,8 +271,8 @@ jQuery(function($) {
 
 
     function style_edit_form(form) {
-        //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
+        //enable datepicker on "createTime" field and switches for "admin" field
+        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' , language:'zh-CN',autoclose:true})
                 .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
@@ -312,6 +301,7 @@ jQuery(function($) {
         form.find('.add-group').addClass('btn btn-xs btn-success');
         form.find('.delete-group').addClass('btn btn-xs btn-danger');
     }
+
     function style_search_form(form) {
         var dialog = form.closest('.ui-jqdialog');
         var buttons = dialog.find('.EditTable')
@@ -389,6 +379,7 @@ jQuery(function($) {
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
     }
+
 
     function enableTooltips(table) {
         $('.navtable .ui-pg-button').tooltip({container:'body'});

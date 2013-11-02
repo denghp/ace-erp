@@ -29,7 +29,7 @@ import java.util.Set;
 public class InjectBaseDependencyHelper {
 
 
-    public static void findAndInjectBaseRepositoryDependency(BaseService<?> baseService) {
+    public static void findAndInjectBaseRepositoryDependency(BaseService<?,?> baseService) {
         final Set<Object> candidates =
                 findDependencies(baseService, BaseComponent.class);
 
@@ -50,7 +50,7 @@ public class InjectBaseDependencyHelper {
     }
 
 
-    public static void findAndInjectBaseServiceDependency(BaseController<?> baseController) {
+    public static void findAndInjectBaseServiceDependency(BaseController<?,?> baseController) {
         final Set<Object> candidates =
                 findDependencies(baseController, BaseComponent.class);
 

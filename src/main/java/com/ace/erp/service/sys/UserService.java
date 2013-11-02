@@ -1,5 +1,6 @@
 package com.ace.erp.service.sys;
 
+import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.common.Constants;
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
@@ -33,9 +34,13 @@ import java.util.Map;
  * Description:
  */
 @Service
-public class UserService {
+public class UserService extends BaseService<User, Integer> {
 
     private Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    @Autowired
+    @BaseComponent
+    private UserMapper userMapper;
 
     @Autowired
     private CacheManager ehcacheManager;
@@ -54,21 +59,17 @@ public class UserService {
         loginRecordCache = ehcacheManager.getCache("loginRecordCache");
     }
 
-    @Autowired
-    private UserMapper userMapper;
-
     public User save(User user) {
         user.randomSalt();
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
-        if (user.getCreateTime() == null ) {
+        if (user.getCreateTime() == null) {
             user.setCreateTime(DateTime.now().toString(TimeUtils.DATETIME_NORMAL_FORMAT));
         } else {
             user.setCreateTime("2013-10-17");
         }
-        userMapper.saveUser(user);
+        super.save(user);
         logger.info("insert successfully, user {}", user);
         return user;
-
     }
 
     public User getUserByEmail(String email) {
@@ -113,23 +114,7 @@ public class UserService {
         return userMapper.getUserByName(username);
     }
 
-    public User getUserById(Integer userId) {
-        return userMapper.getUserById(userId);
-    }
-
-    public boolean deleteById(Integer userId) {
-        int status = userMapper.delete(userId);
-        if (status > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public List<User> getAllUsers() {
-        return userMapper.getAllUsers();
-    }
-
-    public void validate(User user, String password) throws AceException{
+    public void validate(User user, String password) throws AceException {
         String username = user.getUsername();
 
         int retryCount = 0;
@@ -138,43 +123,20 @@ public class UserService {
         if (cacheElement != null) {
             retryCount = (Integer) cacheElement.getObjectValue();
             if (retryCount >= maxRetryCount) {
-                logger.info("{} passwordError password error, retry limit exceed! password: {},max retry count {}", new Object[] {username, password,maxRetryCount});
-                throw AceException.create(AceException.Code.get(AceException.Code.USER_PASSWORD_RETRY_COUNT.intValue()),"" + maxRetryCount);
+                logger.info("{} passwordError password error, retry limit exceed! password: {},max retry count {}", new Object[]{username, password, maxRetryCount});
+                throw AceException.create(AceException.Code.get(AceException.Code.USER_PASSWORD_RETRY_COUNT.intValue()), "" + maxRetryCount);
             }
         }
 
         if (!matches(user, password)) {
             loginRecordCache.put(new Element(username, ++retryCount));
-            logger.info("{} passwordError password error! password: {} retry count: {}", new Object[]{username,password, retryCount});
+            logger.info("{} passwordError password error! password: {} retry count: {}", new Object[]{username, password, retryCount});
             throw new AceException.UserPasswordNotMatchException();
         } else {
             clearLoginRecordCache(username);
         }
     }
 
-    public int getAllCount() {
-        return userMapper.getAllCount();
-    }
-
-    /**
-     * 分页获取用户数据
-     * @param offset
-     * @param limit
-     * @return
-     */
-    public List<User> getUserPages(int offset, int limit) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("offset",offset);
-        params.put("limit", limit);
-        return userMapper.getUserPages(params);
-    }
-
-
-    public User update(User user) {
-        userMapper.update(user);
-        logger.info("update successfully, user {}", user);
-        return user;
-    }
 
     public boolean matches(User user, String newPassword) {
         return user.getPassword().equals(encryptPassword(user.getUsername(), newPassword, user.getSalt()));
@@ -184,6 +146,9 @@ public class UserService {
         loginRecordCache.remove(username);
     }
 
+    public List<User> getAllUser() {
+        return (List<User>) userMapper.getList();
+    }
 
     /**
      * 密码使用MD5算法加密

@@ -7,6 +7,7 @@ package com.ace.erp.common.mybatis;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -16,14 +17,14 @@ import java.util.Map;
  * Date: 11/1/13
  * Time: 10:03 PM
  */
-public interface BaseMapper<T> {
+public interface BaseMapper<T,PK extends Serializable> {
 
     /**
      * 根据ID删除
      * @param id
      * @return
      */
-    int delete(Integer id);
+    int delete(PK id);
 
     /**
      * 删除实体对象
@@ -37,7 +38,7 @@ public interface BaseMapper<T> {
      * @param params key : ids value: [1,2,3]
      * @return
      */
-    public int deleteByIds(Map<String, Object> params);
+    int deleteByIds(Map<String, Object> params);
 
     /**
      * update T 实体对象
@@ -58,20 +59,13 @@ public interface BaseMapper<T> {
      * @param id
      * @return
      */
-    T getOne(Integer id);
-
-    /**
-     * 获取单个实体对象
-     * @param t
-     * @return
-     */
-    T getOne(T t);
+    T getOne(PK id);
 
     /**
      * 获取集合对象
      * @return
      */
-    List<T> getList();
+    public List<T> getList();
 
     /**
      * 分页获取数据

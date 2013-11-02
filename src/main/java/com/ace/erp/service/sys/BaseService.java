@@ -14,6 +14,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,11 +27,11 @@ import java.util.Map;
  * Date: 11/1/13
  * Time: 4:47 PM
  */
-public class BaseService<M extends Serializable> implements InitializingBean {
+public class BaseService<T, PK extends Serializable> implements InitializingBean {
+    private Class<T> entityClass;
+    private BaseMapper<T, PK> baseMapper;
 
-    private BaseMapper<M> baseMapper;
-
-    public void setBaseMapper(BaseMapper<M> baseMapper) {
+    public void setBaseMapper(BaseMapper<T, PK> baseMapper) {
         this.baseMapper = baseMapper;
     }
 
@@ -77,7 +79,7 @@ public class BaseService<M extends Serializable> implements InitializingBean {
 
     public Map<String, Object> initParams(int offset, int limit) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put(RdbParams.OFFSET.value(),offset);
+        params.put(RdbParams.OFFSET.value(), offset);
         params.put(RdbParams.LIMIT.value(), limit);
         return params;
     }
@@ -87,42 +89,43 @@ public class BaseService<M extends Serializable> implements InitializingBean {
      *
      * @param id 主键
      */
-    public void delete(final int id) {
+    public void delete(final PK id) {
         baseMapper.delete(id);
     }
 
     public void delete(final List<String> list) {
         if (list == null && list.size() <= 0) {
-            return ;
+            return;
         }
-        Map<String,Object> params = new HashMap<String, Object>();
-        params.put("list",list);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("list", list);
         baseMapper.deleteByIds(params);
     }
 
     /**
      * 删除实体
      *
-     * @param m 实体
+     * @param t 实体
      */
-    public void delete(M m) {
-        if (m == null) {
+    public void delete(T t) {
+        if (t == null) {
             return;
         }
-        if (m instanceof LogicDeleteable) {
-            ((LogicDeleteable) m).markDeleted();
-            baseMapper.save(m);
+        if (t instanceof LogicDeleteable) {
+            ((LogicDeleteable) t).markDeleted();
+            baseMapper.save(t);
         } else {
-            baseMapper.delete(m);
+            baseMapper.delete(t);
         }
     }
+
     /**
      * 按照主键查询
      *
      * @param id 主键
      * @return 返回id对应的实体
      */
-    public M getOne(Integer id) {
+    public T getOne(PK id) {
         return baseMapper.getOne(id);
     }
 
@@ -135,46 +138,52 @@ public class BaseService<M extends Serializable> implements InitializingBean {
         return baseMapper.getCount();
     }
 
-    public List<M> getPageList(Integer offset, Integer limit) {
-         if (offset == null || limit == null) {
-             return null;
-         }
-        Map<String, Object> params = initParams(offset,limit);
-        return baseMapper.getPageList(params);
-    }
-    /**
-    public M update(M m) {
-        if (m == null) {
+    public List<T> getPageList(Integer offset, Integer limit) {
+        if (offset == null || limit == null) {
             return null;
         }
-        baseMapper.update(m);
-        return baseMapper.getOne(m);
+        Map<String, Object> params = initParams(offset, limit);
+        return baseMapper.getPageList(params);
     }
-     **/
 
-    public boolean update(M m) {
-        if (m == null) {
-            return false;
+
+    public T update(T t) {
+        if (t == null) {
+            return null;
         }
-        int status = baseMapper.update(m);
-        if (status != 1) {
-            return false;
-        }
-        return true;
+        baseMapper.update(t);
+        return t;
     }
+
 
     /**
      * 保存单个实体
      *
-     * @param m 实体
+     * @param t 实体
      * @return 返回保存的实体
      */
-    public M save(M m) {
-        if (m == null) {
+    public T save(T t) {
+        if (t == null) {
             return null;
         }
-        baseMapper.save(m);
-        return m;
+        baseMapper.save(t);
+        return t;
     }
+
+
+    public void setEntityClass() {
+        Class c = getClass();
+        Type type = c.getGenericSuperclass();
+        try {
+            if ((type instanceof ParameterizedType)) {
+                Type[] parameterizedType = ((ParameterizedType) type)
+                        .getActualTypeArguments();
+                this.entityClass = ((Class) parameterizedType[0]);
+            }
+        } catch (Exception ex) {
+            // ex
+        }
+    }
+
 
 }

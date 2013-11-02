@@ -1,5 +1,6 @@
 package com.ace.erp.shiro.persistence;
 
+import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
 
@@ -13,31 +14,13 @@ import java.util.Map;
  * Time: 12:28 AM
  * Description:
  */
-public interface UserMapper {
-
-    int saveUser(User user);
+public interface UserMapper extends BaseMapper<User,Integer> {
 
     User getUserByName(String userName);
 
     User getUserByEmail(String email);
 
-    int update(User user);
-
     User getByMobilePhoneNumber(String mobilePhoneNumber);
 
-    User getUserById(Integer userId);
 
-    int delete(Integer userId);
-
-    List<User> getAllUsers();
-
-    /**
-     * 分页获取用户数据
-     * @param params
-     * @return
-     */
-    public List<User> getUserPages(Map<String, Object> params);
-
-
-    int getAllCount();
 }

@@ -37,44 +37,13 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/sys/permission/permission")
-public class PermissionController extends BaseCRUDController<Permission> {
+public class PermissionController extends BaseCRUDController<Permission,Integer> {
 
     private Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
     @Autowired
     @BaseComponent
     private PermissionService permissionService;
-
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @ResponseBody
-    public Response list(HttpServletRequest request, HttpServletResponse response) {
-        String page = request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数
-        String rows = request.getParameter("rows"); // 取得每页显示行数，,注意这是jqgrid自身的参数
-        if (StringUtils.isNullOrEmpty(page)) {
-            page = "1";
-        }
-        if (StringUtils.isNullOrEmpty(rows)) {
-            rows = "10";
-        }
-        int totalRecord = permissionService.count();
-
-        int totalPage = totalRecord % Integer.parseInt(rows) == 0 ? totalRecord
-                / Integer.parseInt(rows) : totalRecord / Integer.parseInt(rows)
-                + 1; // 计算总页数
-        //计算开始位置
-        int start = (Integer.parseInt(page) - 1) * Integer.parseInt(rows); // 开始记录数
-        int pageSize = Integer.parseInt(rows);
-        List<Permission> roleList = permissionService.getPageList(start, pageSize);
-
-        Response responseJson = new Response();
-        responseJson.setRows(roleList);
-        responseJson.setPage(Integer.parseInt(page));
-        responseJson.setTotal(totalPage);
-        responseJson.setRecords(totalRecord);
-        return responseJson;
-    }
-
-
 
 
 }

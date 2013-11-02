@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace.min.css" />
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-skins.min.css" />
-
+    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/bootstrap-modal.css" />
+    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/bootstrap-modal-bs3patch.css" />
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-ie.min.css" />
     <![endif]-->

@@ -40,6 +40,6 @@ public class UserDaoTest {
         user.setUsername("admin");
         user.setPassword("123");
         user.setEmail("denghp@126.com");
-        userMapper.saveUser(user);
+        userMapper.save(user);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Map;
  * Description:
  */
 @Service
-public class PermissionService extends BaseService<Permission> {
+public class PermissionService extends BaseService<Permission,Integer> {
 
     @Autowired
     @BaseComponent

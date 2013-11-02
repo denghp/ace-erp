@@ -1,5 +1,6 @@
 package com.ace.erp.service.sys;
 
+import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.RoleResourcePermission;
 import com.ace.erp.shiro.persistence.RoleMapper;
@@ -7,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
@@ -18,10 +20,14 @@ import java.util.*;
  * Time: 1:11 PM
  * Description:
  */
-public class RoleService {
+@Service
+public class RoleService extends BaseService<Role,Integer> {
     private Logger logger = LoggerFactory.getLogger(RoleService.class);
+
     @Autowired
+    @BaseComponent
     private RoleMapper roleMapper;
+
 
     public List<RoleResourcePermission> getResourcePermissions(Long roleId) {
         return roleMapper.getResourcePermissions(roleId);
@@ -47,9 +53,12 @@ public class RoleService {
        return roleMapper.getAllRoles();
     }
 
-    public int getCount() {
-        return roleMapper.getCount();
-    }
+
+    /**
+
+     public int getCount() {
+     return roleMapper.getCount();
+     }
 
     public List<Role> getRolePages(int offset, int limit) {
         Map<String, Object> params = new HashMap<String, Object>();
@@ -88,5 +97,7 @@ public class RoleService {
         int result = roleMapper.update(role);
         return roleMapper.getRoleById(role.getId());
     }
+   **/
+
 
 }

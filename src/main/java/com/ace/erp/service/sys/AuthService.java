@@ -35,7 +35,7 @@ public class AuthService {
 
         for (Integer userId : userIds) {
             //获取用户,如果用户不存在,则循环下个用户
-            User user = userService.getUserById(userId);
+            User user = userService.getOne(userId);
             if (user == null) {
                 logger.warn("addUserAuth getUserById not foud user by {}",userId);
                 return ;

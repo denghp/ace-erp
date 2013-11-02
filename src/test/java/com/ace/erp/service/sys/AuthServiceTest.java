@@ -37,7 +37,7 @@ public class AuthServiceTest extends BaseTest {
     @Test
     public void testUserAuth() {
        //executeSqlScript("sql/intergration-test-user-data.sql", false);
-       User user = userService.getUserById(1);
+       User user = userService.getOne(1);
        System.out.println(user);
 
        Set<String> roles = userAuthService.findStringRoles(user);
@@ -65,7 +65,7 @@ public class AuthServiceTest extends BaseTest {
     @Test
     public void testAllAuth() {
 //        executeSqlScript("sql/intergration-test-all-data.sql", false);
-        User user = userService.getUserById(1);
+        User user = userService.getOne(1);
 
         Set<String> roles = userAuthService.findStringRoles(user);
 

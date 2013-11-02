@@ -61,6 +61,7 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 </div><!-- /.page-content -->
+<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
@@ -70,7 +71,7 @@ jQuery(function($) {
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:$path_base+'/admin/sys/permission/role',
+        url:$path_base+'/admin/sys/permission/role/list',
         datatype: "json",
         mtype: 'GET',
         //data: grid_data,
@@ -99,7 +100,7 @@ jQuery(function($) {
             {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
             {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
             {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'description',index:'desc', width:200, editable: true,editoptions:{rows:"2",cols:"10"}},
+            {name:'description',index:'desc', width:200, editable: true,edittype:"textarea",editoptions:{rows:"2",cols:"10"}},
             {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
             {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
             {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
@@ -151,13 +152,6 @@ jQuery(function($) {
     //format date
     function dateFormatter(cellvalue, options, rowObject) {
         return cellvalue.split(" ")[0];
-    }
-
-    function formatShow(cellvalue, options, rowObject) {
-        if (cellvalue) {
-            return "Yes";
-        }
-        return "No";
     }
 
     function getColumnIndexByName(grid, columnName) {
@@ -351,7 +345,7 @@ jQuery(function($) {
         var iCol = getColumnIndexByName(table, 'myac');
         $(table).find(">tbody>tr.jqgrow>td:nth-child(" + (iCol + 1) + ")")
                 .each(function() {
-                    $("<div>", {
+                    var roleDiv = $("<div>", {
                                 title: "角色授权",
                                 mouseover: function() {
                                     $(this).addClass('ui-state-hover');
@@ -362,12 +356,20 @@ jQuery(function($) {
                                 click: function(e) {
                                     alert("'Custom' button is clicked in the rowis="+
                                             $(e.target).closest("tr.jqgrow").attr("id") +" !");
+                                    //loadPage($path_base+'/admin/sys/permission/role/edit');
+                                    $('body').modalmanager('loading');
+                                    var id = $(e.target).closest("tr.jqgrow").attr("id");
+                                    setTimeout(function(){
+                                        $modal.load($path_base+'/admin/sys/permission/role/edit?id='+id, '', function(){
+                                            $modal.modal();
+                                        });
+                                    }, 1000);
                                     return false;
                                 }
-                            }
-                    ).css({"margin-right": "5px", float: "left", cursor: "pointer"})
-                            .addClass("ui-pg-div ui-inline-custom")
-                            .append('<span class="ui-icon  icon-cogs"></span>')
+                            });
+                    roleDiv.css({"margin-right": "5px", float: "left", cursor: "pointer",position: "relative",overflow:"hidden"})
+                            .addClass("ajax ui-pg-div ui-inline-custom")
+                            .append('<span class="demo ui-icon  icon-cogs"></span>')
                             .prependTo($(this).children("div"));
                 });
     }
@@ -436,4 +438,37 @@ jQuery(function($) {
 
 
 });
+
+$(function(){
+
+    $.fn.modal.defaults.spinner = $.fn.modalmanager.defaults.spinner =
+            '<div class="loading-spinner" style="width: 200px; margin-left: -100px;">' +
+                    '<div class="progress progress-striped active">' +
+                    '<div class="progress-bar" style="width: 100%;"></div>' +
+                    '</div>' +
+                    '</div>';
+
+    $.fn.modalmanager.defaults.resize = true;
+
+    $('[data-source]').each(function(){
+        var $this = $(this),
+                $source = $($this.data('source'));
+
+        var text = [];
+        $source.each(function(){
+            var $s = $(this);
+            if ($s.attr('type') == 'text/javascript'){
+                text.push($s.html().replace(/(\n)*/, ''));
+            } else {
+                text.push($s.clone().wrap('<div>').parent().html());
+            }
+        });
+
+        $this.text(text.join('\n\n').replace(/\t/g, '    '));
+    });
+
+});
+
+var $modal = $('#ajax-modal');
+
 </script>
