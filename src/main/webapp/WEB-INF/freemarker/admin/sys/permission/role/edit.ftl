@@ -48,57 +48,75 @@
 
 <div class="tab-content">
 <div id="home" class="tab-pane in active">
-    <div class="profile-user-info profile-user-info-striped">
-        <div class="profile-info-row">
-            <div class="profile-info-name"> Username</div>
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 角色名称 </label>
 
-            <div class="profile-info-value">
-                <span class="editable editable-click" id="username">alexdoe</span>
+            <div class="col-sm-9">
+                <input type="text" id="form-field-1" placeholder="Username" value="${role.name}" class="col-xs-10 col-sm-5">
             </div>
         </div>
 
-        <div class="profile-info-row">
-            <div class="profile-info-name"> Location</div>
+        <div class="space-4"></div>
 
-            <div class="profile-info-value">
-                <i class="icon-map-marker light-orange bigger-110"></i>
-                <span class="editable editable-click" id="country">Netherlands</span>
-                <span class="editable editable-click" id="city">Amsterdam</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 角色标识 </label>
+
+            <div class="col-sm-9">
+                <input type="text" id="form-field-2" value="${role.role}" placeholder="Password" class="col-xs-10 col-sm-5">
             </div>
         </div>
 
-        <div class="profile-info-row">
-            <div class="profile-info-name"> Age</div>
+        <div class="space-4"></div>
 
-            <div class="profile-info-value">
-                <span class="editable editable-click" id="age">38</span>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="form-input-readonly"> 详细描述
+            </label>
+
+            <div class="col-sm-9">
+                <textarea class="form-control" id="form-field-8" placeholder="Default Text">${role.description}</textarea>
             </div>
         </div>
 
-        <div class="profile-info-row">
-            <div class="profile-info-name"> Joined</div>
+        <div class="space-4"></div>
 
-            <div class="profile-info-value">
-                <span class="editable editable-click" id="signup">20/06/2010</span>
+        <div class="form-group">
+
+            <label class="col-sm-3 control-label no-padding-right" for="form-field-4">状 态</label>
+            <div class="col-sm-9">
+            <div class="control-group">
+                    <#if role.show ? string('true','false') == 'true'>
+                        <div class="radio">
+                            <label>
+                                <input name="form-field-radio" checked="checked" type="radio" class="ace">
+                                <span class="lbl"> 可用</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input name="form-field-radio" type="radio" class="ace">
+                                <span class="lbl"> 不可用</span>
+                            </label>
+                        </div>
+                    <#else>
+                        <div class="radio">
+                            <label>
+                                <input name="form-field-radio"  type="radio" class="ace">
+                                <span class="lbl"> 可用</span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input checked="checked" name="form-field-radio" type="radio" class="ace">
+                                <span class="lbl"> 不可用</span>
+                            </label>
+                        </div>
+                    </#if>
+                </div>
             </div>
         </div>
 
-        <div class="profile-info-row">
-            <div class="profile-info-name"> Last Online</div>
-
-            <div class="profile-info-value">
-                <span class="editable editable-click" id="login">3 hours ago</span>
-            </div>
-        </div>
-
-        <div class="profile-info-row">
-            <div class="profile-info-name"> About Me</div>
-
-            <div class="profile-info-value">
-                <span class="editable editable-click" id="about">Editable as WYSIWYG</span>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
 
 <div id="profile" class="tab-pane">

@@ -78,7 +78,7 @@ jQuery(function($) {
         height: 350,
         colNames:[' ', 'ID','权限名称','权限标识', '详细描述', '是否可用'],
         colModel:[
-            {name:'myac',index:'', width:120, fixed:true, sortable:false, resize:false,
+            {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
@@ -120,7 +120,6 @@ jQuery(function($) {
             var table = this;
             setTimeout(function(){
                 styleCheckbox(table);
-                customButton(table);
                 updateActionIcons(table);
                 updatePagerIcons(table);
                 enableTooltips(table);
@@ -332,31 +331,6 @@ jQuery(function($) {
         var form = $(e[0]);
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
         style_edit_form(form);
-    }
-
-    function customButton(table) {
-        var iCol = getColumnIndexByName(table, 'myac');
-        $(table).find(">tbody>tr.jqgrow>td:nth-child(" + (iCol + 1) + ")")
-                .each(function() {
-                    $("<div>", {
-                                title: "角色授权",
-                                mouseover: function() {
-                                    $(this).addClass('ui-state-hover');
-                                },
-                                mouseout: function() {
-                                    $(this).removeClass('ui-state-hover');
-                                },
-                                click: function(e) {
-                                    alert("'Custom' button is clicked in the rowis="+
-                                            $(e.target).closest("tr.jqgrow").attr("id") +" !");
-                                    return false;
-                                }
-                            }
-                    ).css({"margin-right": "5px", float: "left", cursor: "pointer"})
-                            .addClass("ui-pg-div ui-inline-custom")
-                            .append('<span class="ui-icon  icon-cogs"></span>')
-                            .prependTo($(this).children("div"));
-                });
     }
 
 

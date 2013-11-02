@@ -50,12 +50,12 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
     private ResourceService resourceService;
 
 
-    @RequestMapping(value = "/{edit:edit;?.*}",method = RequestMethod.GET)
-    public String editIndex(@CurrentUser User user, HttpServletRequest request, Model model) {
+    @RequestMapping(value = "/{edit:edit;?.*}",method = RequestMethod.POST)
+    public String editIndex(Role role, Model model) {
 
         //List<Role> roleList = roleService.getAllRoles();
         //model.addAttribute("roleList", roleList);
-
+        model.addAttribute("role",role);
         return "/admin/sys/permission/role/edit";
     }
 

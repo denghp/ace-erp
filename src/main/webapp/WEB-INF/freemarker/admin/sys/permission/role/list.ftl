@@ -79,7 +79,7 @@ jQuery(function($) {
         height: 350,
         colNames:[' ', 'ID','角色名','角色', '描述','创建时间','修改时间', '是否可用'],
         colModel:[
-            {name:'myac',index:'', width:120, fixed:true, sortable:false, resize:false,
+            {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
@@ -103,7 +103,7 @@ jQuery(function($) {
             {name:'description',index:'desc', width:200, editable: true,edittype:"textarea",editoptions:{rows:"2",cols:"10"}},
             {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
             {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
-            {name:'show',index:'show', width:30, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
+            {name:'show',index:'show', width:50, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
 
 
         ],
@@ -354,13 +354,13 @@ jQuery(function($) {
                                     $(this).removeClass('ui-state-hover');
                                 },
                                 click: function(e) {
-                                    alert("'Custom' button is clicked in the rowis="+
-                                            $(e.target).closest("tr.jqgrow").attr("id") +" !");
-                                    //loadPage($path_base+'/admin/sys/permission/role/edit');
+                                    //alert("'Custom' button is clicked in the rowis="+
+                                    //        $(e.target).closest("tr.jqgrow").attr("id") +" !");
                                     $('body').modalmanager('loading');
                                     var id = $(e.target).closest("tr.jqgrow").attr("id");
+                                    var form = $("#grid-table").jqGrid('getRowData',id);
                                     setTimeout(function(){
-                                        $modal.load($path_base+'/admin/sys/permission/role/edit?id='+id, '', function(){
+                                        $modal.load($path_base+'/admin/sys/permission/role/edit', form, function(){
                                             $modal.modal();
                                         });
                                     }, 1000);
