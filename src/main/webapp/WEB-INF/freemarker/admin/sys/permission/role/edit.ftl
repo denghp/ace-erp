@@ -145,214 +145,6 @@
                                         <div class="widget-body">
                                             <div class="widget-main padding-8" >
                                                 <ul id="treeDemo" class="ztree" style="height: 240px;width: 300px;margin-top: 0px;">
-                                                    <li id="treeDemo_1" class="level0" tabindex="0" hidefocus="true"
-                                                        treenode=""><span id="treeDemo_1_switch" title=""
-                                                                          class="button level0 switch roots_open"
-                                                                          treenode_switch=""></span><span
-                                                            id="treeDemo_1_check" class="button chk checkbox_false_full"
-                                                            treenode_check=""></span><a id="treeDemo_1_a" class="level0"
-                                                                                        treenode_a="" onclick=""
-                                                                                        target="_blank" style=""
-                                                                                        title="随意勾选 1"><span
-                                                            id="treeDemo_1_ico" title="" treenode_ico=""
-                                                            class="button ico_open" style=""></span><span
-                                                            id="treeDemo_1_span">随意勾选 1</span></a>
-                                                        <ul id="treeDemo_1_ul" class="level0 line"
-                                                            style="display:block">
-                                                            <li id="treeDemo_2" class="level1" tabindex="0"
-                                                                hidefocus="true" treenode=""><span
-                                                                    id="treeDemo_2_switch" title=""
-                                                                    class="button level1 switch center_open"
-                                                                    treenode_switch=""></span><span
-                                                                    id="treeDemo_2_check"
-                                                                    class="button chk checkbox_false_full"
-                                                                    treenode_check=""></span><a id="treeDemo_2_a"
-                                                                                                class="level1"
-                                                                                                treenode_a="" onclick=""
-                                                                                                target="_blank" style=""
-                                                                                                title="随意勾选 1-1"><span
-                                                                    id="treeDemo_2_ico" title="" treenode_ico=""
-                                                                    class="button ico_open" style=""></span><span
-                                                                    id="treeDemo_2_span">随意勾选 1-1</span></a>
-                                                                <ul id="treeDemo_2_ul" class="level1 line"
-                                                                    style="display:block">
-                                                                    <li id="treeDemo_3" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_3_switch" title=""
-                                                                            class="button level2 switch center_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_3_check"
-                                                                            class="button chk checkbox_false_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_3_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 1-1-1"><span
-                                                                            id="treeDemo_3_ico" title="" treenode_ico=""
-                                                                            class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_3_span">随意勾选 1-1-1</span></a>
-                                                                    </li>
-                                                                    <li id="treeDemo_4" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_4_switch" title=""
-                                                                            class="button level2 switch bottom_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_4_check"
-                                                                            class="button chk checkbox_false_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_4_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 1-1-2"><span
-                                                                            id="treeDemo_4_ico" title="" treenode_ico=""
-                                                                            class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_4_span">随意勾选 1-1-2</span></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li id="treeDemo_5" class="level1" tabindex="0"
-                                                                hidefocus="true" treenode=""><span
-                                                                    id="treeDemo_5_switch" title=""
-                                                                    class="button level1 switch bottom_open"
-                                                                    treenode_switch=""></span><span
-                                                                    id="treeDemo_5_check"
-                                                                    class="button chk checkbox_false_full"
-                                                                    treenode_check=""></span><a id="treeDemo_5_a"
-                                                                                                class="level1"
-                                                                                                treenode_a="" onclick=""
-                                                                                                target="_blank" style=""
-                                                                                                title="随意勾选 1-2"><span
-                                                                    id="treeDemo_5_ico" title="" treenode_ico=""
-                                                                    class="button ico_open" style=""></span><span
-                                                                    id="treeDemo_5_span">随意勾选 1-2</span></a>
-                                                                <ul id="treeDemo_5_ul" class="level1 "
-                                                                    style="display:block">
-                                                                    <li id="treeDemo_6" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_6_switch" title=""
-                                                                            class="button level2 switch center_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_6_check"
-                                                                            class="button chk checkbox_false_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_6_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 1-2-1"><span
-                                                                            id="treeDemo_6_ico" title="" treenode_ico=""
-                                                                            class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_6_span">随意勾选 1-2-1</span></a>
-                                                                    </li>
-                                                                    <li id="treeDemo_7" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_7_switch" title=""
-                                                                            class="button level2 switch bottom_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_7_check"
-                                                                            class="button chk checkbox_false_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_7_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 1-2-2"><span
-                                                                            id="treeDemo_7_ico" title="" treenode_ico=""
-                                                                            class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_7_span">随意勾选 1-2-2</span></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
-                                                    </li>
-                                                    <li id="treeDemo_8" class="level0" tabindex="0" hidefocus="true"
-                                                        treenode=""><span id="treeDemo_8_switch" title=""
-                                                                          class="button level0 switch bottom_open"
-                                                                          treenode_switch=""></span><span
-                                                            id="treeDemo_8_check" class="button chk checkbox_true_full"
-                                                            treenode_check=""></span><a id="treeDemo_8_a" class="level0"
-                                                                                        treenode_a="" onclick=""
-                                                                                        target="_blank" style=""
-                                                                                        title="随意勾选 2"><span
-                                                            id="treeDemo_8_ico" title="" treenode_ico=""
-                                                            class="button ico_open" style=""></span><span
-                                                            id="treeDemo_8_span">随意勾选 2</span></a>
-                                                        <ul id="treeDemo_8_ul" class="level0 " style="display:block">
-                                                            <li id="treeDemo_9" class="level1" tabindex="0"
-                                                                hidefocus="true" treenode=""><span
-                                                                    id="treeDemo_9_switch" title=""
-                                                                    class="button level1 switch center_docu"
-                                                                    treenode_switch=""></span><span
-                                                                    id="treeDemo_9_check"
-                                                                    class="button chk checkbox_true_full"
-                                                                    treenode_check=""></span><a id="treeDemo_9_a"
-                                                                                                class="level1"
-                                                                                                treenode_a="" onclick=""
-                                                                                                target="_blank" style=""
-                                                                                                title="随意勾选 2-1"><span
-                                                                    id="treeDemo_9_ico" title="" treenode_ico=""
-                                                                    class="button ico_docu" style=""></span><span
-                                                                    id="treeDemo_9_span">随意勾选 2-1</span></a></li>
-                                                            <li id="treeDemo_10" class="level1" tabindex="0"
-                                                                hidefocus="true" treenode=""><span
-                                                                    id="treeDemo_10_switch" title=""
-                                                                    class="button level1 switch center_open"
-                                                                    treenode_switch=""></span><span
-                                                                    id="treeDemo_10_check"
-                                                                    class="button chk checkbox_true_full"
-                                                                    treenode_check=""></span><a id="treeDemo_10_a"
-                                                                                                class="level1"
-                                                                                                treenode_a="" onclick=""
-                                                                                                target="_blank" style=""
-                                                                                                title="随意勾选 2-2"><span
-                                                                    id="treeDemo_10_ico" title="" treenode_ico=""
-                                                                    class="button ico_open" style=""></span><span
-                                                                    id="treeDemo_10_span">随意勾选 2-2</span></a>
-                                                                <ul id="treeDemo_10_ul" class="level1 line"
-                                                                    style="display:block">
-                                                                    <li id="treeDemo_11" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_11_switch" title=""
-                                                                            class="button level2 switch center_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_11_check"
-                                                                            class="button chk checkbox_true_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_11_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 2-2-1"><span
-                                                                            id="treeDemo_11_ico" title=""
-                                                                            treenode_ico="" class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_11_span">随意勾选 2-2-1</span></a>
-                                                                    </li>
-                                                                    <li id="treeDemo_12" class="level2" tabindex="0"
-                                                                        hidefocus="true" treenode=""><span
-                                                                            id="treeDemo_12_switch" title=""
-                                                                            class="button level2 switch bottom_docu"
-                                                                            treenode_switch=""></span><span
-                                                                            id="treeDemo_12_check"
-                                                                            class="button chk checkbox_true_full"
-                                                                            treenode_check=""></span><a
-                                                                            id="treeDemo_12_a" class="level2"
-                                                                            treenode_a="" onclick="" target="_blank"
-                                                                            style="" title="随意勾选 2-2-2"><span
-                                                                            id="treeDemo_12_ico" title=""
-                                                                            treenode_ico="" class="button ico_docu"
-                                                                            style=""></span><span id="treeDemo_12_span">随意勾选 2-2-2</span></a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                            <li id="treeDemo_13" class="level1" tabindex="0"
-                                                                hidefocus="true" treenode=""><span
-                                                                    id="treeDemo_13_switch" title=""
-                                                                    class="button level1 switch bottom_docu"
-                                                                    treenode_switch=""></span><span
-                                                                    id="treeDemo_13_check"
-                                                                    class="button chk checkbox_true_full"
-                                                                    treenode_check=""></span><a id="treeDemo_13_a"
-                                                                                                class="level1"
-                                                                                                treenode_a="" onclick=""
-                                                                                                target="_blank" style=""
-                                                                                                title="随意勾选 2-3"><span
-                                                                    id="treeDemo_13_ico" title="" treenode_ico=""
-                                                                    class="button ico_docu" style=""></span><span
-                                                                    id="treeDemo_13_span">随意勾选 2-3</span></a></li>
-                                                        </ul>
-                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -446,12 +238,76 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    var $path_base = "${rc.getContextPath()}";//this will be used in gritter alerts containing images
+</script>
 <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/demo.css" type="text/css">
 <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.all-3.5.min.js"></script>
-<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.exhide-3.5.min.js"></script>
+<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.core-3.5.js"></script>
 <script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.excheck-3.5.min.js"></script>
+
+<script type="text/javascript">
+    debugger;
+    var setting = {
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+    var zTreeObj;
+    var zNodes =[
+        { id:1, pId:0, name:"随意勾选 1", open:true},
+        { id:11, pId:1, name:"随意勾选 1-1", open:true},
+        { id:111, pId:11, name:"随意勾选 1-1-1"},
+        { id:112, pId:11, name:"随意勾选 1-1-2"},
+        { id:12, pId:1, name:"随意勾选 1-2", open:true},
+        { id:121, pId:12, name:"随意勾选 1-2-1"},
+        { id:122, pId:12, name:"随意勾选 1-2-2"},
+        { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+        { id:21, pId:2, name:"随意勾选 2-1"},
+        { id:22, pId:2, name:"随意勾选 2-2", open:true},
+        { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+        { id:222, pId:22, name:"随意勾选 2-2-2"},
+        { id:23, pId:2, name:"随意勾选 2-3"}
+    ];
+
+    $(document).ready(function(){
+        $.ajax({
+            type: "GET",
+            url: $path_base + '/admin/sys/resource/ajax/load',
+            dataType: "json",
+            global: false,
+            async: false,
+            success: function (strReult) {
+                zNodes=eval(strReult);
+            },
+            error: function () {
+                alert("Ajax请求数据失败!");
+            }
+        });
+        $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        //zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        //$("#submit").bind('click',getNodeValue);
+    });
+    function getNodeValue (){
+        var nodes = zTreeObj.getCheckedNodes();
+        var s = '';//选中节点ids
+        //遍历选中的节点，为s赋值
+        for(var i=0; i<nodes.length; i++){
+            var isParent = nodes[i].isParent;
+            if(isParent!=true){
+                if (s != '')s += ',';
+                s += nodes[i].id;
+            }
+        }
+        $("#content").val(s);
+    }
+</script>
+
 </body>
 </html>

@@ -6,7 +6,9 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.BaseTest;
+import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.Menu;
+import com.ace.erp.entity.sys.Resource;
 import com.ace.erp.entity.sys.User;
 import com.mysql.jdbc.StringUtils;
 import org.junit.Test;
@@ -53,6 +55,24 @@ public class ResourceServiceTest extends BaseTest {
     @Test
     public void testAB() {
 
-        System.out.print("boolean  : "+ (false || false));
+        System.out.println("boolean  : " + (false || false));
     }
+
+    @Test
+    public void getAllResourceTest() {
+       List<Resource> resourceList = resourceService.getAllWithSort();
+       for(Resource resource : resourceList) {
+            System.out.println(resource.toString());
+       }
+    }
+
+    @Test
+    public void getZTreeListTest() {
+        List<ZTree<Integer>> zTreeList = resourceService.getZTreeList("/ace",true);
+        for(ZTree zTree : zTreeList) {
+            System.out.println(zTree);
+        }
+    }
+
+
 }

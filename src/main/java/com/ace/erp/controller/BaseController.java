@@ -30,9 +30,9 @@ import java.io.Serializable;
  * Date: 11/1/13
  * Time: 5:33 PM
  */
-public abstract class BaseController<M, PK extends Serializable> implements InitializingBean {
+public abstract class BaseController<M, ID extends Serializable> implements InitializingBean {
 
-    protected BaseService<M,PK> baseService;
+    protected BaseService<M,ID> baseService;
     /**
      * 实体类型
      */
@@ -51,7 +51,7 @@ public abstract class BaseController<M, PK extends Serializable> implements Init
      *
      * @param baseService
      */
-    public void setBaseService(BaseService<M,PK> baseService) {
+    public void setBaseService(BaseService<M,ID> baseService) {
         this.baseService = baseService;
     }
 

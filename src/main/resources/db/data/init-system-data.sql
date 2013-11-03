@@ -247,14 +247,14 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (82, 81, '0/1/71/81/', 1, '权限列表', 'permission', '/admin/sys/permission/permission', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (83, 81, '0/1/71/81/', 2, '角色管理', 'role', '/admin/sys/permission/role/main', true);;
+  values (83, 81, '0/1/71/81/', 2, '角色管理', 'role', '/admin/sys/permission/role', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (84, 81, '0/1/71/81/', 3, '资源列表', 'resource', '/admin/sys/resource', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (85, 71, '0/1/71/', 4, '用户管理', '', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (86, 85, '0/1/71/85/', 1, '用户列表', 'user', '/admin/sys/user/main', true);;
+  values (86, 85, '0/1/71/85/', 1, '用户列表', 'user', '/admin/sys/user', true);;
 
 
 

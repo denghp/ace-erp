@@ -1,6 +1,6 @@
 package com.ace.erp.entity.sys;
 
-import com.ace.erp.common.Treeable;
+import com.ace.erp.entity.Treeable;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -218,7 +218,7 @@ public class Resource implements Treeable<Integer> {
 
     @Override
     public String toString() {
-        return "Resource{" +
+        return "{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", icon='" + icon + '\'' +

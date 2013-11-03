@@ -137,3 +137,21 @@ create table `sys_auth`(
 ) charset=utf8 ENGINE=InnoDB;;
 alter table `sys_auth` auto_increment=1000;;
 
+/*** custom function getChildList **/
+DROP FUNCTION IF EXISTS getChildList;
+DELIMITER ||
+CREATE FUNCTION `getChildList`(rootId INT)
+     RETURNS VARCHAR(1000)
+BEGIN
+       DECLARE pTemp VARCHAR(1000);
+       DECLARE cTemp VARCHAR(1000);
+       SET pTemp = '$';
+       SET cTemp =cast(rootId as CHAR);
+       WHILE cTemp is not null DO
+         SET pTemp = concat(pTemp,',',cTemp);
+         SELECT group_concat(id) INTO cTemp FROM sys_resource
+         WHERE FIND_IN_SET(parent_id,cTemp)>0;
+       END WHILE;
+       RETURN pTemp;
+END ||
+DELIMITER ;

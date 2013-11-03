@@ -27,11 +27,12 @@ import java.util.Map;
  * Date: 11/1/13
  * Time: 4:47 PM
  */
-public class BaseService<T, PK extends Serializable> implements InitializingBean {
-    private Class<T> entityClass;
-    private BaseMapper<T, PK> baseMapper;
+public class BaseService<T, ID extends Serializable> implements InitializingBean {
 
-    public void setBaseMapper(BaseMapper<T, PK> baseMapper) {
+    private Class<T> entityClass;
+    private BaseMapper<T, ID> baseMapper;
+
+    public void setBaseMapper(BaseMapper<T, ID> baseMapper) {
         this.baseMapper = baseMapper;
     }
 
@@ -89,7 +90,7 @@ public class BaseService<T, PK extends Serializable> implements InitializingBean
      *
      * @param id 主键
      */
-    public void delete(final PK id) {
+    public void delete(final ID id) {
         baseMapper.delete(id);
     }
 
@@ -125,7 +126,7 @@ public class BaseService<T, PK extends Serializable> implements InitializingBean
      * @param id 主键
      * @return 返回id对应的实体
      */
-    public T getOne(PK id) {
+    public T getOne(ID id) {
         return baseMapper.getOne(id);
     }
 
@@ -183,6 +184,10 @@ public class BaseService<T, PK extends Serializable> implements InitializingBean
         } catch (Exception ex) {
             // ex
         }
+    }
+
+    public List<T> getList() {
+        return baseMapper.getList();
     }
 
 

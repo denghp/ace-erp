@@ -1,9 +1,12 @@
 package com.ace.erp.service.sys;
 
+import com.ace.erp.annotation.BaseComponent;
+import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.Menu;
 import com.ace.erp.entity.sys.Resource;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.shiro.persistence.ResourceMapper;
+import com.google.common.collect.Lists;
 import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.permission.WildcardPermission;
@@ -23,17 +26,16 @@ import java.util.*;
  * Description:
  */
 @Service
-public class ResourceService {
+public class ResourceService extends BaseService<Resource,Integer> {
     private static Logger logger = LoggerFactory.getLogger(ResourceService.class);
     @Autowired
     private UserAuthService userAuthService;
 
     @Autowired
+    @BaseComponent
     private ResourceMapper resourceMapper;
 
-    public Resource getResourceById(Integer resourceId) {
-        return resourceMapper.getResourceById(resourceId);
-    }
+    public static final String DEFAULT_SORT = "parent_id desc,weight desc";
 
     /**
      * 得到真实的资源标识  即 父亲:儿子
@@ -51,13 +53,13 @@ public class ResourceService {
 
         boolean hasResourceIdentity = !StringUtils.isEmpty(resource.getIdentity());
 
-        Resource parent = resourceMapper.getResourceById(resource.getParentId());
+        Resource parent = resourceMapper.getOne(resource.getParentId());
         while (parent != null) {
             if (!StringUtils.isEmpty(parent.getIdentity())) {
                 s.insert(0, parent.getIdentity() + ":");
                 hasResourceIdentity = true;
             }
-            parent = resourceMapper.getResourceById(parent.getParentId());
+            parent = resourceMapper.getOne(parent.getParentId());
         }
 
         //如果用户没有声明 资源标识  且父也没有，那么就为空
@@ -74,7 +76,7 @@ public class ResourceService {
 
         //如果有儿子 最后拼一个*
         boolean hasChildren = false;
-        for (Resource r : resourceMapper.getAllResource()) {
+        for (Resource r : resourceMapper.getList()) {
             if (resource.getId().equals(r.getParentId())) {
                 hasChildren = true;
                 break;
@@ -196,6 +198,54 @@ public class ResourceService {
 
     private static Menu convertToMenu(Resource resource) {
         return new Menu(resource.getId(), resource.getName(), resource.getIcon(), resource.getUrl());
+    }
+
+    public List<Resource>  getAllWithSort() {
+        return getAllWithSort(null);
+    }
+
+    public List<Resource>  getAllWithSort(String sort) {
+        if (StringUtils.isBlank(sort)) {
+            logger.warn("sort is empty, use default sort!!");
+            sort = DEFAULT_SORT;
+        }
+        Map<String, Object> params = new HashMap<String,Object>();
+        params.put("sort",sort);
+        return resourceMapper.getAllWithSort(params);
+    }
+
+    public List<ZTree<Integer>> getZTreeList(String contextPath,boolean async) {
+             List<Resource> resourceList = getAllWithSort();
+        return convertToZtreeList(contextPath, resourceList, async);
+    }
+
+    private List<ZTree<Integer>> convertToZtreeList(String contextPath, List<Resource> models, boolean async) {
+        List<ZTree<Integer>> zTrees = Lists.newArrayList();
+
+        if (models == null || models.isEmpty()) {
+            return zTrees;
+        }
+
+        for (Resource resource : models) {
+            ZTree zTree = convertToZtree(resource, async);
+            zTrees.add(zTree);
+        }
+        return zTrees;
+    }
+
+    private ZTree convertToZtree(Resource m, boolean open) {
+        ZTree<Integer> zTree = new ZTree<Integer>();
+        zTree.setId(m.getId());
+        zTree.setpId(m.getParentId());
+        zTree.setName(m.getName());
+        //zTree.setIconSkin(m.getIcon());
+        zTree.setOpen(open);
+        //zTree.setRoot(m.isRoot());
+        //zTree.setIsParent(m.isHasChildren());
+
+        //zTree.setNocheck(false);
+
+        return zTree;
     }
 
 }

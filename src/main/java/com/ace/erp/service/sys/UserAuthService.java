@@ -86,7 +86,7 @@ public class UserAuthService {
         List<Role> roles = findRoles(user);
         for (Role role : roles) {
             for (RoleResourcePermission rrp : role.getResourcePermissions()) {
-                Resource resource = resourceService.getResourceById(rrp.getResourceId());
+                Resource resource = resourceService.getOne(rrp.getResourceId());
 
                 String actualResourceIdentity = resourceService.findActualResourceIdentity(resource);
 

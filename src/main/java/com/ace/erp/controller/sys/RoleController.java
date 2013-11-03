@@ -46,10 +46,6 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
     @BaseComponent
     private RoleService roleService;
 
-    @Autowired
-    private ResourceService resourceService;
-
-
     @RequestMapping(value = "/{edit:edit;?.*}",method = RequestMethod.POST)
     public String editIndex(Role role, Model model) {
 

@@ -3,7 +3,7 @@
  *
  * Licensed 
  */
-package com.ace.erp.common;
+package com.ace.erp.entity;
 
 import java.io.Serializable;
 

@@ -16,16 +16,16 @@
         <result property="hasChildren" column="hasChildren" />
     </resultMap>
 
-  <select id="getResourceById" parameterType="java.lang.Long" resultMap="resourceResult">
+  <select id="getOne" parameterType="java.lang.Long" resultMap="resourceResult">
     SELECT * FROM sys_resource WHERE id = #{resourceId}
   </select>
 
-    <select id="getAllResource" resultMap="resourceResult">
+    <select id="getList" resultMap="resourceResult">
     SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show FROM sys_resource;
   </select>
 
   <select id="getAllWithSort" parameterType="java.lang.String" resultMap="resourceResult">
-    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show FROM sys_resource where is_show = 1 ORDER by ${sort};
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource where is_show = 1  ORDER by ${sort};
   </select>
 
     <insert id="save" parameterType="Resource" useGeneratedKeys="true" keyProperty="id">

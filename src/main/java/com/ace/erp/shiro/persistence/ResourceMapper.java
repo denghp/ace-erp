@@ -1,5 +1,6 @@
 package com.ace.erp.shiro.persistence;
 
+import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Resource;
 
 import java.util.List;
@@ -14,15 +15,8 @@ import java.util.Map;
  * Time: 2:32 PM
  * Description:
  */
-public interface ResourceMapper {
+public interface ResourceMapper extends BaseMapper<Resource, Integer> {
 
-    public int save(Resource resource);
-
-    public void update(Resource resource);
-
-    public Resource getResourceById(Integer resourceId);
-
-    public List<Resource> getAllResource();
 
     public List<Resource> getAllWithSort(Map<String,Object> params);
 

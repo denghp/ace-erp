@@ -37,10 +37,10 @@ import java.util.List;
  * Date: 11/1/13
  * Time: 6:22 PM
  */
-public class BaseCRUDController<M, PK extends Serializable> extends BaseController<M,PK> implements InitializingBean {
+public class BaseCRUDController<M, ID extends Serializable> extends BaseController<M,ID> implements InitializingBean {
     private Logger logger = LoggerFactory.getLogger(BaseCRUDController.class);
 
-    protected BaseService<M,PK> baseService;
+    protected BaseService<M,ID> baseService;
 
     protected PermissionList permissionList = null;
 
@@ -49,7 +49,7 @@ public class BaseCRUDController<M, PK extends Serializable> extends BaseControll
      *
      * @param baseService
      */
-    public void setBaseService(BaseService<M,PK> baseService) {
+    public void setBaseService(BaseService<M,ID> baseService) {
         this.baseService = baseService;
     }
 

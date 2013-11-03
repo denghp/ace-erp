@@ -17,14 +17,14 @@ import java.util.Map;
  * Date: 11/1/13
  * Time: 10:03 PM
  */
-public interface BaseMapper<T,PK extends Serializable> {
+public interface BaseMapper<T,ID extends Serializable> {
 
     /**
      * 根据ID删除
      * @param id
      * @return
      */
-    int delete(PK id);
+    int delete(ID id);
 
     /**
      * 删除实体对象
@@ -59,7 +59,7 @@ public interface BaseMapper<T,PK extends Serializable> {
      * @param id
      * @return
      */
-    T getOne(PK id);
+    T getOne(ID id);
 
     /**
      * 获取集合对象
