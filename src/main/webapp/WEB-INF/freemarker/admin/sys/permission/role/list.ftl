@@ -76,7 +76,7 @@ jQuery(function($) {
         mtype: 'GET',
         //data: grid_data,
         //datatype: "local",
-        height: 350,
+        height: 400,
         colNames:[' ', 'ID','角色名','角色', '描述','创建时间','修改时间', '是否可用'],
         colModel:[
             {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
@@ -93,7 +93,7 @@ jQuery(function($) {
                         }
                         jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ response.responseText
                                 +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
-                        return [false];
+                        return [true,'ok'];
                     }
                 }
             },
@@ -470,5 +470,56 @@ $(function(){
 });
 
 var $modal = $('#ajax-modal');
+var setting = {
+    check: {
+        enable: true
+    },
+    data: {
+        simpleData: {
+            enable: true
+        }
+    }
+};
+var zTreeObj;
+var zNodes =[];
+var permissionNodes;
+$(document).ready(function(){
+    /**
+     $.ajax({
+            type: "GET",
+            url: $path_base + '/admin/sys/resource/ajax/load',
+            dataType: "json",
+            global: false,
+            async: false,
+            success: function (strReult) {
+                zNodes=eval(strReult);
+            },
+            error: function () {
+                alert("Ajax请求数据失败!");
+            }
+        });
+     **/
+        //$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    $("#submit").bind('click',getNodeValue);
 
+    //请求多选框中的数据
+    /**
+     $.ajax({
+            type:"GET",
+            url: $path_base +'/admin/sys/permission/permission/list?rows=100',
+            dataType:'json',
+            async:false,
+            success: function(jsonData) {
+                permissionNodes = eval(jsonData);
+            },
+            error: function() {
+                alert("Ajax请求数据失败!");
+            }
+        });
+     initSelectData(permissionNodes); **/
+});
 </script>
+
+
+

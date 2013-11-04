@@ -155,3 +155,14 @@ BEGIN
        RETURN pTemp;
 END ||
 DELIMITER ;
+/*** custom function getChildList **/
+DROP FUNCTION IF EXISTS getChildCount;
+DELIMITER ||
+CREATE FUNCTION `getChildCount`(rootId INT) 
+     RETURNS INT  
+BEGIN 
+       DECLARE pTemp INT DEFAULT 0 ;
+       set pTemp = (select count(*) from sys_resource f_t where f_t.parent_id = rootId);
+       RETURN pTemp;
+END ||
+DELIMITER ;

@@ -22,12 +22,11 @@ public class ZTree<ID extends Serializable> implements Serializable {
     private ID pId;
     private String name;
     private boolean open;
-    /**
     private boolean root;
     private String iconSkin;
     private boolean isParent;
     private boolean nocheck = false;
-       **/
+
     public ID getId() {
         return id;
     }
@@ -61,7 +60,6 @@ public class ZTree<ID extends Serializable> implements Serializable {
         this.open = open;
     }
 
-    /**
     public String getIconSkin() {
         return iconSkin;
     }
@@ -94,7 +92,7 @@ public class ZTree<ID extends Serializable> implements Serializable {
         this.nocheck = nocheck;
     }
 
-
+    /**
     @Override
     public String toString() {
         return "{" +

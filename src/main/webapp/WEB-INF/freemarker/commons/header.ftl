@@ -31,6 +31,9 @@
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-skins.min.css" />
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/bootstrap-modal.css" />
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/bootstrap-modal-bs3patch.css" />
+
+
+    <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <!--[if lte IE 8]>
     <link rel="stylesheet" href="${rc.getContextPath()}/assets/css/ace-ie.min.css" />
     <![endif]-->
