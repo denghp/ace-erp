@@ -87,11 +87,6 @@ span.tmpzTreeMove_arrow {width:16px; height:16px; display: inline-block; padding
 ul.ztree.zTreeDragUL {margin:0; padding:0; position:absolute; width:auto; height:auto;overflow:hidden; background-color:#cfcfcf; border:1px #00B83F dotted; opacity:0.8; filter:alpha(opacity=80)}
 .zTreeMask {z-index:10000; background-color:#cfcfcf; opacity:0.0; filter:alpha(opacity=0); position:absolute}
 
-/* level style*/
-/*.ztree li span.button.level0 {
-	display:none;
-}
-.ztree li ul.level0 {
-	padding:0;
-	background:none;
-}*/
+div.zTreeDemoBackground {width:250px;height:362px;text-align:left;}
+
+ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #f0f6e4;width:220px;height:360px;overflow-y:scroll;overflow-x:auto;}

@@ -45,11 +45,14 @@
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.pie.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/flot/jquery.flot.resize.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/ace-elements.min.js"></script>
     -->
 <!-- ace scripts -->
 
-<script src="${rc.getContextPath()}/assets/js/ace-elements.min.js"></script>
+
 <script src="${rc.getContextPath()}/assets/js/ace.min.js"></script>
+<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.excheck-3.5.min.js"></script>
 
 <!-- page specific plugin scripts -->
 
