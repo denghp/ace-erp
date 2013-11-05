@@ -18,27 +18,11 @@
 
                         <li>
                             <a data-toggle="tab" href="#profile">
+                                <i class="green icon-cogs bigger-110"></i>
                                 授权信息
-                                <span class="badge badge-danger">4</span>
                             </a>
                         </li>
 
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                Dropdown &nbsp;
-                                <i class="icon-caret-down bigger-110 width-auto"></i>
-                            </a>
-
-                            <ul class="dropdown-menu dropdown-info">
-                                <li>
-                                    <a data-toggle="tab" href="#dropdown1">@fat</a>
-                                </li>
-
-                                <li>
-                                    <a data-toggle="tab" href="#dropdown2">@mdo</a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -134,7 +118,7 @@
 
                                         <div class="widget-body">
                                             <div class="widget-main padding-8">
-                                                <ul id="treeDemo" class="ztree"
+                                                <ul id="treeview" class="ztree"
                                                     style="height: 240px;width: 300px;margin-top: 0px;">
                                                 </ul>
                                             </div>
@@ -146,28 +130,17 @@
                                 <div class="col-sm-6">
                                     <div class="widget-box">
                                         <div class="widget-header header-color-green2">
-                                            <h4 class="lighter smaller">Browse Files</h4>
+                                            <h4 class="lighter smaller">资源权限</h4>
                                         </div>
                                         <div class="widget-body">
-                                            <div class="widget-main padding-8">
-                                                <select class="form-control" id="form-field-select-2"
-                                                        multiple="multiple">
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="AZ">Arizona</option>
-                                                    <option value="AR">Arkansas</option>
-                                                    <option value="CA">California</option>
-                                                    <option value="CO">Colorado</option>
-                                                    <option value="CT">Connecticut</option>
-                                                    <option value="TN">Tennessee</option>
-                                                    <option value="TX">Texas</option>
-                                                    <option value="UT">Utah</option>
-                                                    <option value="VT">Vermont</option>
-                                                    <option value="VA">Virginia</option>
-                                                    <option value="WA">Washington</option>
-                                                    <option value="WV">West Virginia</option>
-                                                    <option value="WI">Wisconsin</option>
-                                                    <option value="WY">Wyoming</option>
+                                            <div class="widget-main padding-8" >
+                                                <select class="form-control" id="form-field-select"
+                                                        multiple="multiple" style="height: 240px">
+                                                <#if permissionList?exists>
+                                                     <#list permissionList as permission>
+                                                         <option value="${permission.permission}">${permission.name} ( ${permission.permission} )</option>
+                                                     </#list>
+                                                </#if>
                                                 </select>
                                             </div>
                                         </div>
@@ -177,16 +150,6 @@
                             </div>
                         </div>
 
-                        <div id="dropdown1" class="tab-pane">
-                            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's
-                                organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                        </div>
-
-                        <div id="dropdown2" class="tab-pane">
-                            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold
-                                out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack
-                                portland seitan DIY, art party locavore wolf cliche high life echo park Austin.</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -216,22 +179,8 @@
         }
     };
     var zTreeObj;
-    var zNodes = [
-        { id: 1, pId: 0, name: "随意勾选 1", open: true},
-        { id: 11, pId: 1, name: "随意勾选 1-1", open: true},
-        { id: 111, pId: 11, name: "随意勾选 1-1-1"},
-        { id: 112, pId: 11, name: "随意勾选 1-1-2"},
-        { id: 12, pId: 1, name: "随意勾选 1-2", open: true},
-        { id: 121, pId: 12, name: "随意勾选 1-2-1"},
-        { id: 122, pId: 12, name: "随意勾选 1-2-2"},
-        { id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
-        { id: 21, pId: 2, name: "随意勾选 2-1"},
-        { id: 22, pId: 2, name: "随意勾选 2-2", open: true},
-        { id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
-        { id: 222, pId: 22, name: "随意勾选 2-2-2"},
-        { id: 23, pId: 2, name: "随意勾选 2-3"}
-    ];
-
+    var zNodes = [];
+    var permissNodes = [];
     $(document).ready(function () {
         $.ajax({
             type: "GET",
@@ -246,7 +195,6 @@
                 alert("Ajax请求数据失败!");
             }
         });
-        //$.fn.zTree.init($("#treeDemo"), setting, zNodes);
-        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        zTreeObj = $.fn.zTree.init($("#treeview"), setting, zNodes);
     });
 </script>

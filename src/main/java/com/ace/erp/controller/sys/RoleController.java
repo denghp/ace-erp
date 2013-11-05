@@ -9,9 +9,8 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
-import com.ace.erp.entity.sys.Menu;
-import com.ace.erp.entity.sys.Role;
-import com.ace.erp.entity.sys.User;
+import com.ace.erp.entity.sys.*;
+import com.ace.erp.service.sys.PermissionService;
 import com.ace.erp.service.sys.ResourceService;
 import com.ace.erp.service.sys.RoleService;
 import com.google.common.collect.Collections2;
@@ -46,12 +45,17 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
     @BaseComponent
     private RoleService roleService;
 
+    @Autowired
+    private PermissionService permissionService;
+
+
     @RequestMapping(value = "/{edit:edit;?.*}",method = RequestMethod.POST)
     public String editIndex(Role role, Model model) {
+        List<Permission> permissionList = permissionService.getPageList(0,50);
 
-        //List<Role> roleList = roleService.getAllRoles();
-        //model.addAttribute("roleList", roleList);
         model.addAttribute("role",role);
+        model.addAttribute("permissionList", permissionList);
+
         return "/admin/sys/permission/role/edit";
     }
 

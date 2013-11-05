@@ -13,16 +13,31 @@
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="modifyTime" column="modify_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-        <collection property="resourcePermissions" ofType="RoleResourcePermission">
-            <id property="id" column="rrp_id"/>
-            <id property="roleId" column="role_id"/>
-            <id property="resourceId" column="resource_id"/>
-            <id property="permissionIds" column="permission_ids"/>
+        <collection column="role_id" property="resourcePermissions" ofType="RoleResourcePermission">
+            <result property="id" column="rrp_id"/>
+            <result property="roleId" column="role_id"/>
+            <result property="resourceId" column="resource_id"/>
+            <result property="permissionIds" column="permission_ids"/>
         </collection>
     </resultMap>
 
-    <select id="getResourcePermissions" parameterType="java.lang.Integer" resultMap="roleResult">
-    SELECT id, name, role, description,is_show,create_time,modify_time FROM sys_role WHERE role_id = #{roleId}
+
+    <select id="getRoleResourcePermissions" parameterType="java.lang.Integer" resultMap="roleResult">
+        select
+            role.id,
+            role.name,
+            role.role,
+            role.description,
+            rrp.id as rrp_id,
+            rrp.role_id,
+            rrp.resource_id,
+            rrp.permission_ids
+        from
+            sys_role as role
+        left join
+            sys_role_resource_permission as rrp on role.id = rrp.role_id
+        where
+            role.id = #{roleId};
   </select>
 
     <select id="getListRolesByRoleIds" parameterType="Map" resultMap="roleResult">

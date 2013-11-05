@@ -29,8 +29,12 @@ public class RoleService extends BaseService<Role,Integer> {
     private RoleMapper roleMapper;
 
 
-    public List<RoleResourcePermission> getResourcePermissions(Long roleId) {
-        return roleMapper.getResourcePermissions(roleId);
+    public List<RoleResourcePermission> getRoleResourcePermissions(Integer roleId) {
+        List<Role> roles = roleMapper.getRoleResourcePermissions(roleId);
+        if (roles != null && roles.size() > 0) {
+           return roles.get(0).getResourcePermissions();
+        }
+        return null;
     }
 
     public List<Role> findShowRoles(String roleIds) {

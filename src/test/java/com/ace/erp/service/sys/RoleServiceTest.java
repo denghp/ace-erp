@@ -3,11 +3,11 @@
  *
  * Licensed 
  */
-package com.ace.erp.dao;
+package com.ace.erp.service.sys;
 
 import com.ace.erp.BaseTest;
 import com.ace.erp.entity.sys.Role;
-import com.ace.erp.service.sys.RoleService;
+import com.ace.erp.entity.sys.RoleResourcePermission;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.List;
  * Date: 10/20/13
  * Time: 3:33 PM
  */
-public class RoleDaoTest extends BaseTest {
+public class RoleServiceTest extends BaseTest {
 
     @Autowired
     private RoleService roleService;
@@ -33,5 +33,16 @@ public class RoleDaoTest extends BaseTest {
         }
         Assert.assertNotNull(roleList);
     }
+
+    @Test
+    public void getRoleResourcePermission() {
+        List<RoleResourcePermission> rrpList = roleService.getRoleResourcePermissions(1);
+            for (RoleResourcePermission rrp : rrpList) {
+                System.out.println(rrp);
+            }
+        Assert.assertNotNull(rrpList);
+    }
+
+
 
 }

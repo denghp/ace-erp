@@ -8,7 +8,6 @@ package com.ace.erp.dao;
 import com.ace.erp.BaseTest;
 import com.ace.erp.entity.sys.Resource;
 import com.ace.erp.shiro.persistence.ResourceMapper;
-import org.apache.shiro.crypto.hash.Hash;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +21,7 @@ import java.util.Map;
  * Date: 10/20/13
  * Time: 9:36 AM
  */
-public class ResourceDaoTest extends BaseTest {
+public class ResourceMapperTest extends BaseTest {
 
     @Autowired
     private ResourceMapper resourceMapper;

@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/*.xml")
-public class UserDaoTest {
+public class UserMapperTest {
     @Resource
     private UserService userService;
 

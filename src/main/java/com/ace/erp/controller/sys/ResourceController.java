@@ -7,11 +7,11 @@ package com.ace.erp.controller.sys;
 
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.controller.BaseCRUDController;
-import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.Resource;
+import com.ace.erp.entity.sys.Role;
+import com.ace.erp.entity.sys.RoleResourcePermission;
 import com.ace.erp.service.sys.ResourceService;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
+import com.ace.erp.service.sys.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +38,20 @@ public class ResourceController extends BaseCRUDController<Resource,Integer> {
     @BaseComponent
     private ResourceService resourceService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping(value = "/ajax/load")
     //@PageableDefaults(sort = {"parentIds=asc", "weight=asc"})
     @ResponseBody
     public Object load(
             HttpServletRequest request,
+            @RequestParam(value = "roleId",required = false) Integer roleId,
             @RequestParam(value = "async", defaultValue = "true") boolean async) {
+        List<RoleResourcePermission> rrpList;
+        if (roleId != null) {
+            rrpList = roleService.getRoleResourcePermissions(roleId);
+         }
 
         return resourceService.getZTreeList(request.getContextPath(), async);
     }

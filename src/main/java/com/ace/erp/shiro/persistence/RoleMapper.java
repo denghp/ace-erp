@@ -21,9 +21,9 @@ public interface RoleMapper extends BaseMapper<Role,Integer> {
     /**
      * 根据 roleId获取相关的ResourcePermission
      * @param roleId
-     * @return List<RoleResourcePermission>
+     * @return List<Role>
      */
-    public List<RoleResourcePermission> getResourcePermissions(Long roleId);
+    public List<Role> getRoleResourcePermissions(Integer roleId);
 
     /**
      * 根据角色ID获取角色列表

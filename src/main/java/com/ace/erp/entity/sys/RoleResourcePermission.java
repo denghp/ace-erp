@@ -65,8 +65,8 @@ public class RoleResourcePermission {
 
     @Override
     public String toString() {
-        return "RoleResourcePermission{id=" + this.getId() +
-                ",roleId=" + (roleId ) +
+        return "{id=" + this.getId() +
+                ",roleId=" + roleId  +
                 ", resourceId=" + resourceId +
                 ", permissionIds=" + permissionIds +
                 '}';
