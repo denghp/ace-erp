@@ -156,7 +156,7 @@
 </div>
 <div class="modal-footer">
     <button type="button" data-dismiss="modal" class="btn">Close</button>
-    <button type="button" class="btn btn-primary">Ok</button>
+    <button type="button" id="okBtn" class="btn btn-primary">Ok</button>
 </div>
 
 
@@ -194,5 +194,13 @@
             }
         });
         zTreeObj = $.fn.zTree.init($("#treeview"), setting, zNodes);
+    });
+
+    $('#okBtn').on('click', function(e){
+       alert("OK");
+        var nodes = zTreeObj.getCheckedNodes();
+        for (var i = 0 ; i < nodes.length; i ++) {
+            alert("id : "+nodes[i].id+"name : " + nodes[i].name + " checked : " + nodes[i].checked);
+        }
     });
 </script>
