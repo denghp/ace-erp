@@ -3,7 +3,7 @@
  *
  * Licensed 
  */
-package com.ace.erp.entity;
+package com.ace.erp.exception;
 
 /**
  * Created with ace.

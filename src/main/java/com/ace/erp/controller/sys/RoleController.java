@@ -10,6 +10,7 @@ import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.sys.*;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.PermissionService;
 import com.ace.erp.service.sys.ResourceService;
 import com.ace.erp.service.sys.RoleService;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,14 +51,28 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
     private PermissionService permissionService;
 
 
-    @RequestMapping(value = "/{edit:edit;?.*}",method = RequestMethod.POST)
+    @RequestMapping(value = "/{edit:edit;?.*}", method = RequestMethod.POST)
     public String editIndex(Role role, Model model) {
-        List<Permission> permissionList = permissionService.getPageList(0,50);
+        List<Permission> permissionList = permissionService.getPageList(0, 50);
 
-        model.addAttribute("role",role);
+        model.addAttribute("role", role);
         model.addAttribute("permissionList", permissionList);
 
         return "/admin/sys/permission/role/edit";
     }
+
+    @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Response updateWithResourcePermission(Role role,
+                                                 BindingResult result,
+                                                 Integer[] resourceIds,
+                                                 Model model) throws AceException {
+        if (role.getId() != null && resourceIds != null) {
+            roleService.updateWithResourcePermission(resourceIds, role);
+        }
+        return Response.createErrorResp(AceException.Code.BAD_REQUEST.intValue(), "Bad Request, the params is invalid.");
+
+    }
+
 
 }

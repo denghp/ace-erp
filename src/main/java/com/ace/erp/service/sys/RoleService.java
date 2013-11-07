@@ -3,7 +3,9 @@ package com.ace.erp.service.sys;
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.RoleResourcePermission;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.shiro.persistence.RoleMapper;
+import com.ace.erp.shiro.persistence.RoleResourcePermissionMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,8 @@ public class RoleService extends BaseService<Role,Integer> {
     @BaseComponent
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RoleResourcePermissionMapper rrpMapper;
 
     public List<RoleResourcePermission> getRoleResourcePermissions(Integer roleId) {
         List<Role> roles = roleMapper.getRoleResourcePermissions(roleId);
@@ -70,50 +74,44 @@ public class RoleService extends BaseService<Role,Integer> {
     }
 
 
-    /**
+    public void updateWithResourcePermission(Integer[] resourceIds,Role role) throws AceException{
+        //获取当前role存在的权限资源
+        Map<String,RoleResourcePermission> rrpMaps = null;
+        if (role == null || role.getId() == null || resourceIds == null
+                && resourceIds.length <= 0) {
+            logger.warn("updateWithResourcePermission failed, this params invalid");
+            return ;
+        }
+        rrpMaps = getMapRRPS(role.getId(),resourceIds);
+        try {
 
-     public int getCount() {
-     return roleMapper.getCount();
-     }
+            for (Integer resourceId : resourceIds) {
+                RoleResourcePermission rrp = new RoleResourcePermission(role.getId(),resourceId,"1");
+                //验证role_id + resouceId 组合的key 是否已经存在
+                if (!rrpMaps.containsKey(role.getId()+"_"+resourceId)) {
+                    rrpMapper.save(rrp);
+                }
 
-    public List<Role> getRolePages(int offset, int limit) {
+            }
+        } catch (Exception ex) {
+           throw AceException.create(AceException.Code.SYSTEM_ERROR,ex.getMessage());
+        }
+
+    }
+
+    //TODO: 这里需要优化,如果resourceIds大于100个时,
+    // 查询会影响性能,最好控制在100以内,这里使用的是in
+    public Map<String,RoleResourcePermission> getMapRRPS(int roleId, Integer[] resourceIds) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("offset",offset);
-        params.put("limit",limit);
-        return roleMapper.getRolePages(params);
-    }
-
-    public Role add(Role role) {
-        int result = roleMapper.save(role);
-        return role;
-    }
-
-    public boolean deleteById(Integer id) {
-        if (id == null) {
-            logger.warn("delete role ids is empty.");
-            return false;
+        params.put("roleId",roleId);
+        params.put("resourceIds",resourceIds);
+        List<RoleResourcePermission> rrpList = rrpMapper.getRRPSByRIdAndResIds(params);
+        Map<String, RoleResourcePermission> rrpMaps = new HashMap<String, RoleResourcePermission>();
+        for (RoleResourcePermission rrp : rrpList) {
+            rrpMaps.put(rrp.getRoleId()+"_"+rrp.getResourceId(),rrp);
         }
-        roleMapper.deleteById(id);
-        return true;
+        return rrpMaps;
     }
-
-    public boolean deleteByIds(List<String> list) {
-        if (list == null) {
-            logger.warn("delete role ids is empty.");
-            return false;
-        }
-        Map<String,Object> params = new HashMap<String, Object>();
-        params.put("list",list);
-        roleMapper.deleteByIds(params);
-        return true;
-    }
-
-    public Role update(Role role) {
-        //update
-        int result = roleMapper.update(role);
-        return roleMapper.getRoleById(role.getId());
-    }
-   **/
 
 
 }

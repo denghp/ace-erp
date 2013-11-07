@@ -10,6 +10,20 @@
         <result property="permissionIds" column="permission_ids"/>
     </resultMap>
 
+    <insert id="save" parameterType="RoleResourcePermission">
+        insert into sys_role_resource_permission (role_id,resource_id,permission_ids)
+        values (#{roleId},#{resourceId},#{permissionIds});
+    </insert>
 
+    <select id="getOne" parameterType="java.util.Map" resultMap="roleResourcePermissionMap">
+        select id,role_id,resource_id,permission_ids from  sys_role_resource_permission where role_id = #{roleId} and resource_id = #{resourceId};
+    </select>
 
+    <select id="getRRPSByRIdAndResIds" parameterType="java.util.Map" resultMap="roleResourcePermissionMap">
+        select id,role_id,resource_id,permission_ids from  sys_role_resource_permission where role_id = #{roleId} and resource_id in
+        <foreach item="item" index="index" collection="resourceIds"
+                 open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </select>
 </mapper>

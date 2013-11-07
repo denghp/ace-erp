@@ -165,7 +165,7 @@
 </script>
 
 <script type="text/javascript">
-    debugger;
+    eval('debugger;');
     var setting = {
         check: {
             enable: true
@@ -197,10 +197,24 @@
     });
 
     $('#okBtn').on('click', function(e){
-       alert("OK");
         var nodes = zTreeObj.getCheckedNodes();
+        var resourceIds = new Array();
         for (var i = 0 ; i < nodes.length; i ++) {
-            alert("id : "+nodes[i].id+"name : " + nodes[i].name + " checked : " + nodes[i].checked);
+            resourceIds[i] = nodes[i].id;
+            //alert("id : "+nodes[i].id+" name : " + nodes[i].name + " checked : " + nodes[i].checked);
         }
+        $.ajax({
+            type: 'POST',
+            url: $path_base + "/admin/sys/permission/role/${role.id}/update",
+            dataType: "json",
+            data: {'resourceIds':resourceIds},
+            traditional:true,
+            success: function (data,status) {
+                alert("success : " + data);
+            },
+            error: function(){
+                alert('操作错误,请与系统管理员联系!');
+            }
+        });
     });
 </script>

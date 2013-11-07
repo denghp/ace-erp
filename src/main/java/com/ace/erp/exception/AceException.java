@@ -196,6 +196,9 @@ public abstract class AceException extends Exception {
         return "ViTaErrorCode = " + getCodeMessage(code) + " for " + message;
     }
 
+    public int code() {
+        return code.intValue();
+    }
 
     /**
      * @see Code#SYSTEM_ERROR

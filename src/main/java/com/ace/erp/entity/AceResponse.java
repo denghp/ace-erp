@@ -5,13 +5,11 @@
  */
 package com.ace.erp.entity;
 
-import com.ace.erp.entity.sys.User;
+import com.ace.erp.exception.Error;
 import com.ace.erp.utils.JsonUtils;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created with ace-erp.
@@ -23,7 +21,7 @@ import java.util.List;
 public class AceResponse implements Serializable {
     private ResponseHeader responseHeader;
     private Response response;
-    private Error error;
+    private com.ace.erp.exception.Error error;
 
     public AceResponse() {}
 

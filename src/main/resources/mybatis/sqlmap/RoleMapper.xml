@@ -13,12 +13,15 @@
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="modifyTime" column="modify_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-        <collection column="role_id" property="resourcePermissions" ofType="RoleResourcePermission">
+        <collection column="role_id" property="resourcePermissions" ofType="RoleResourcePermission"
+                resultMap="com.ace.erp.shiro.persistence.RoleResourcePermissionMapper.roleResourcePermissionMap" />
+            <!--
             <result property="id" column="rrp_id"/>
             <result property="roleId" column="role_id"/>
             <result property="resourceId" column="resource_id"/>
             <result property="permissionIds" column="permission_ids"/>
         </collection>
+        -->
     </resultMap>
 
 

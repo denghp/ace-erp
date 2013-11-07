@@ -5,7 +5,7 @@
  */
 package com.ace.erp.entity;
 
-import com.ace.erp.entity.sys.User;
+import com.ace.erp.exception.Error;
 import com.ace.erp.utils.JsonUtils;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
@@ -25,6 +25,7 @@ public class Response implements Serializable {
     private int total;
     private int page;
     private List<?> rows;
+    private Error error;
 
     public Response() {}
 
@@ -69,6 +70,20 @@ public class Response implements Serializable {
 
     public void setRows(List<?> rows) {
         this.rows = rows;
+    }
+
+    public Error getError() {
+        return error;
+    }
+
+    public void setError(Error error) {
+        this.error = error;
+    }
+
+    public static Response createErrorResp(int code, String msg) {
+        Response response = new Response();
+        response.setError(new Error(code,msg));
+        return response;
     }
 
     @Override

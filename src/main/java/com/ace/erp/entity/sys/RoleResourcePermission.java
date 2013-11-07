@@ -30,6 +30,12 @@ public class RoleResourcePermission {
     public RoleResourcePermission() {
     }
 
+    public RoleResourcePermission(Integer roleId, Integer resourceId, String permissionIds) {
+        this.roleId = roleId;
+        this.resourceId = resourceId;
+        this.permissionIds = permissionIds;
+    }
+
     public Integer getId() {
         return id;
     }
