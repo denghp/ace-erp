@@ -17,7 +17,7 @@
     </resultMap>
 
   <select id="getOne" parameterType="java.lang.Long" resultMap="resourceResult">
-    SELECT * FROM sys_resource WHERE id = #{resourceId}
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource WHERE id = #{resourceId}
   </select>
 
     <select id="getList" resultMap="resourceResult">

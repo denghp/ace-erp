@@ -48,7 +48,8 @@ public class ResourceMenuCacheAspect extends BaseCacheAspect {
         clear();
     }
 
-    @Around(value = "resourceServicePointcut() && resourceCacheablePointcut(arg)", argNames = "pjp,arg")
+    //TODO: 开发时期禁用cache
+    //@Around(value = "resourceServicePointcut() && resourceCacheablePointcut(arg)", argNames = "pjp,arg")
     public Object findRolesCacheableAdvice(ProceedingJoinPoint pjp, User arg) throws Throwable {
 
         User user = arg;

@@ -37,6 +37,18 @@ public class RoleService extends BaseService<Role,Integer> {
         return null;
     }
 
+    public Map<Integer,RoleResourcePermission> getRoleResourceMaps(Integer roleId) {
+        List<Role> roles = roleMapper.getRoleResourcePermissions(roleId);
+        Map<Integer, RoleResourcePermission> rrpMaps = new HashMap<Integer, RoleResourcePermission>();
+        if (roles != null && roles.size() > 0) {
+            List<RoleResourcePermission> rrpList = roles.get(0).getResourcePermissions();
+            for (RoleResourcePermission rrp : rrpList) {
+                rrpMaps.put(rrp.getResourceId(),rrp);
+            }
+        }
+        return rrpMaps;
+    }
+
     public List<Role> findShowRoles(String roleIds) {
         if (StringUtils.isBlank(roleIds)) {
             logger.info("roleIds is empty!");

@@ -88,6 +88,7 @@ public class UserAuthService {
             for (RoleResourcePermission rrp : role.getResourcePermissions()) {
                 Resource resource = resourceService.getOne(rrp.getResourceId());
 
+                //获取资源identity
                 String actualResourceIdentity = resourceService.findActualResourceIdentity(resource);
 
                 //不可用 即没查到 或者标识字符串不存在
@@ -97,7 +98,8 @@ public class UserAuthService {
                 if (StringUtils.isNotBlank(rrp.getPermissionIds())) {
                     String[] permissionIds = rrp.getPermissionIds().split(",");
                     for (String permissionId : permissionIds) {
-                        Permission permission = null;// = permissionService.getPermissionById(Integer.valueOf(permissionId));
+                        //获取权限状态
+                        Permission permission = permissionService.getOne(Integer.valueOf(permissionId));
                         //不可用
                         if (permission == null || Boolean.FALSE.equals(permission.getShow())) {
                             continue;

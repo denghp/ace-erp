@@ -4,6 +4,7 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.Menu;
 import com.ace.erp.entity.sys.Resource;
+import com.ace.erp.entity.sys.RoleResourcePermission;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.shiro.persistence.ResourceMapper;
 import com.google.common.collect.Lists;
@@ -30,6 +31,9 @@ public class ResourceService extends BaseService<Resource,Integer> {
     private static Logger logger = LoggerFactory.getLogger(ResourceService.class);
     @Autowired
     private UserAuthService userAuthService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     @BaseComponent
@@ -75,6 +79,7 @@ public class ResourceService extends BaseService<Resource,Integer> {
         }
 
         //如果有儿子 最后拼一个*
+        /**
         boolean hasChildren = false;
         for (Resource r : resourceMapper.getList()) {
             if (resource.getId().equals(r.getParentId())) {
@@ -82,7 +87,9 @@ public class ResourceService extends BaseService<Resource,Integer> {
                 break;
             }
         }
-        if (hasChildren) {
+        **/
+
+        if (resource.isHasChildren()) {
             s.append(":*");
         }
 
@@ -214,12 +221,16 @@ public class ResourceService extends BaseService<Resource,Integer> {
         return resourceMapper.getAllWithSort(params);
     }
 
-    public List<ZTree<Integer>> getZTreeList(String contextPath,boolean async) {
-             List<Resource> resourceList = getAllWithSort();
-        return convertToZtreeList(contextPath, resourceList, async);
+    public List<ZTree<Integer>> getZTreeList(boolean async, Integer roleId) {
+        List<Resource> resourceList = getAllWithSort();
+        Map<Integer, RoleResourcePermission> rrpMaps = null;
+        if (roleId != null) {
+            rrpMaps = roleService.getRoleResourceMaps(roleId);
+        }
+        return convertToZtreeList(resourceList, async,rrpMaps);
     }
 
-    private List<ZTree<Integer>> convertToZtreeList(String contextPath, List<Resource> models, boolean async) {
+    private List<ZTree<Integer>> convertToZtreeList(List<Resource> models, boolean async, Map<Integer, RoleResourcePermission> rrpMaps) {
         List<ZTree<Integer>> zTrees = Lists.newArrayList();
 
         if (models == null || models.isEmpty()) {
@@ -228,6 +239,9 @@ public class ResourceService extends BaseService<Resource,Integer> {
 
         for (Resource resource : models) {
             ZTree zTree = convertToZtree(resource, async);
+            if (rrpMaps != null && rrpMaps.containsKey(resource.getId())) {
+                zTree.setChecked(true);
+            }
             zTrees.add(zTree);
         }
         return zTrees;
@@ -238,8 +252,8 @@ public class ResourceService extends BaseService<Resource,Integer> {
         zTree.setId(m.getId());
         zTree.setpId(m.getParentId());
         zTree.setName(m.getName());
-        //zTree.setIconSkin(m.getIcon());
         zTree.setOpen(open);
+        //zTree.setIconSkin(m.getIcon());
         //zTree.setRoot(m.isRoot());
         //zTree.setIsParent(m.isHasChildren());
 

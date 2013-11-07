@@ -1,5 +1,4 @@
 /**
- * Copyright (c) 20095-2013 https://github.com/zhangkaitao
  *
  *
  */

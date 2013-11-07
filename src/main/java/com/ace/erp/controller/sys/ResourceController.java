@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/admin/sys/resource")
-public class ResourceController extends BaseCRUDController<Resource,Integer> {
+public class ResourceController extends BaseCRUDController<Resource, Integer> {
 
     private Logger logger = LoggerFactory.getLogger(RoleController.class);
     @Autowired
@@ -46,14 +46,10 @@ public class ResourceController extends BaseCRUDController<Resource,Integer> {
     @ResponseBody
     public Object load(
             HttpServletRequest request,
-            @RequestParam(value = "roleId",required = false) Integer roleId,
+            @RequestParam(value = "roleId", required = false) Integer roleId,
             @RequestParam(value = "async", defaultValue = "true") boolean async) {
-        List<RoleResourcePermission> rrpList;
-        if (roleId != null) {
-            rrpList = roleService.getRoleResourcePermissions(roleId);
-         }
 
-        return resourceService.getZTreeList(request.getContextPath(), async);
+        return resourceService.getZTreeList(async, roleId);
     }
 
 
