@@ -1,3 +1,4 @@
+<#assign shiro=JspTaglibs["http://shiro.apache.org/tags"]>
 <!DOCTYPE html>
 <html lang="en">
 <#include "commons/header.ftl" >

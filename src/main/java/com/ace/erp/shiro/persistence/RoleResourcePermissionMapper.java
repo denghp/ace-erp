@@ -21,6 +21,8 @@ public interface RoleResourcePermissionMapper extends BaseMapper<RoleResourcePer
 
     public RoleResourcePermission getOne(Map<String, Object> params);
 
-    public List<RoleResourcePermission> getRRPSByRIdAndResIds(Map<String, Object> params);
+    public List<RoleResourcePermission> getRRPListByRId(int roleId);
+
+    public void deleteRRPByRoleId(int roleId);
 
 }

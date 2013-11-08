@@ -2,7 +2,7 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title">角色授权</h4>
 </div>
-<div class="modal-body">
+<div class="modal-body" id="modal-body">
     <div class="row">
     <div class="col-sm-12">
         <div class="tabbable">
@@ -155,8 +155,8 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn">Close</button>
-    <button type="button" id="okBtn" class="btn btn-primary">Ok</button>
+    <button type="button" data-dismiss="modal" class="btn">取消</button>
+    <button type="button" id="update" class="btn btn-primary">更新</button>
 </div>
 
 
@@ -166,6 +166,7 @@
 
 <script type="text/javascript">
     eval('debugger;');
+    var $modal = $('#ajax-modal');
     var setting = {
         check: {
             enable: true
@@ -195,26 +196,35 @@
         });
         zTreeObj = $.fn.zTree.init($("#treeview"), setting, zNodes);
     });
-
-    $('#okBtn').on('click', function(e){
+    $('#update').on('click', function(e){
         var nodes = zTreeObj.getCheckedNodes();
         var resourceIds = new Array();
         for (var i = 0 ; i < nodes.length; i ++) {
-            resourceIds[i] = nodes[i].id;
+            if (!nodes[i].isParent) {
+                resourceIds.push(nodes[i].id);
+            }
             //alert("id : "+nodes[i].id+" name : " + nodes[i].name + " checked : " + nodes[i].checked);
         }
-        $.ajax({
-            type: 'POST',
-            url: $path_base + "/admin/sys/permission/role/${role.id}/update",
-            dataType: "json",
-            data: {'resourceIds':resourceIds},
-            traditional:true,
-            success: function (data,status) {
-                alert("success : " + data);
-            },
-            error: function(){
-                alert('操作错误,请与系统管理员联系!');
-            }
-        });
+        setTimeout(function(){
+            $.ajax({
+                type: 'POST',
+                url: $path_base + "/admin/sys/permission/role/${role.id}/update",
+                dataType: "json",
+                data: {'resourceIds':resourceIds},
+                traditional:true,
+                success: function (data,status) {
+                    //alert("success : " + data);
+                    var resp = JSON.stringify(data);
+                    $modal.find('.modal-body')
+                            .prepend('<div class="alert alert-info fade in">' +
+                                    resp+'<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                    '</div>');
+                },
+                error: function(){
+                    alert('操作错误,请与系统管理员联系!');
+                }
+            });
+        }, 1000);
     });
+
 </script>

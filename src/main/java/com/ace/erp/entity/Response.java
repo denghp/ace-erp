@@ -21,46 +21,51 @@ import java.util.List;
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Response implements Serializable {
     private static final long serialVersionUID = 3056471023678709706l;
-    private int records;
-    private int total;
-    private int page;
+    private ResponseHeader responseHeader;
+    private Integer records;
+    private Integer total;
+    private Integer page;
     private List<?> rows;
     private Error error;
 
     public Response() {}
 
-    public Response(int total, int page, int records) {
+    public Response(ResponseHeader responseHeader){
+        this.responseHeader = responseHeader;
+    }
+
+    public Response(Integer total, Integer page, Integer records) {
         this.total = total;
         this.page = page;
         this.records = records;
     }
 
-    public Response(int total, int page, int records, List<?> rows) {
+    public Response(Integer total, Integer page, Integer records, List<?> rows) {
         this(total,page,records);
         this.rows = rows;
     }
 
-    public int getRecords() {
+    public Integer getRecords() {
         return records;
     }
 
-    public void setRecords(int records) {
+    public void setRecords(Integer records) {
         this.records = records;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 
-    public int getPage() {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 
@@ -80,6 +85,14 @@ public class Response implements Serializable {
         this.error = error;
     }
 
+    public ResponseHeader getResponseHeader() {
+        return responseHeader;
+    }
+
+    public void setResponseHeader(ResponseHeader responseHeader) {
+        this.responseHeader = responseHeader;
+    }
+
     public static Response createErrorResp(int code, String msg) {
         Response response = new Response();
         response.setError(new Error(code,msg));
@@ -89,7 +102,6 @@ public class Response implements Serializable {
     @Override
     public String toString() {
         try {
-
             return JsonUtils.mapper.writeValueAsString(this);
         } catch (Exception ex) {
             ex.printStackTrace();

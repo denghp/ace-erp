@@ -9,6 +9,7 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
+import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.PermissionService;
@@ -67,11 +68,12 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
                                                  BindingResult result,
                                                  Integer[] resourceIds,
                                                  Model model) throws AceException {
+        long starTime = System.currentTimeMillis();
         if (role.getId() != null && resourceIds != null) {
             roleService.updateWithResourcePermission(resourceIds, role);
+            return new Response(new ResponseHeader(AceException.Code.OK.intValue(),System.currentTimeMillis() - starTime));
         }
         return Response.createErrorResp(AceException.Code.BAD_REQUEST.intValue(), "Bad Request, the params is invalid.");
-
     }
 
 

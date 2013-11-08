@@ -36,7 +36,7 @@ public class GlobalExceptionController {
     @ResponseBody
     public Response handleAllException(Exception ex) {
         logger.error("Exception : {}", ex);
-        return Response.createErrorResp(AceException.Code.SYSTEM_ERROR.intValue(), "Server internal error. " + ex.getMessage());
+        return Response.createErrorResp(AceException.Code.SYSTEM_ERROR.intValue(), "Server internal error. ");
 
     }
 

@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
 /**
  * Project_Name: smart-erp
  * File: AuthenticationRealm
@@ -43,7 +45,13 @@ public class AuthenticationRealm extends AuthorizingRealm {
 
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(userAuthService.findStringRoles(user));
-        authorizationInfo.setStringPermissions(userAuthService.findStringPermissions(user));
+        Set<String> permissions =  userAuthService.findStringPermissions(user);
+        if (logger.isDebugEnabled()) {
+            for (String permission : permissions) {
+                logger.debug("User : {} , permission : {} ",user.getUsername(), permission);
+            }
+        }
+        authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }
 

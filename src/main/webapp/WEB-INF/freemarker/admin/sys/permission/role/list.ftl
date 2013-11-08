@@ -1,3 +1,4 @@
+<#assign shiro=JspTaglibs["http://shiro.apache.org/tags"]>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -44,6 +45,8 @@
                 <i class="icon-hand-right"></i>
 
                 Please note that demo server is not configured to save the changes, therefore you may get an error message.
+            <@shiro.hasPermission name="sys:permission:role:*"> 具有所有权限</@shiro.hasPermission>
+            <@shiro.hasPermission name="sys:permission:role:create"> 具有create权限</@shiro.hasPermission>
                 <button class="close" data-dismiss="alert">
                     <i class="icon-remove"></i>
                 </button>
@@ -368,8 +371,8 @@ jQuery(function($) {
                                 }
                             });
                     roleDiv.css({"margin-right": "5px", float: "left", cursor: "pointer",position: "relative",overflow:"hidden"})
-                            .addClass("ajax ui-pg-div ui-inline-custom")
-                            .append('<span class="demo ui-icon  icon-cogs"></span>')
+                            .addClass("ui-pg-div ui-inline-custom")
+                            .append('<@shiro.hasPermission name='sys:permission:role:update'><span class="ui-icon  icon-cogs"></span></@shiro.hasPermission>')
                             .prependTo($(this).children("div"));
                 });
     }
@@ -426,7 +429,20 @@ jQuery(function($) {
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-        })
+        });
+        //TODO: 根据细粒度权限控制
+        /**
+        $('.ui-pg-table > tbody > tr > .ui-pg-button.ui-corner-all:not(.ui-state-disabled)').each(function(){
+            var buttons = $(this);
+            for (var i = 0 ;i < buttons.length; i ++) {
+                var id = buttons[i].id;
+                if (id == "add_grid-table") {
+                    <@shiro.lacksPermission name='sys:permission:role:create'>
+                       buttons[i].remove()
+                    </@shiro.lacksPermission>
+                }
+            }
+        });   **/
     }
 
     function enableTooltips(table) {
@@ -470,8 +486,6 @@ $(function(){
 });
 
 var $modal = $('#ajax-modal');
-
-
 </script>
 
 

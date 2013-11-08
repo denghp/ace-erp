@@ -25,14 +25,7 @@
         <property name="maxAge" value="${shiro.uid.rememeberMe.cookie.maxAge}"/>
     </bean>
     <!--dao -->
-    <!-- 会话保持的DAO
-    <bean id="onlineSessionDAO" class="org.apache.shiro.session.mgt.eis.OnlineSessionDAO">
-        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
-        <property name="activeSessionsCacheName" value="${shiro.active.session.cacheName}"/>
-    </bean>
 
-    <bean id="onlineSessionFactory" class="org.apache.shiro.session.mgt.OnlineSessionFactory"/>
-     -->
     <bean id="myBatisRealm" class="com.ace.erp.shiro.realm.AuthenticationRealm"></bean>
     <!-- manager -->
     <!-- Remembered vs Authenticated http://www.ituring.com.cn/article/287 -->

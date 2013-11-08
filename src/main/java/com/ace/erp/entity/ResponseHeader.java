@@ -7,6 +7,7 @@ package com.ace.erp.entity;
 
 import com.ace.erp.utils.JsonUtils;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
 
@@ -16,11 +17,19 @@ import java.io.Serializable;
  * Date: 10/27/13
  * Time: 10:42 PM
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ResponseHeader implements Serializable {
 
     private int status;
     @JsonProperty("QTime")
     private long QTime;
+
+    public ResponseHeader() {}
+
+    public ResponseHeader(int status, long Qtime) {
+        this.status = status;
+        this.QTime = Qtime;
+    }
 
     public long getQTime() {
         return QTime;

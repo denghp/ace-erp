@@ -229,7 +229,7 @@
         <img class="nav-user-photo" src="${rc.getContextPath()}/assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<@shiro.principal/>
 								</span>
 
         <i class="icon-caret-down"></i>

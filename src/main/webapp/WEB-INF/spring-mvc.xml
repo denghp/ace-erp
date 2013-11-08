@@ -146,9 +146,7 @@
     <bean id="freeMarkerViewResolver"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="order" value="2"/>
-        <!--
         <property name="cache" value="true"/>
-        -->
         <property name="prefix" value="/"/>
         <property name="suffix" value=".ftl"/>
         <property name="exposeRequestAttributes" value="true"/>
@@ -164,9 +162,9 @@
         <property name="maxUploadSize" value="104857600"/>
     </bean>  -->
 
-    <!-- 控制器异常处理 -->
+    <!-- 控制器异常处理
     <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
         <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
     </bean>
-
+     -->
 </beans>

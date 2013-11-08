@@ -59,10 +59,7 @@ public class PermissionMapperTest {
 
     @Test
     public void getRRPList() {
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("roleId",5);
-        params.put("resourceIds",new Integer[]{33,2});
-        List<RoleResourcePermission> rrpList = rrpMapper.getRRPSByRIdAndResIds(params);
+        List<RoleResourcePermission> rrpList = rrpMapper.getRRPListByRId(5);
         for (RoleResourcePermission rrp : rrpList) {
             System.out.println(rrp.toString());
         }

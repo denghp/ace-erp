@@ -75,37 +75,38 @@ public class RoleService extends BaseService<Role,Integer> {
 
 
     public void updateWithResourcePermission(Integer[] resourceIds,Role role) throws AceException{
-        //获取当前role存在的权限资源
-        Map<String,RoleResourcePermission> rrpMaps = null;
         if (role == null || role.getId() == null || resourceIds == null
                 && resourceIds.length <= 0) {
             logger.warn("updateWithResourcePermission failed, this params invalid");
             return ;
         }
-        rrpMaps = getMapRRPS(role.getId(),resourceIds);
-        try {
 
+        try {
+            //删除当前role对应的所有资源信息
+            rrpMapper.deleteRRPByRoleId(role.getId());
             for (Integer resourceId : resourceIds) {
-                RoleResourcePermission rrp = new RoleResourcePermission(role.getId(),resourceId,"1");
-                //验证role_id + resouceId 组合的key 是否已经存在
-                if (!rrpMaps.containsKey(role.getId()+"_"+resourceId)) {
+                if (resourceId != null) {
+                    RoleResourcePermission rrp = new RoleResourcePermission(role.getId(),resourceId,"1");
                     rrpMapper.save(rrp);
                 }
-
             }
         } catch (Exception ex) {
-           throw AceException.create(AceException.Code.SYSTEM_ERROR,ex.getMessage());
+            logger.error("updateWithResourcePermission error , {}", ex);
+            throw AceException.create(AceException.Code.SYSTEM_ERROR,"UpdateWithResourcePermission failed!");
         }
 
     }
 
-    //TODO: 这里需要优化,如果resourceIds大于100个时,
-    // 查询会影响性能,最好控制在100以内,这里使用的是in
-    public Map<String,RoleResourcePermission> getMapRRPS(int roleId, Integer[] resourceIds) {
+    /**
+     * 根据当前角色获取对应的所有资源
+     * @param roleId
+     * @return
+     */
+    public Map<String,RoleResourcePermission> getMapRRPSByRoleId(int roleId) {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleId",roleId);
-        params.put("resourceIds",resourceIds);
-        List<RoleResourcePermission> rrpList = rrpMapper.getRRPSByRIdAndResIds(params);
+        //params.put("resourceIds",resourceIds);
+        List<RoleResourcePermission> rrpList = rrpMapper.getRRPListByRId(roleId);
         Map<String, RoleResourcePermission> rrpMaps = new HashMap<String, RoleResourcePermission>();
         for (RoleResourcePermission rrp : rrpList) {
             rrpMaps.put(rrp.getRoleId()+"_"+rrp.getResourceId(),rrp);

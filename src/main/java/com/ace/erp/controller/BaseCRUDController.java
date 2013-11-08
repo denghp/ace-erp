@@ -153,7 +153,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
         Response responseJson = new Response();
         responseJson.setRows(list);
-        responseJson.setPage(Integer.parseInt(page));
+        responseJson.setPage(Integer.valueOf(page));
         responseJson.setTotal(totalPage);
         responseJson.setRecords(totalRecord);
         return responseJson;

@@ -191,14 +191,23 @@ public abstract class AceException extends Exception {
     @Override
     public String getMessage() {
         if (message == null) {
-            return "ViTaErrorCode = " + getCodeMessage(code);
+            return getCodeMessage(code);
         }
-        return "ViTaErrorCode = " + getCodeMessage(code) + " for " + message;
+        return message;
     }
 
     public int code() {
         return code.intValue();
     }
+
+    @Override
+    public String toString() {
+        if (message == null) {
+            return "{\"code\": "+ code.intValue() +",\"message\":\""+ getCodeMessage(code) +"\" }";
+        }
+        return "{\"code\": "+ code.intValue() +",\"message\":\""+ message +"\" }";
+    }
+
 
     /**
      * @see Code#SYSTEM_ERROR
