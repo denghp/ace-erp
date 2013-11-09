@@ -11,7 +11,9 @@ import org.apache.commons.lang3.StringUtils;
  * Time: 1:02 AM
  */
 public class Resource implements Treeable<Integer> {
+
     private Integer id;
+
     /**
      * 标题
      */
@@ -45,13 +47,46 @@ public class Resource implements Treeable<Integer> {
     /**
      * 是否有叶子节点
      */
-    //@Formula(value = "(select count(*) from sys_resource f_t where f_t.parent_id = id)")
     private boolean hasChildren;
 
     /**
      * 是否显示
      */
     private Boolean show = Boolean.FALSE;
+
+    //表示此数据在哪一级
+    private Integer level;
+
+    //表示此节点是否展开
+    private boolean expanded = Boolean.FALSE;
+
+    // 表示是否加载完成，设置为True表示加载完成，不需要在加载,
+    //一般设置此值为True，这样在点击树节点就不会再次调用后台数据，加载数据，避免数据重复
+    private boolean loaded = Boolean.FALSE;
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
+    }
 
     public String getName() {
 
@@ -226,6 +261,7 @@ public class Resource implements Treeable<Integer> {
                 ", isHasChildren='" + hasChildren + '\'' +
                 ", parentId =" + parentId +
                 ", parentIds = " + parentIds +
+                ", level = " + level +
                 '}';
     }
 

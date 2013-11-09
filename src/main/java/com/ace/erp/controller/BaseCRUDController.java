@@ -130,7 +130,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
         return HttpStatus.INTERNAL_SERVER_ERROR.name();
     }
 
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Response list(HttpServletRequest request, HttpServletResponse response) {
         String page = request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数

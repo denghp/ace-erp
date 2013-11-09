@@ -1,7 +1,7 @@
 /*** custom function getChildList **/
-DROP FUNCTION IF EXISTS getChildList;
+DROP FUNCTION IF EXISTS `ace`.`getChildList`;
 DELIMITER ||
-CREATE FUNCTION `getChildList`(rootId INT) 
+CREATE FUNCTION `ace`.`getChildList`(rootId INT) 
      RETURNS VARCHAR(1000)  
 BEGIN 
        DECLARE pTemp VARCHAR(1000);  
@@ -16,3 +16,4 @@ BEGIN
        RETURN pTemp;  
 END ||
 DELIMITER ;
+

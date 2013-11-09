@@ -79,4 +79,12 @@ public class UserServiceTest extends BaseUserTest {
         }
     }
 
+    @Test
+    public void testSplit() {
+        System.out.println("0/1/23/43".split("/").length);
+        System.out.println("0/1/23/43/".split("/").length);
+        System.out.println("/0/1/23/43".split("/").length);
+        System.out.println("/0/1/23/43/".split("/").length);
+    }
+
 }

@@ -82,6 +82,8 @@ public class RoleService extends BaseService<Role,Integer> {
         }
 
         try {
+            //更新角色信息
+            roleMapper.update(role);
             //删除当前role对应的所有资源信息
             rrpMapper.deleteRRPByRoleId(role.getId());
             for (Integer resourceId : resourceIds) {

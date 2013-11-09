@@ -14,14 +14,19 @@
         <result property="weight" column="weight"/>
         <result property="show" column="is_show"/>
         <result property="hasChildren" column="hasChildren" />
+        <result property="level" column="parent_ids" javaType="java.lang.Integer" typeHandler="com.ace.erp.handler.mybatis.StringParentIdsToLevel"/>
     </resultMap>
 
   <select id="getOne" parameterType="java.lang.Long" resultMap="resourceResult">
     SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource WHERE id = #{resourceId}
   </select>
 
-    <select id="getList" resultMap="resourceResult">
-    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show FROM sys_resource;
+  <select id="getList" resultMap="resourceResult">
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource;
+  </select>
+
+  <select id="getChildsByPid" resultMap="resourceResult">
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource where parent_id = #{pid};
   </select>
 
   <select id="getAllWithSort" parameterType="java.lang.String" resultMap="resourceResult">

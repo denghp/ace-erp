@@ -37,4 +37,15 @@ public class ResourceMapperTest extends BaseTest {
         }
     }
 
+    @Test
+    public void testChildren() {
+        List<Resource> resourceList = resourceMapper.getChildsByPid(72);
+        for (Resource resource : resourceList) {
+            System.out.println(resource);
+        }
+        List<Resource> resourceList1 = resourceMapper.getChildsByPid(1);
+        for (Resource resource : resourceList1) {
+            System.out.println(resource);
+        }
+    }
 }

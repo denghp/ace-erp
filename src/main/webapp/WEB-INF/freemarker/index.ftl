@@ -39,10 +39,6 @@
 <#include "commons/common-script.ftl" >
 
 
-<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.core-3.5.js"></script>
-<script type="text/javascript" src="${rc.getContextPath()}/assets/js/jquery.ztree.excheck-3.5.min.js"></script>
-
-
 <script type="text/javascript">
     /**
     $(document).ready(function(id, url) {

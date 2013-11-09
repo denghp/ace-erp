@@ -24,6 +24,9 @@ public class Menu implements Serializable {
     private String name;
     private String icon;
     private String url;
+    private Integer weight;
+    private String identity;
+    private Boolean status;
 
     private List<Menu> children;
 
@@ -33,6 +36,13 @@ public class Menu implements Serializable {
         this.icon = icon;
         this.url = url;
     }
+    public Menu(Integer id, String name, String icon, String url,
+                Integer weight, String identity, boolean status) {
+       this(id,name,icon,url);
+        this.weight = weight;
+        this.identity = identity;
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -40,6 +50,30 @@ public class Menu implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public String getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(String identity) {
+        this.identity = identity;
     }
 
     public String getName() {

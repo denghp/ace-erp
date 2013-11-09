@@ -42,6 +42,8 @@ public abstract class AceException extends Exception {
         switch (code) {
             case SYSTEM_ERROR:
                 return new SystemErrorException();
+            case NOT_FOUND:
+                return new NotFoundException();
             case NO_AUTH:
                 return new NoAuthException();
             case CONNECTION_LOSS:
@@ -76,6 +78,8 @@ public abstract class AceException extends Exception {
                 return "ok";
             case SYSTEM_ERROR:
                 return "SystemError";
+            case NOT_FOUND:
+                return "NotFound";
             case NO_AUTH:
                 return "NoAuth";
             case CONNECTION_LOSS:
@@ -106,7 +110,7 @@ public abstract class AceException extends Exception {
     public static enum Code{
         //OK 200 Everything is OK
         OK(200),
-
+        NOT_FOUND(404),
         /** 系统级别的错误状态码 10001 **/
         //系统错误
         SYSTEM_ERROR(10001),
@@ -252,6 +256,15 @@ public abstract class AceException extends Exception {
     public static class NoAuthException extends AceException {
         public NoAuthException() {
             super(Code.NO_AUTH);
+        }
+    }
+
+    /**
+     * @see Code#NOT_FOUND
+     */
+    public static class NotFoundException extends AceException {
+        public NotFoundException() {
+            super(Code.NOT_FOUND);
         }
     }
 

@@ -2,10 +2,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.ZTree;
-import com.ace.erp.entity.sys.Menu;
-import com.ace.erp.entity.sys.Resource;
-import com.ace.erp.entity.sys.RoleResourcePermission;
-import com.ace.erp.entity.sys.User;
+import com.ace.erp.entity.sys.*;
 import com.ace.erp.shiro.persistence.ResourceMapper;
 import com.google.common.collect.Lists;
 import net.sf.ehcache.CacheManager;
@@ -99,6 +96,20 @@ public class ResourceService extends BaseService<Resource,Integer> {
     /**
      * 根据登录用户获取菜单权限列表
      * 需要使用缓存实现,不然会影响性能
+     * @return
+     */
+    public List<Menu> findMenus() {
+        String sort = "parent_id desc,weight desc";
+        Map<String, Object> params = new HashMap<String,Object>();
+        params.put("sort",sort);
+        List<Resource> resources = resourceMapper.getAllWithSort(params);
+
+        return convertToMenus(resources);
+    }
+
+    /**
+     * 根据登录用户获取菜单权限列表
+     * 需要使用缓存实现,不然会影响性能
      * @param user
      * @return
      */
@@ -120,6 +131,24 @@ public class ResourceService extends BaseService<Resource,Integer> {
         }
         return convertToMenus(resources);
     }
+
+    public List<Resource> getChildsByPid(int pid) {
+         return resourceMapper.getChildsByPid(pid);
+    }
+
+    public List<TreeGrid> getTreeGridAll(int pid) {
+        List<Resource> list = resourceMapper.getChildsByPid(pid);
+        List<TreeGrid> treeGrids = new ArrayList<TreeGrid>();
+        for(Resource resource : list) {
+            int level = resource.getParentIds().split("/").length - 1;
+            TreeGrid treeGrid = new TreeGrid(resource.getId(),resource.getName(),resource.getIdentity()
+            ,resource.getUrl(),resource.getParentId(),level,resource.isHasChildren() ? false : true,false,false);
+            treeGrids.add(treeGrid);
+        }
+        return treeGrids;
+    }
+
+
 
     private boolean hasPermission(Resource resource, Set<String> userPermissions) {
         String actualResourceIdentity = findActualResourceIdentity(resource);
@@ -204,7 +233,8 @@ public class ResourceService extends BaseService<Resource,Integer> {
     }
 
     private static Menu convertToMenu(Resource resource) {
-        return new Menu(resource.getId(), resource.getName(), resource.getIcon(), resource.getUrl());
+        return new Menu(resource.getId(), resource.getName(), resource.getIcon(), resource.getUrl(),
+                resource.getWeight(),resource.getIdentity(),resource.getShow());
     }
 
     public List<Resource>  getAllWithSort() {
@@ -226,8 +256,9 @@ public class ResourceService extends BaseService<Resource,Integer> {
         Map<Integer, RoleResourcePermission> rrpMaps = null;
         if (roleId != null) {
             rrpMaps = roleService.getRoleResourceMaps(roleId);
+            return convertToZtreeList(resourceList, async,rrpMaps);
         }
-        return convertToZtreeList(resourceList, async,rrpMaps);
+        return convertToZtreeList(resourceList, async,null);
     }
 
     private List<ZTree<Integer>> convertToZtreeList(List<Resource> models, boolean async, Map<Integer, RoleResourcePermission> rrpMaps) {
@@ -252,7 +283,11 @@ public class ResourceService extends BaseService<Resource,Integer> {
         zTree.setId(m.getId());
         zTree.setpId(m.getParentId());
         zTree.setName(m.getName());
-        zTree.setOpen(open);
+        if (!open && m.getId() == 1) {
+            zTree.setOpen(true);
+        } else {
+            zTree.setOpen(open);
+        }
         //zTree.setIconSkin(m.getIcon());
         //zTree.setRoot(m.isRoot());
         //zTree.setIsParent(m.isHasChildren());

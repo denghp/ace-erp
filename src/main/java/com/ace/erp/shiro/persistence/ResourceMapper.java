@@ -20,4 +20,6 @@ public interface ResourceMapper extends BaseMapper<Resource, Integer> {
 
     public List<Resource> getAllWithSort(Map<String,Object> params);
 
+
+    public List<Resource> getChildsByPid(int pid);
 }
