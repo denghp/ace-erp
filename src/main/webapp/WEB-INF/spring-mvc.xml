@@ -72,6 +72,7 @@
     <!-- 静态资源映射 -->
     <mvc:resources mapping="/static/**" location="/assets/"/>
 
+
     <!-- 内容协商管理器  -->
     <!--1、首先检查路径扩展名（如my.pdf）；2、其次检查Parameter（如my?format=pdf）；3、检查Accept Header-->
     <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
@@ -83,15 +84,16 @@
         <!-- 是否忽略Accept Header -->
         <property name="ignoreAcceptHeader" value="false"/>
 
-        <property name="mediaTypes"> <!--扩展名到MIME的映射；favorPathExtension, favorParameter是true时起作用  -->
-            <value>
-                json=application/json
-                xml=application/xml
-                html=text/html
-            </value>
+        <!--扩展名到MIME的映射；favorPathExtension, favorParameter是true时起作用  -->
+        <property name="mediaTypes">
+            <map>
+                <entry key="json" value="application/json" />
+                <entry key="xml" value="application/xml" />
+                <entry key="rss" value="application/rss+xml" />
+            </map>
         </property>
-        <!-- 默认的content type -->
-        <property name="defaultContentType" value="text/html"/>
+        <!-- 在没有扩展名时即: "/user/1" 时的默认展现形式 -->
+        <property name="defaultContentType" value="application/json"/>
     </bean>
 
 
@@ -104,14 +106,12 @@
         <!-- 默认视图 放在解析链最后 -->
         <property name="defaultViews">
             <list>
-                <!--
-                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
-                -->
-                <!--<bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView" />-->
+                <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
                 <!--<bean class="org.springframework.web.servlet.view.xml.MarshallingView"/>-->
             </list>
         </property>
     </bean>
+
 
     <!-- freemarker config -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -133,11 +133,6 @@
             </map>
         </property>
     </bean>
-    <!-- freemarker 继承扩展包
-    <bean id="block" class="cn.org.rapid_framework.freemarker.directive.BlockDirective" />
-    <bean id="override" class="cn.org.rapid_framework.freemarker.directive.OverrideDirective" />
-    <bean id="extends" class="cn.org.rapid_framework.freemarker.directive.ExtendsDirective" />
-    -->
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
     <!--
   View resolvers can also be configured with ResourceBundles or XML files. If you need
@@ -162,9 +157,4 @@
         <property name="maxUploadSize" value="104857600"/>
     </bean>  -->
 
-    <!-- 控制器异常处理
-    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
-        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
-    </bean>
-     -->
 </beans>

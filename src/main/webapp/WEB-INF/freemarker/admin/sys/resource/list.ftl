@@ -83,8 +83,34 @@ jQuery(function($) {
         //datastr:mdatastr,
         mtype: 'GET',
         height: 450,
-        colNames:['ID','资源名称','父节点ID','排序编码','资源图标','资源标识','URL路径', '是否可用'],
+        colNames:['','ID','资源名称','父节点ID','排序编码','资源图标','资源标识','URL路径', '是否可用'],
         colModel:[
+            {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
+                formatter:'actions',
+                formatoptions:{
+                    keys:true,
+                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    //editformbutton:true,
+                    //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
+                    onSuccess: function(response) {
+                        if (response.responseJSON.responseHeader.status == "200" ) {
+                            jQuery("#alert-info").html("<i class='icon-hand-right'></i> 更新成功!"
+                                    +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+                            return [true];
+                        }
+                        var resp = JSON.stringify(response.responseJSON);
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+                        return [false];
+                    },
+                    onError: function (response) {
+                        var resp = JSON.stringify(response);
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
+                        return [true,'error'];
+                    }
+                }
+            },
             {name:'id',index:'id', width:30,hidden:false,key:true, editable:true},
             {name:'name',index:'name', width:100, editable:true, align:"left"},
             {name:'parentId',index:'parent', width:35, align:"center",editable:true},
@@ -116,11 +142,11 @@ jQuery(function($) {
         treeGrid:true,
         treeGridModel:"adjacency",
         ExpandColumn: 'name',
-        ExpandColClick: true,
+        //ExpandColClick: true,
         treeIcons:{
-            plus:'icon-plus',
-            minus:'icon-minus'
-            //leaf:'arrow icon-edit'
+            plus:'arrow icon-double-angle-down',
+            minus:'icon-double-angle-right'
+            //leaf:'ui-icon-radio-off' //使用leafDefaultIcon = icon-angle-right
         },
         treeReader: {
             level_field: "level",
@@ -128,8 +154,8 @@ jQuery(function($) {
             leaf_field: "leaf",
             expanded_field: "expanded"
         },
-        editurl: $path_base+"/dummy.html",//nothing is saved
-        caption: "jqGrid with inline editing",
+        editurl: $path_base+"/admin/sys/resource/update",//nothing is saved
+        caption: "系统资源管理",
 
 
         autowidth: true

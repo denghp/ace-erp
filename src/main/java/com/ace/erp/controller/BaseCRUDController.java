@@ -10,7 +10,9 @@ package com.ace.erp.controller;
 import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.controller.permission.PermissionList;
 import com.ace.erp.entity.Response;
+import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.Role;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.BaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -76,11 +78,11 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public String delete(
+    public Response delete(
             @RequestParam("oper") String oper,
             @RequestParam("id") String ids,
-            Model model) {
-
+            Model model) throws AceException {
+        long starTime = System.currentTimeMillis();
         if (permissionList != null) {
             this.permissionList.assertHasDeletePermission();
         }
@@ -89,45 +91,46 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
             if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
                 String[] idItems = ids.split(",");
                 baseService.delete(Arrays.asList(idItems));
-                return HttpStatus.OK.name();
+                return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
             }
-            return HttpStatus.BAD_REQUEST.name();
+            throw AceException.create(AceException.Code.BAD_REQUEST,"无效的请求!");
         } catch (Exception ex) {
-            logger.error("delete role error , exception : {}", ex);
+            logger.error("delete error , exception : {}", ex);
         }
-        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
     }
 
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public String update(
+    public Response update(
             Model model, M m, BindingResult result,
-            RedirectAttributes redirectAttributes) {
-
+            RedirectAttributes redirectAttributes) throws AceException{
+        long starTime = System.currentTimeMillis();
         if (permissionList != null) {
             this.permissionList.assertHasUpdatePermission();
         }
         try {
             baseService.update(m);
-            return HttpStatus.OK.name();
+            return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
         } catch (Exception ex) {
-            logger.error("update Role error, exception :", ex);
+            logger.error("update {} error, exception :",m, ex);
         }
-        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
     }
 
     @RequestMapping(value = "/add")
     @ResponseBody
-    public String save(M m, BindingResult bindingResult, Model model) {
+    public Response save(M m, BindingResult bindingResult, Model model) throws AceException {
         try {
+            long starTime = System.currentTimeMillis();
             baseService.save(m);
-            return HttpStatus.OK.name();
+            return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
         } catch (Exception ex) {
             logger.error("save {} error, exception : {}", m, ex);
         }
-        return HttpStatus.INTERNAL_SERVER_ERROR.name();
+        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

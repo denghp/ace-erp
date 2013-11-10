@@ -1,6 +1,7 @@
 package com.ace.erp.entity.sys;
 
 import com.ace.erp.entity.Treeable;
+import com.ace.erp.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -248,11 +249,16 @@ public class Resource implements Treeable<Integer> {
      */
     @Override
     public String getLeafDefaultIcon() {
-        return "ztree_file";
+        return "icon-angle-right";
     }
 
     @Override
     public String toString() {
+        try {
+            return JsonUtils.mapper.writeValueAsString(this);
+        } catch (Exception ex) {
+
+        }
         return "{" +
                 "id=" + id +
                 ", name='" + name + '\'' +

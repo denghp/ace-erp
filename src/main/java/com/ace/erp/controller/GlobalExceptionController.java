@@ -29,7 +29,6 @@ public class GlobalExceptionController {
     public Response handleCustomException(AceException ex) {
         logger.error("SearchException : {}, {}",ex.toString(), ex);
         return Response.createErrorResp(ex.code(), ex.getMessage());
-
     }
 
     @ExceptionHandler(Exception.class)

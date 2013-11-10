@@ -64,12 +64,9 @@
                                     <ul class="submenu">
                                         <#list children.getChildren() as threeChildren>
                                             <li>
-                                                <!--
-                                                <a href="${rc.getContextPath()}${threeChildren.url}" target="main">
-                                                -->
                                                 <a href="javascript:void(0);" onclick="loadPage('${rc.getContextPath()}${threeChildren.url}')"  >
                                                     <i class="icon-double-angle-right"></i>
-                                                ${threeChildren.name}
+                                                    ${threeChildren.name}
                                                 </a>
                                             </li>
                                         </#list>

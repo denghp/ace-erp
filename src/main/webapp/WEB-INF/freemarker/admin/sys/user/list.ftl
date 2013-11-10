@@ -88,13 +88,21 @@ jQuery(function($) {
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
-                        console.log("response > " + response.responseText);
-                        if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        if (response.responseJSON.responseHeader.status == "200" ) {
+                            jQuery("#alert-info").html("<i class='icon-hand-right'></i> 更新成功!"
+                                    +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
                             return [true];
                         }
-                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ response.responseText
-                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
+                        var resp = JSON.stringify(response.responseJSON);
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
                         return [false];
+                    },
+                    onError: function (response) {
+                        var resp = JSON.stringify(response.responseJSON);
+                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
+                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+                        return [true,'error'];
                     }
                 }
             },
@@ -131,7 +139,7 @@ jQuery(function($) {
         },
 
         editurl: $path_base+"/admin/sys/user/update",//nothing is saved
-        caption: "jqGrid with inline editing",
+        caption: "用户信息管理",
 
         autowidth: true
     });

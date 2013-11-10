@@ -136,19 +136,6 @@ public class ResourceService extends BaseService<Resource,Integer> {
          return resourceMapper.getChildsByPid(pid);
     }
 
-    public List<TreeGrid> getTreeGridAll(int pid) {
-        List<Resource> list = resourceMapper.getChildsByPid(pid);
-        List<TreeGrid> treeGrids = new ArrayList<TreeGrid>();
-        for(Resource resource : list) {
-            int level = resource.getParentIds().split("/").length - 1;
-            TreeGrid treeGrid = new TreeGrid(resource.getId(),resource.getName(),resource.getIdentity()
-            ,resource.getUrl(),resource.getParentId(),level,resource.isHasChildren() ? false : true,false,false);
-            treeGrids.add(treeGrid);
-        }
-        return treeGrids;
-    }
-
-
 
     private boolean hasPermission(Resource resource, Set<String> userPermissions) {
         String actualResourceIdentity = findActualResourceIdentity(resource);

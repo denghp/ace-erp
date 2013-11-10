@@ -14,6 +14,7 @@
         <result property="weight" column="weight"/>
         <result property="show" column="is_show"/>
         <result property="hasChildren" column="hasChildren" />
+        <result property="loaded" column="loaded" />
         <result property="level" column="parent_ids" javaType="java.lang.Integer" typeHandler="com.ace.erp.handler.mybatis.StringParentIdsToLevel"/>
     </resultMap>
 
@@ -26,7 +27,7 @@
   </select>
 
   <select id="getChildsByPid" resultMap="resourceResult">
-    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren FROM sys_resource where parent_id = #{pid};
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren,if (getChildCount(id) > 0,false,true) as loaded FROM sys_resource where parent_id = #{pid};
   </select>
 
   <select id="getAllWithSort" parameterType="java.lang.String" resultMap="resourceResult">
@@ -42,18 +43,20 @@
 
     <update id="update" parameterType="Resource">
         update sys_resource set
-        name = #{name},
+        <if test="name != null">
+            name = #{name},
+        </if>
         <if test="identity != null">
             identity = #{identity},
         </if>
         <if test="url != null">
             url = #{url},
         </if>
-        <if test="parent_id != null">
-            parent_id = #{parent_id},
+        <if test="parentId != null">
+            parent_id = #{parentId},
         </if>
-        <if test="parent_ids != null">
-            parent_ids = #{parent_ids},
+        <if test="parentIds != null">
+            parent_ids = #{parentIds},
         </if>
         <if test="icon != null">
             icon = #{icon},
@@ -62,7 +65,7 @@
             weight = #{weight},
         </if>
         <if test="show != null">
-            show = #{show},
+            is_show = #{show}
         </if>
         where id = #{id}
     </update>
