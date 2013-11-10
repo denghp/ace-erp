@@ -55,6 +55,9 @@ public class Resource implements Treeable<Integer> {
      */
     private Boolean show = Boolean.FALSE;
 
+    //表示父级ID
+    private Integer parent;
+
     //表示此数据在哪一级
     private Integer level;
 
@@ -87,6 +90,14 @@ public class Resource implements Treeable<Integer> {
 
     public void setLoaded(boolean loaded) {
         this.loaded = loaded;
+    }
+
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
     }
 
     public String getName() {
@@ -144,13 +155,19 @@ public class Resource implements Treeable<Integer> {
     }
 
     public String getTreetableIds() {
-        String selfId = makeSelfAsNewParentIds().replace("/", "-");
-        return selfId.substring(0, selfId.length() - 1);
+        if (StringUtils.isNotBlank(makeSelfAsNewParentIds())) {
+            String selfId = makeSelfAsNewParentIds().replace("/", "-");
+            return selfId.substring(0, selfId.length() - 1);
+        }
+        return null;
     }
 
     public String getTreetableParentIds() {
-        String parentIds = getParentIds().replace("/", "-");
-        return parentIds.substring(0, parentIds.length() - 1);
+        if (StringUtils.isNotBlank(getParentIds())) {
+            String parentIds = getParentIds().replace("/", "-");
+            return parentIds.substring(0, parentIds.length() - 1);
+        }
+        return null;
     }
 
     @Override
@@ -259,16 +276,7 @@ public class Resource implements Treeable<Integer> {
         } catch (Exception ex) {
 
         }
-        return "{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", icon='" + icon + '\'' +
-                ", url='" + url + '\'' +
-                ", isHasChildren='" + hasChildren + '\'' +
-                ", parentId =" + parentId +
-                ", parentIds = " + parentIds +
-                ", level = " + level +
-                '}';
+        return  null;
     }
 
 }

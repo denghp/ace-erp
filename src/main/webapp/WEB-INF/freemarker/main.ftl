@@ -10,7 +10,7 @@
             <a href="#">Home</a>
         </li>
         <li class="active">Dashboard</li>
-        <@shiro.hasRole name="admin" >admin角色</@shiro.hasRole>
+
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">

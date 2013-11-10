@@ -9,6 +9,7 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
+import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.ResourceService;
@@ -19,11 +20,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,17 +56,6 @@ public class ResourceController extends BaseCRUDController<Resource, Integer> {
 
         return resourceService.getZTreeList(async, roleId);
     }
-    /**
-    @RequestMapping(method = RequestMethod.GET)
-    public String view(Model model) {
-        List<Menu> menuList = resourceService.findMenus();
-        model.addAttribute("menuList", menuList);
-
-
-        return viewName("list");
-    }
-    **/
-
 
 
     @RequestMapping(value = "{id}/update", method = RequestMethod.GET)
@@ -92,12 +84,47 @@ public class ResourceController extends BaseCRUDController<Resource, Integer> {
             @RequestParam(value = "nodeid", defaultValue = "1",required = false) Integer nodeid,
             HttpServletRequest request,
                          HttpServletResponse response) throws AceException {
-        //List<TreeGrid> treeGrids = resourceService.getTreeGridAll(nodeid);
         List<Resource> resourceList = resourceService.getChildsByPid(nodeid);
         Response responseJson = new Response();
         responseJson.setRows(resourceList);
         return responseJson;
 
+    }
+
+    /**
+    @RequestMapping(value = "/add")
+    @ResponseBody
+    public Response saveResource(Resource m, HttpServletRequest request,BindingResult bindingResult, Model model) throws AceException {
+        long starTime = System.currentTimeMillis();
+        baseService.save(m);
+        return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
+    }
+    **/
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Response delete(
+            @RequestParam("oper") String oper,
+            @RequestParam("id") String ids,
+            Model model) throws AceException {
+        long starTime = System.currentTimeMillis();
+        if (permissionList != null) {
+            this.permissionList.assertHasDeletePermission();
+        }
+
+        if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
+            String[] idItems = ids.split(",");
+            //查看该资源是否还有子节点,如果有则删除失败,没有则正常删除
+            if (idItems != null && idItems.length > 0) {
+                Resource resource = resourceService.getOne(Integer.valueOf(idItems[0]));
+                if (resource != null && !resource.isHasChildren()) {
+                    resourceService.deleteByIds(idItems);
+                    return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
+                }
+                throw AceException.create(AceException.Code.BAD_REQUEST, "删除资源失败了, 该资源包含子菜单!");
+            }
+        }
+        throw AceException.create(AceException.Code.BAD_REQUEST, "无效的请求!");
     }
 
 }

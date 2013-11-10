@@ -10,6 +10,9 @@ package com.ace.erp.service.sys;
 import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.LogicDeleteable;
+import com.ace.erp.exception.AceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -28,7 +31,7 @@ import java.util.Map;
  * Time: 4:47 PM
  */
 public class BaseService<T, ID extends Serializable> implements InitializingBean {
-
+    private Logger logger = LoggerFactory.getLogger(BaseService.class);
     private Class<T> entityClass;
     private BaseMapper<T, ID> baseMapper;
 
@@ -103,6 +106,15 @@ public class BaseService<T, ID extends Serializable> implements InitializingBean
         baseMapper.deleteByIds(params);
     }
 
+    public void deleteByIds(final String[]  ids) {
+        if (ids == null && ids.length <= 0) {
+            return;
+        }
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("ids", ids);
+        baseMapper.deleteByIds(params);
+    }
+
     /**
      * 删除实体
      *
@@ -148,7 +160,7 @@ public class BaseService<T, ID extends Serializable> implements InitializingBean
     }
 
 
-    public T update(T t) {
+    public T update(T t) throws AceException {
         if (t == null) {
             return null;
         }
@@ -163,12 +175,17 @@ public class BaseService<T, ID extends Serializable> implements InitializingBean
      * @param t 实体
      * @return 返回保存的实体
      */
-    public T save(T t) {
+    public T save(T t) throws AceException {
         if (t == null) {
             return null;
         }
-        baseMapper.save(t);
-        return t;
+        try {
+            baseMapper.save(t);
+            return t;
+        } catch (Exception ex) {
+            logger.error("save {} error, {}",t, ex);
+            throw AceException.create(AceException.Code.SYSTEM_ERROR,"System Save Object Error !");
+        }
     }
 
 

@@ -39,10 +39,10 @@ import java.util.List;
  * Date: 11/1/13
  * Time: 6:22 PM
  */
-public class BaseCRUDController<M, ID extends Serializable> extends BaseController<M,ID> implements InitializingBean {
+public class BaseCRUDController<M, ID extends Serializable> extends BaseController<M, ID> implements InitializingBean {
     private Logger logger = LoggerFactory.getLogger(BaseCRUDController.class);
 
-    protected BaseService<M,ID> baseService;
+    protected BaseService<M, ID> baseService;
 
     protected PermissionList permissionList = null;
 
@@ -51,7 +51,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
      *
      * @param baseService
      */
-    public void setBaseService(BaseService<M,ID> baseService) {
+    public void setBaseService(BaseService<M, ID> baseService) {
         this.baseService = baseService;
     }
 
@@ -87,50 +87,34 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
             this.permissionList.assertHasDeletePermission();
         }
 
-        try {
-            if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
-                String[] idItems = ids.split(",");
-                baseService.delete(Arrays.asList(idItems));
-                return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
-            }
-            throw AceException.create(AceException.Code.BAD_REQUEST,"无效的请求!");
-        } catch (Exception ex) {
-            logger.error("delete error , exception : {}", ex);
+        if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
+            String[] idItems = ids.split(",");
+            baseService.delete(Arrays.asList(idItems));
+            return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
         }
-        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
+        throw AceException.create(AceException.Code.BAD_REQUEST, "无效的请求!");
     }
-
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Response update(
             Model model, M m, BindingResult result,
-            RedirectAttributes redirectAttributes) throws AceException{
+            RedirectAttributes redirectAttributes) throws AceException {
         long starTime = System.currentTimeMillis();
         if (permissionList != null) {
             this.permissionList.assertHasUpdatePermission();
         }
-        try {
-            baseService.update(m);
-            return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
-        } catch (Exception ex) {
-            logger.error("update {} error, exception :",m, ex);
-        }
-        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
+        baseService.update(m);
+        return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 
     @RequestMapping(value = "/add")
     @ResponseBody
     public Response save(M m, BindingResult bindingResult, Model model) throws AceException {
-        try {
-            long starTime = System.currentTimeMillis();
-            baseService.save(m);
-            return new Response(new ResponseHeader(200,System.currentTimeMillis() - starTime));
-        } catch (Exception ex) {
-            logger.error("save {} error, exception : {}", m, ex);
-        }
-        throw AceException.create(AceException.Code.SYSTEM_ERROR,"服务器内部错误!");
+        long starTime = System.currentTimeMillis();
+        baseService.save(m);
+        return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

@@ -3,6 +3,7 @@ package com.ace.erp.service.sys;
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.*;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.shiro.persistence.ResourceMapper;
 import com.google.common.collect.Lists;
 import net.sf.ehcache.CacheManager;
@@ -282,6 +283,30 @@ public class ResourceService extends BaseService<Resource,Integer> {
         //zTree.setNocheck(false);
 
         return zTree;
+    }
+
+    /**
+     * 保存单个实体
+     *
+     * @param t 实体
+     * @return 返回保存的实体
+     */
+    public Resource save(Resource t) throws AceException {
+        if (t == null) {
+            return null;
+        }
+        //获取父级
+        Resource resource = resourceMapper.getOne(t.getParentId());
+        if (resource == null) {
+           throw AceException.create(AceException.Code.NOT_FOUND,"父级资源没有找到!");
+        }
+        if (resource.getParentIds().endsWith("/")) {
+            t.setParentIds(resource.getParentIds()+resource.getId());
+        } else {
+            t.setParentIds(resource.getParentIds()+"/"+resource.getId());
+        }
+        resourceMapper.save(t);
+        return t;
     }
 
 }

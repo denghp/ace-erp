@@ -15,6 +15,7 @@
         <result property="show" column="is_show"/>
         <result property="hasChildren" column="hasChildren" />
         <result property="loaded" column="loaded" />
+        <result property="parent" column="parent_id" />
         <result property="level" column="parent_ids" javaType="java.lang.Integer" typeHandler="com.ace.erp.handler.mybatis.StringParentIdsToLevel"/>
     </resultMap>
 
@@ -38,7 +39,7 @@
       INSERT INTO
         sys_resource (name,identity,url,parent_id,parent_ids,icon,weight,is_show)
       VALUES
-        (#{name},#{identity}, #{url}, #{parent_id}, #{parent_ids}, #{icon}, #{weight},#{show})
+        (#{name},#{identity}, #{url}, #{parentId}, #{parentIds}, #{icon}, #{weight},#{show})
   </insert>
 
     <update id="update" parameterType="Resource">
@@ -69,5 +70,21 @@
         </if>
         where id = #{id}
     </update>
+
+    <delete id="delete" parameterType="map" >
+        delete from sys_resource where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByIds" parameterType="map" >
+        delete from sys_resource where id in
+        <foreach item="item" index="index" collection="ids"
+                 open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </delete>
 
 </mapper>

@@ -80,44 +80,69 @@ jQuery(function($) {
         url:$path_base + "/admin/sys/resource/children",
         //data: grid_data,
         datatype:"json",
-        //datastr:mdatastr,
         mtype: 'GET',
         height: 450,
         colNames:['','ID','资源名称','父节点ID','排序编码','资源图标','资源标识','URL路径', '是否可用'],
         colModel:[
-            {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
+            {name:'resource',index:'', width:100, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    delOptions:{url:$path_base+"/admin/sys/resource/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
+                        /** TODO:服务器端做验证
+                        beforeSubmit: function(posdata, formid){
+                            if($("#grid-table").jqGrid('getRowData',posdata).leaf == "true") {
+                                return[true,"delete posdata " + formid];
+                            }
+                            showMsg("提交失败了, 该资源包含子菜单!")
+                            return [false,'提交失败了, 该资源包含子菜单!']
+                        },
+                         **/
+                        afterSubmit : function(response, postdata)  {
+                            var resp = response.responseJSON;
+                            if (resp.responseHeader != undefined &&
+                                    resp.responseHeader.status != undefined &&
+                                    resp.responseHeader.status == "200" ) {
+                                showMsg("删除成功!");
+                                return [true];
+                            }
+                            //showMsg("更新失败,未知的错误! ");
+                            return [false,"删除失败,服务器内部的错误! "];
+                        }
+                    },
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
-                        if (response.responseJSON.responseHeader.status == "200" ) {
-                            jQuery("#alert-info").html("<i class='icon-hand-right'></i> 更新成功!"
-                                    +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+                        var resp = response.responseJSON;
+                        if (resp.responseHeader != undefined &&
+                                resp.responseHeader.status != undefined &&
+                                resp.responseHeader.status == "200" ) {
+                            showMsg("更新成功!");
                             return [true];
                         }
-                        var resp = JSON.stringify(response.responseJSON);
-                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
-                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+                        //showMsg("更新失败,未知的错误! ");
                         return [false];
+
                     },
-                    onError: function (response) {
-                        var resp = JSON.stringify(response);
-                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ resp
-                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
-                        return [true,'error'];
+                    onError: function(response) {
+                        if (response.responseJSON != undefined) {
+                            var resp = response.responseJSON;
+                            //获取error
+                            var errorMsg  = JSON.stringify(resp);
+                            showMsg("更新失败! "+ errorMsg);
+                        }
+                        showMsg("更新失败! ");
+                        return [true];
                     }
                 }
             },
-            {name:'id',index:'id', width:30,hidden:false,key:true, editable:true},
+            {name:'id',index:'id', width:30,hidden:false,key:true, editable:false},
             {name:'name',index:'name', width:100, editable:true, align:"left"},
-            {name:'parentId',index:'parent', width:35, align:"center",editable:true},
+            {name:'parentId',index:'parentId', width:35, align:"center",editable:true},
             {name:'weight',index:'weight', width:35,align:"center",editable:true},
             {name:'icon',index:'icon', width:50, align:"center",editable:true},
             {name:'identity',index:'identity', width:80,align:"left",editable:true},
-            {name:'url',index:'url', width:80,align:"left",editable:true,left:true},
+            {name:'url',index:'url', width:80,align:"left",editable:true, formatter:formatURL},
             {name:'show',index:'show', width:50, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
         ],
 
@@ -126,7 +151,7 @@ jQuery(function($) {
         rowList:[10,20,30],
         pager : pager_selector,
         //toppager: true,
-        multiselect: true,
+        multiselect: false,
         //multikey: "ctrlKey",
         multiboxonly: true,
         loadComplete : function() {
@@ -150,18 +175,26 @@ jQuery(function($) {
         },
         treeReader: {
             level_field: "level",
-            parent_id_field: "parentId", // then why does your table use "parent_id"?
+            parent_id_field: "parent", // then why does your table use "parent_id"?
             leaf_field: "leaf",
             expanded_field: "expanded"
         },
         editurl: $path_base+"/admin/sys/resource/update",//nothing is saved
         caption: "系统资源管理",
-
-
         autowidth: true
 
     });
 
+    function showMsg(message) {
+        jQuery("#alert-info").html("<i class='icon-hand-right'></i> " + message
+                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>");
+    }
+    function formatURL( cellvalue, options, cell ) {
+        if (cellvalue.length <= 0) {
+            return "javascript:void(0)"
+        }
+        return cellvalue;
+    }
     //enable search/filter toolbar
     //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
 
@@ -201,31 +234,53 @@ jQuery(function($) {
             },
             {
                 //edit record form
-                //closeAfterEdit: true,
+                url:$path_base+"/admin/sys/resource/update",
+                closeAfterEdit:true,
                 recreateForm: true,
-                beforeShowForm : function(e) {
-                    var form = $(e[0]);
-                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                    style_edit_form(form);
-                }
-            },
-            {
-                //new record form
-                closeAfterAdd: true,
-                recreateForm: true,
-                viewPagerButtons: false,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
                 },
-                beforeSubmit: function(posdata, formid) {
-                    alert(posdata.admin);
-                    return [true,'']
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
+                }
+            },
+            {
+                //new record form
+                url:$path_base+"/admin/sys/resource/addE",
+                closeAfterAdd: true,
+                recreateForm: true,
+                viewPagerButtons: false,
+                serializeEditData: function(data){
+                    //新增数据的时候把默认的id='_empty'设置为id='0'
+                    return $.param($.extend({},data,{id:0}));
+                },
+                beforeShowForm : function(e) {
+                    var form = $(e[0]);
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                    style_edit_form(form);
+
+                },
+                beforeSubmit: function(posdata,formid) {
+                    console.log(posdata);
+                    return [true,formid];
+                },
+                afterSubmit: function(response, postdata) {
+                    console.log("postdata : " + postdata);
+                    console.log(response.responseText);
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
             },
             {
                 //delete record form
+                url:$path_base+"/admin/sys/resource/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -236,12 +291,16 @@ jQuery(function($) {
 
                     form.data('styled', true);
                 },
-                onClick : function(e) {
-                    alert(1);
+                afterSubmit: function (response, postdata) {
+                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        return [true,response.responseText];
+                    }
+                    return [false,response.responseText];
                 }
             },
             {
                 //search form
+                url:$path_base+"/admin/sys/resource/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);
@@ -269,11 +328,9 @@ jQuery(function($) {
     )
 
 
-
     function style_edit_form(form) {
         //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-                .end().find('input[name=stock]')
+        form.find('input[name=show]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
         //update buttons classes
