@@ -59,7 +59,7 @@ public class UserService extends BaseService<User, Integer> {
         loginRecordCache = ehcacheManager.getCache("loginRecordCache");
     }
 
-    public User save(User user) {
+    public User save(User user) throws AceException {
         user.randomSalt();
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
         if (user.getCreateTime() == null) {
@@ -104,7 +104,7 @@ public class UserService extends BaseService<User, Integer> {
 
         return user;
     }
-
+    //TODO
     public boolean changePassword(Long userId, String password) {
 
         return false;  //To change body of implemented methods use File | Settings | File Templates.
@@ -147,7 +147,7 @@ public class UserService extends BaseService<User, Integer> {
     }
 
     public List<User> getAllUser() {
-        return (List<User>) userMapper.getList();
+        return userMapper.getList();
     }
 
     /**

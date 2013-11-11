@@ -41,12 +41,12 @@ public class UserServiceTest extends BaseUserTest {
     }
 
     @Test
-    public void addUser() {
+    public void addUser() throws AceException{
         userService.save(user);
     }
 
     @Test
-    public void updateUser() {
+    public void updateUser()throws AceException {
         userService.update(user);
     }
 

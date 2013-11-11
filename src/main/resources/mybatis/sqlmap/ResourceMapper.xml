@@ -28,7 +28,7 @@
   </select>
 
   <select id="getChildsByPid" resultMap="resourceResult">
-    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren,if (getChildCount(id) > 0,false,true) as loaded FROM sys_resource where parent_id = #{pid};
+    SELECT id,name,identity,url,parent_id,parent_ids,icon,weight,is_show,if (getChildCount(id) > 0,true,false) as hasChildren,if (getChildCount(id) > 0,false,true) as loaded FROM sys_resource where parent_id = #{pid} order by parent_id desc,weight asc;
   </select>
 
   <select id="getAllWithSort" parameterType="java.lang.String" resultMap="resourceResult">

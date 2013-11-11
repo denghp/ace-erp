@@ -82,17 +82,42 @@ jQuery(function($) {
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/permission/permission/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                    delOptions:{url:$path_base+"/admin/sys/permission/permission/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
+                        afterSubmit : function(response, postdata)  {
+                            var resp = response.responseJSON;
+                            if (resp.responseHeader != undefined &&
+                                    resp.responseHeader.status != undefined &&
+                                    resp.responseHeader.status == "200" ) {
+                                ace.show_msg("删除成功!");
+                                return [true];
+                            }
+                            if (resp.error != undefined ) {
+                                return [false,JSON.stringify(resp.error)];
+                            }
+                            return [false,"删除失败,服务器内部的错误! "];
+                        }},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
-                        console.log("response > " + response.responseText);
-                        if (response.responseText.toLocaleLowerCase() == "ok" ) {
+                        var resp = response.responseJSON;
+                        if (resp.responseHeader != undefined &&
+                                resp.responseHeader.status != undefined &&
+                                resp.responseHeader.status == "200" ) {
+                            ace.show_msg("更新成功!");
                             return [true];
                         }
-                        jQuery("#alert-info").html("<i class='icon-hand-right'></i> "+ response.responseText
-                                +"<button class='close' data-dismiss='alert'><i class='icon-remove'></i></button>")
                         return [false];
+
+                    },
+                    onError: function(response) {
+                        if (response.responseJSON != undefined) {
+                            var resp = response.responseJSON;
+                            //获取error
+                            var errorMsg  = JSON.stringify(resp);
+                            ace.show_msg("更新失败! "+ errorMsg);
+                        }
+                        ace.show_msg("更新失败! ");
+                        return [true];
                     }
                 }
             },
@@ -189,11 +214,18 @@ jQuery(function($) {
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
                 },
-                afterSubmit: function (response, postdata) {
-                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
-                        return [true,response.responseText];
+                afterSubmit : function(response, postdata)  {
+                    var resp = response.responseJSON;
+                    if (resp.responseHeader != undefined &&
+                            resp.responseHeader.status != undefined &&
+                            resp.responseHeader.status == "200" ) {
+                        ace.show_msg("更新成功!");
+                        return [true,'更新成功!'];
                     }
-                    return [false,response.responseText];
+                    if (resp.error != undefined ) {
+                        return [false,JSON.stringify(resp.error)];
+                    }
+                    return [false,"更新失败,服务器内部的错误! "];
                 }
             },
             {
@@ -213,13 +245,18 @@ jQuery(function($) {
                     //新增数据的时候把默认的id='_empty'设置为id='0'
                     return $.param($.extend({},data,{id:0}));
                 },
-                afterSubmit: function(response, postdata) {
-                    console.log("postdata : " + postdata);
-                    console.log(response.responseText);
-                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
-                        return [true,response.responseText,''];
+                afterSubmit : function(response, postdata)  {
+                    var resp = response.responseJSON;
+                    if (resp.responseHeader != undefined &&
+                            resp.responseHeader.status != undefined &&
+                            resp.responseHeader.status == "200" ) {
+                        ace.show_msg("添加成功!");
+                        return [true,'添加成功!'];
                     }
-                    return [false,response.responseText];
+                    if (resp.error != undefined ) {
+                        return [false,JSON.stringify(resp.error)];
+                    }
+                    return [false,"添加失败,服务器内部的错误! "];
                 }
             },
             {
@@ -235,19 +272,19 @@ jQuery(function($) {
 
                     form.data('styled', true);
                 },
-                afterSubmit: function (response, postdata) {
-                    if (response.responseText.toLocaleLowerCase() == "ok" ) {
-                        return [true,response.responseText];
+                afterSubmit : function(response, postdata)  {
+                    var resp = response.responseJSON;
+                    if (resp.responseHeader != undefined &&
+                            resp.responseHeader.status != undefined &&
+                            resp.responseHeader.status == "200" ) {
+                        ace.show_msg("删除成功!");
+                        return [true,'删除成功!'];
                     }
-                    return [false,response.responseText];
+                    if (resp.error != undefined ) {
+                        return [false,JSON.stringify(resp.error)];
+                    }
+                    return [false,"删除失败,服务器内部的错误! "];
                 }
-                /**
-                 errorTextFormat: function (response) {
-                    return '<span class="ui-icon ui-icon-alert" ' +
-                            'style="float:left; margin-right:.3em;"></span>' +
-                            response.responseText;
-                }
-                 **/
             },
             {
                 //search form
