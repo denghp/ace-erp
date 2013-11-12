@@ -86,7 +86,7 @@ jQuery(function($) {
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback
+                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
                         afterSubmit : function(response, postdata)  {
                             var resp = response.responseJSON;
                             if (resp.responseHeader != undefined &&
@@ -160,7 +160,7 @@ jQuery(function($) {
         },
 
         editurl: $path_base+"/admin/sys/permission/role/update",//nothing is saved
-        caption: "jqGrid with inline editing",
+        caption: "角色管理",
 
         autowidth: true
     });
