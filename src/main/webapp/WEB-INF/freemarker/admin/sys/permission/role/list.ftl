@@ -402,6 +402,7 @@ jQuery(function($) {
                                     var form = $("#grid-table").jqGrid('getRowData',id);
                                     setTimeout(function(){
                                         $modal.load($path_base+'/admin/sys/permission/role/edit', form, function(){
+                                        //$modal.load($path_base+'/admin/sys/permission/role/edit', form, function(){
                                             $modal.modal();
                                         });
                                     }, 1000);

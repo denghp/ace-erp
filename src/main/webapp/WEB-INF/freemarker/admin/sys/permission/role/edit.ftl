@@ -27,11 +27,11 @@
                     <div id="role-info" class="tab-pane in active">
                         <form class="form-horizontal" id="validation-form" role="form">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label no-padding-right" for="form-field-1">
+                                <label class="col-sm-3 control-label no-padding-right" for="role-name">
                                     角色名称 </label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" id="name" placeholder="RoleName" value="${role.name}"
+                                    <input type="text" name="roleName" id="roleName" placeholder="RoleName" value="${role.name}"
                                            class="col-xs-10 col-sm-5">
                                 </div>
                             </div>
@@ -163,6 +163,7 @@
 <script type="text/javascript">
     var $path_base = "${rc.getContextPath()}";//this will be used in gritter alerts containing images
 </script>
+<script src="${rc.getContextPath()}/assets/js/additional-methods.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jquery.validate.min.js"></script>
 <script type="text/javascript">
     eval('debugger;');
@@ -198,8 +199,31 @@
     });
     $('#update').on('click', function (e) {
 
-        checkForm();
-
+        $('#validation-form').validate({
+            rules: {
+                roleName: {
+                    required: true
+                }
+            },
+            messages: {
+                roleName: {
+                    required: "Please provide a valid name."
+                    //email: "Please provide a valid email."
+                }
+            },
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+            submitHandler: function (form) {
+                alert("submit");
+                form.submit();
+            }
+        });
+        /**
         var nodes = zTreeObj.getCheckedNodes();
         var resourceIds = new Array();
         for (var i = 0; i < nodes.length; i++) {
@@ -228,6 +252,7 @@
                 }
             });
         }, 1000);
+        **/
     });
 
     function checkForm() {
@@ -238,23 +263,14 @@
             rules: {
                 name: {
                     required: true
-                },
-                role: {
-                    required: true,
-                    minlength: 5
-                },
-                gender: 'required'
+                }
             },
 
             messages: {
                 name: {
                     required: "Please provide a valid name."
                     //email: "Please provide a valid email."
-                },
-                password: {
-                    required: "Please specify a role."
-                },
-                gender: "Please choose gender"
+                }
             },
 
             highlight: function (e) {
@@ -267,19 +283,17 @@
             },
 
             errorPlacement: function (error, element) {
-                if (element.is('.chosen-select')) {
-                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-                }
-                else error.insertAfter(element.parent());
+                alert(error + element);
             },
 
             submitHandler: function (form) {
                 alert("submit");
+                form.submit();
             },
             invalidHandler: function (form) {
                 alert("invalidHandler");
             }
-        }).form();
+        });
     }
 
 </script>
