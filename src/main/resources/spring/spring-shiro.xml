@@ -126,6 +126,8 @@
             <value>
                 /assets/** = anon
                 /jcaptcha* = anon
+                /register* = anon
+                /forgot* = anon
                 /logout = logout
                 /login = jCaptchaValidate,authc
                 /** = sysUser,user,perms,roles

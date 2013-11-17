@@ -1,4 +1,4 @@
-<#import "../commons/showMessage.ftl" as show>
+<#import "commons/showMessage.ftl" as show>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,18 +64,19 @@
     <div class="widget-body">
         <div class="widget-main">
             <h4 class="header blue lighter bigger">
-             <@show.errorMesage />
+            <@show.errorMesage />
                 <i class="icon-coffee green"></i>
                 Please Enter Your Information
             </h4>
 
             <div class="space-6"></div>
-            <form id="loginForm"  method="post" >
+            <form id="loginForm" method="post" action="${rc.getContextPath()}/login">
                 <fieldset>
                     <div class="form-group">
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="username" value="admin" class="form-control"
+															<input type="text" name="username" value="admin"
+                                                                   class="form-control"
                                                                    placeholder="Username"/>
 															<i class="icon-user"></i>
 														</span>
@@ -84,13 +85,14 @@
                     <div class="form-group">
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" name="password" value="123456" class="form-control"
+															<input type="password" name="password" value="123456"
+                                                                   class="form-control"
                                                                    placeholder="Password"/>
 															<i class="icon-lock"></i>
 														</span>
                         </label>
                     </div>
-                    <#if jcaptchaEbabled ? string('true','false') == 'true'>
+                <#if jcaptchaEbabled?? && jcaptchaEbabled ? string('true','false') == 'true'>
                     <label class="block clearfix">
                                 <span class="block input-icon input-icon-right">
                                 <input type="text" id="jcaptchaCode" name="jcaptchaCode"
@@ -100,16 +102,16 @@
                                      src="${rc.getContextPath()}/jcaptcha.jpg" title="点击更换验证码">
                                 </span>
                     </label>
-                    </#if>
+                </#if>
                     <div class="space"></div>
 
                     <div class="clearfix">
                         <label class="inline">
                             <input type="checkbox" class="ace"/>
-                            <span class="lbl"> Remember Me</span>
+                            <span class="lbl"> 记住我</span>
                         </label>
 
-                        <button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+                        <button type="submit" id="login" class="width-35 pull-right btn btn-sm btn-primary">
                             <i class="icon-key"></i>
                             Login
                         </button>
@@ -118,24 +120,25 @@
                     <div class="space-4"></div>
                 </fieldset>
             </form>
+            <!--
+           <div class="social-or-login center">
+               <span class="bigger-110">Or Login Using</span>
+           </div>
 
-            <div class="social-or-login center">
-                <span class="bigger-110">Or Login Using</span>
-            </div>
+           <div class="social-login center">
+               <a class="btn btn-primary">
+                   <i class="icon-facebook"></i>
+               </a>
 
-            <div class="social-login center">
-                <a class="btn btn-primary">
-                    <i class="icon-facebook"></i>
-                </a>
+               <a class="btn btn-info">
+                   <i class="icon-twitter"></i>
+               </a>
 
-                <a class="btn btn-info">
-                    <i class="icon-twitter"></i>
-                </a>
-
-                <a class="btn btn-danger">
-                    <i class="icon-google-plus"></i>
-                </a>
-            </div>
+               <a class="btn btn-danger">
+                   <i class="icon-google-plus"></i>
+               </a>
+           </div>
+           -->
         </div>
         <!-- /widget-main -->
 
@@ -143,13 +146,13 @@
             <div>
                 <a href="#" onclick="show_box('forgot-box'); return false;" class="forgot-password-link">
                     <i class="icon-arrow-left"></i>
-                    I forgot my password
+                    忘记密码?
                 </a>
             </div>
 
             <div>
                 <a href="#" onclick="show_box('signup-box'); return false;" class="user-signup-link">
-                    I want to register
+                    我要注册
                     <i class="icon-arrow-right"></i>
                 </a>
             </div>
@@ -209,51 +212,59 @@
         <div class="widget-main">
             <h4 class="header green lighter bigger">
                 <i class="icon-group blue"></i>
-                New User Registration
+                新用户注册
             </h4>
 
             <div class="space-6"></div>
-            <p> Enter your details to begin: </p>
+            <p> 开始输入你的详细信息: </p>
 
-            <form>
+            <form id="registerForm" name="registerForm" method="post" action="${rc.getContextPath()}/register">
                 <fieldset>
-                    <label class="block clearfix">
+                    <div class="form-group">
+                        <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control"
-                                                                   placeholder="Email"/>
+															<input type="email" name="email" id="email"
+                                                                   class="form-control"
+                                                                   placeholder="电子邮箱"/>
 															<i class="icon-envelope"></i>
 														</span>
-                    </label>
-
-                    <label class="block clearfix">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control"
-                                                                   placeholder="Username"/>
+															<input type="text" name="username" id="username"
+                                                                   class="form-control"
+                                                                   placeholder="用户名"/>
 															<i class="icon-user"></i>
 														</span>
-                    </label>
-
-                    <label class="block clearfix">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control"
-                                                                   placeholder="Password"/>
+															<input type="password" name="password" id="password"
+                                                                   class="form-control"
+                                                                   placeholder="设置密码"/>
 															<i class="icon-lock"></i>
 														</span>
-                    </label>
-
-                    <label class="block clearfix">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control"
-                                                                   placeholder="Repeat password"/>
+															<input type="password" name="repeat-password"
+                                                                   class="form-control"
+                                                                   placeholder="确认密码"/>
 															<i class="icon-retweet"></i>
 														</span>
-                    </label>
-
+                        </label>
+                    </div>
                     <label class="block">
                         <input type="checkbox" class="ace"/>
 														<span class="lbl">
-															I accept the
-															<a href="#">User Agreement</a>
+															同意
+															<a href="#">用户协议</a>
 														</span>
                     </label>
 
@@ -262,11 +273,11 @@
                     <div class="clearfix">
                         <button type="reset" class="width-30 pull-left btn btn-sm">
                             <i class="icon-refresh"></i>
-                            Reset
+                            重置
                         </button>
 
-                        <button type="button" class="width-65 pull-right btn btn-sm btn-success">
-                            Register
+                        <button type="submit" id="register" class="width-65 pull-right btn btn-sm btn-success">
+                            注册
                             <i class="icon-arrow-right icon-on-right"></i>
                         </button>
                     </div>
@@ -277,7 +288,7 @@
         <div class="toolbar center">
             <a href="#" onclick="show_box('login-box'); return false;" class="back-to-login-link">
                 <i class="icon-arrow-left"></i>
-                Back to login
+                返回登录
             </a>
         </div>
     </div>
@@ -345,36 +356,115 @@
             imageSrc = imageSrc + "?" + new Date().getTime();
             img.attr("src", imageSrc);
         });
-        $('#loginForm').validate(
-                {
-                    rules: {
-                        username: {
-                            minlength: 2,
-                            required: true
-                        },
-                        email: {
-                            required: true,
-                            email: true
-                        },
-                        password: {
-                            minlength: 2,
-                            required: true
-                        }
-                    },
+        $('#loginForm').validate({
+            rules: {
+                username: {
+                    minlength: 2,
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    minlength: 2,
+                    required: true
+                }
+            },
 
-                    highlight: function (element) {
-                        //$(element).closest('.form-group').removeClass('success').addClass('error');
-                        $(element).closest('.form-group').removeClass('has-info').addClass('has-error');
-                    },
-                    success: function (element) {
-                        //element
-                        //        .text('OK!').addClass('valid')
-                        //        .closest('.form-group').removeClass('error').addClass('success');
-                        $(element).closest('.form-group').removeClass('has-error').addClass('has-info');
-                        $(element).remove();
-                    }
-                });
+            highlight: function (element) {
+                //$(element).closest('.form-group').removeClass('success').addClass('error');
+                $(element).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+            success: function (element) {
+                //element
+                //        .text('OK!').addClass('valid')
+                //        .closest('.form-group').removeClass('error').addClass('success');
+                $(element).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(element).remove();
+            }
+        });
+        $('#registerForm').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                username: {
+                    minlength: 2,
+                    required: true
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                password: {
+                    minlength: 2,
+                    required: true
+                }
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('.login-form')).show();
+            },
+
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            }
+        });
     }); // end document.ready
+
+    $(document).ready(function () {
+        /**
+        $('#login').on('click', function (e) {
+            if ($('#loginForm').valid()) {
+                var postData = $('#loginForm').serialize();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url:  "${rc.getContextPath()}/login",
+                        dataType: "json",
+                        data: postData,
+                        traditional: true,
+                        success: function (data, status) {
+                            alert("success : " + data);
+                        },
+                        error: function () {
+                            alert('登录失败,请与系统管理员联系!');
+                        }
+                    });
+                }, 1000);
+            }
+        });
+        **/
+        /**
+        $('#register').on('click', function (e) {
+            if ($('#registerForm').valid()) {
+                alert("register");
+                var postData = $('#registerForm').serialize();
+                setTimeout(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url:  "${rc.getContextPath()}/register",
+                        dataType: "json",
+                        data: postData,
+                        traditional: true,
+                        success: function (data, status) {
+                            alert("success : " + data);
+                        },
+                        error: function () {
+                            alert('注册失败,请与系统管理员联系!');
+                        }
+                    });
+                }, 1000);
+            }
+        });
+         **/
+    });
 </script>
 
 </body>

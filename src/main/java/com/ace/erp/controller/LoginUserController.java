@@ -9,7 +9,9 @@ package com.ace.erp.controller;
 
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.common.Constants;
+import com.ace.erp.entity.Response;
 import com.ace.erp.entity.sys.User;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -19,10 +21,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Project_Name: smart-erp
@@ -42,7 +50,6 @@ public class LoginUserController {
 
     @Autowired
     private MessageSource messageSource;
-
 
     @RequestMapping(value = {"/{login:login;?.*}"}) //spring3.2.2 bug see  http://jinnianshilongnian.iteye.com/blog/1831408
     public String loginForm(@CurrentUser User user,HttpServletRequest request, ModelMap model) {
@@ -100,14 +107,7 @@ public class LoginUserController {
             model.remove(Constants.MESSAGE);
         }
 
-        return "/login/login";
+        return "/login";
     }
-    /**
-    @RequestMapping(value = "/{login:login;?.*}", method = RequestMethod.GET)
-    public String index(@ModelAttribute("model") ModelMap model) {
-
-        return "/login/login";
-    }
-    **/
 
 }

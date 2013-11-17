@@ -9,7 +9,9 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.sys.User;
+import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.UserService;
+import com.ace.erp.utils.AceUtils;
 import com.mysql.jdbc.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import javax.validation.Validator;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +47,6 @@ public class UserController  extends BaseCRUDController<User,Integer> {
     @Autowired
     @BaseComponent
     private UserService userService;
-
 
 
 }

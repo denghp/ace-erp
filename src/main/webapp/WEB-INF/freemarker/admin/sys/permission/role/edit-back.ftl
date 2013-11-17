@@ -24,7 +24,7 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div id="home" class="tab-pane in active">
+                    <div id="role-info" class="tab-pane in active">
                         <form class="form-horizontal" id="validation-form" role="form">
                             <div class="form-group" style="display: none">
                                 <label class="col-sm-3 control-label no-padding-right" for="role-name">
@@ -80,19 +80,35 @@
 
                                 <div class="col-sm-9">
                                     <div class="control-group">
+                                    <#if role.show ? string('true','false') == 'true'>
                                         <div class="radio">
                                             <label>
-                                                <input name="show" value="true" <#if role.show ? string('true','false') == 'true'>checked="checked"</#if> type="radio"
+                                                <input name="show" checked="checked" type="radio"
                                                        class="ace">
                                                 <span class="lbl"> 可用</span>
                                             </label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input name="show" value="false" <#if role.show ? string('true','false') == 'false'>checked="checked"</#if> type="radio" class="ace">
+                                                <input name="show" type="radio" class="ace">
                                                 <span class="lbl"> 不可用</span>
                                             </label>
                                         </div>
+                                    <#else>
+                                        <div class="radio">
+                                            <label>
+                                                <input name="show" type="radio" class="ace">
+                                                <span class="lbl"> 可用</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input checked="checked" name="show" type="radio"
+                                                       class="ace">
+                                                <span class="lbl"> 不可用</span>
+                                            </label>
+                                        </div>
+                                    </#if>
                                     </div>
                                 </div>
                             </div>
@@ -117,6 +133,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- /span -->
+                            <!--
+                                <div class="col-sm-6">
+                                    <div class="widget-box">
+                                        <div class="widget-header header-color-green2">
+                                            <h4 class="lighter smaller">资源权限</h4>
+                                        </div>
+                                        <div class="widget-body">
+                                            <div class="widget-main padding-8" >
+                                                <select class="form-control" id="form-field-select"
+                                                        multiple="multiple" style="height: 240px">
+                                                <#if permissionList?exists>
+                                                     <#list permissionList as permission>
+                                                         <option value="${permission.permission}">${permission.name} ( ${permission.permission} )</option>
+                                                     </#list>
+                                                </#if>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                -->
+                            <!-- /span -->
                         </div>
                     </div>
 
@@ -129,7 +168,6 @@
     <button type="button" data-dismiss="modal" class="btn">取消</button>
     <button type="button" id="update" class="btn btn-primary">更新</button>
 </div>
-
 
 
 <script type="text/javascript">
@@ -176,21 +214,21 @@
             errorClass: 'help-block',
             focusInvalid: false,
             rules: {
-                name: {
+                roleName: {
                     required: true,
                     minlength: 6
                 },
-                role: {
+                roleRole: {
                     required:true,
                     minlength: 6
                 }
             },
             messages: {
-                name: {
+                roleName: {
                     required: "请输入有效角色名称.",
                     minlength: "角色名称不能少于6个字符."
                 },
-                role: {
+                roleRole: {
                     required: "请输入有效的角色标识.",
                     minlength: "角色名称不能少于6个字符."
                 }
@@ -210,15 +248,8 @@
         });
 
         $('#update').on('click', function (e) {
-            var haserror = $('#validation-form').find('.form-group.has-error');
-            if (haserror != null && haserror.length > 0) {
-                var resp = '请输入有效的角色基本信息!';
-                $modal.find('.modal-body')
-                        .prepend('<div class="alert alert-info fade in">' +
-                                resp + '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                                '</div>');
-            } else {
-                if ($('#validation-form').valid()) {
+            if ($('#validation-form').valid()) {
+                alert('hello - valid form');
                 var nodes = zTreeObj.getCheckedNodes();
                 var resourceIds = new Array();
                 for (var i = 0; i < nodes.length; i++) {
@@ -250,7 +281,6 @@
                         }
                     });
                 }, 1000);
-            }
             }
         } );
     });

@@ -62,7 +62,7 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
         return "/admin/sys/permission/role/edit";
     }
 
-    @RequestMapping(value = "{id}/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateAll", method = RequestMethod.POST)
     @ResponseBody
     public Response updateWithResourcePermission(Role role,
                                                  BindingResult result,
