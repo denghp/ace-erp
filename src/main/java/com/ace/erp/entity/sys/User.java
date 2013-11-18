@@ -77,7 +77,7 @@ public class User implements LogicDeleteable,Serializable {
     /*
      * 用户 组织机构
      */
-    private Long organizationId;
+    private Integer organizationId;
 
     public User() {
     }
@@ -191,11 +191,11 @@ public class User implements LogicDeleteable,Serializable {
         this.admin = admin;
     }
 
-    public Long getOrganizationId() {
+    public Integer getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(Long organizationId) {
+    public void setOrganizationId(Integer organizationId) {
         this.organizationId = organizationId;
     }
 

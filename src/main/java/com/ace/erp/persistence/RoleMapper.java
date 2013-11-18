@@ -1,8 +1,7 @@
-package com.ace.erp.shiro.persistence;
+package com.ace.erp.persistence;
 
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Role;
-import com.ace.erp.entity.sys.RoleResourcePermission;
 
 import java.util.List;
 import java.util.Map;

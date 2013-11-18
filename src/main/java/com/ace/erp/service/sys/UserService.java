@@ -1,12 +1,12 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
-import com.ace.erp.common.Constants;
-import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
+import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.entity.sys.UserStatus;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.shiro.persistence.UserMapper;
+import com.ace.erp.persistence.UserMapper;
+import com.ace.erp.persistence.UserOrganizationMapper;
 import com.ace.erp.utils.Md5Utils;
 import com.ace.erp.utils.TimeUtils;
 import net.sf.ehcache.Cache;
@@ -20,11 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with smart-erp.
@@ -45,6 +41,10 @@ public class UserService extends BaseService<User, Integer> {
     @Autowired
     private CacheManager ehcacheManager;
 
+    @Autowired
+    private UserOrganizationMapper userOrganizationMapper;
+
+
     private Cache loginRecordCache;
 
     @Value(value = "${user.password.maxRetryCount}")
@@ -59,6 +59,12 @@ public class UserService extends BaseService<User, Integer> {
         loginRecordCache = ehcacheManager.getCache("loginRecordCache");
     }
 
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     * @throws AceException
+     */
     public User save(User user) throws AceException {
         user.randomSalt();
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
@@ -67,7 +73,32 @@ public class UserService extends BaseService<User, Integer> {
         } else {
             user.setCreateTime("2013-10-17");
         }
+        //
         super.save(user);
+        logger.info("insert successfully, user {}", user);
+        return user;
+    }
+
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     * @throws AceException
+     */
+    public User saveUserOrOrganization(User user) throws AceException {
+        user.randomSalt();
+        user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
+        if (user.getCreateTime() == null) {
+            user.setCreateTime(DateTime.now().toString(TimeUtils.DATETIME_NORMAL_FORMAT));
+        } else {
+            user.setCreateTime("2013-10-17");
+        }
+        super.save(user);
+
+        UserOrganization userOrganization = new UserOrganization();
+        userOrganization.setUserId(user.getId());
+        userOrganization.setOrganizationId(1);
+        userOrganizationMapper.save(userOrganization);
         logger.info("insert successfully, user {}", user);
         return user;
     }

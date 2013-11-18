@@ -6,11 +6,8 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.BaseTest;
-import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.sys.Permission;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.shiro.persistence.PermissionMapper;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

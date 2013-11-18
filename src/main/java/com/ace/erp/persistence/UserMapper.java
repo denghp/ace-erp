@@ -1,11 +1,7 @@
-package com.ace.erp.shiro.persistence;
+package com.ace.erp.persistence;
 
 import com.ace.erp.common.mybatis.BaseMapper;
-import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created with smart-erp.
@@ -21,6 +17,5 @@ public interface UserMapper extends BaseMapper<User,Integer> {
     User getUserByEmail(String email);
 
     User getByMobilePhoneNumber(String mobilePhoneNumber);
-
 
 }

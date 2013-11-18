@@ -167,23 +167,23 @@
         <div class="widget-main">
             <h4 class="header red lighter bigger">
                 <i class="icon-key"></i>
-                Retrieve Password
+                找回密码
             </h4>
 
             <div class="space-6"></div>
             <p>
-                Enter your email and to receive instructions
+                请输入接收密码的电子邮箱
             </p>
 
             <form>
                 <fieldset>
-                    <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="email" class="form-control"
-                                                                   placeholder="Email"/>
-															<i class="icon-envelope"></i>
-														</span>
-                    </label>
+                    <div class="form-group">
+                        <div class="block input-icon input-icon-right ">
+                            <input type="email" class="form-control"
+                                   placeholder="Email"/>
+                            <i class="icon-envelope"></i>
+                        </div>
+                    </div>
 
                     <div class="clearfix">
                         <button type="button" class="width-35 pull-right btn btn-sm btn-danger">
@@ -221,44 +221,35 @@
             <form id="registerForm" name="registerForm" method="post" action="${rc.getContextPath()}/register">
                 <fieldset>
                     <div class="form-group">
-                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="email" name="email" id="email"
-                                                                   class="form-control"
-                                                                   placeholder="电子邮箱"/>
-															<i class="icon-envelope"></i>
-														</span>
-                        </label>
+                        <div class="block input-icon input-icon-right ">
+                            <input type="email" name="email" id="email"
+                                   class="form-control"
+                                   placeholder="电子邮箱"/>
+                            <i class="icon-envelope"></i>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" name="username" id="username"
-                                                                   class="form-control"
-                                                                   placeholder="用户名"/>
-															<i class="icon-user"></i>
-														</span>
-                        </label>
+                        <div class="block input-icon input-icon-right ">
+                            <input type="text" name="username" id="username" class="form-control"
+                                   placeholder="用户名" class="col-xs-10 col-sm-5"/>
+                            <i class="icon-user"></i>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" name="password" id="password"
-                                                                   class="form-control"
-                                                                   placeholder="设置密码"/>
-															<i class="icon-lock"></i>
-														</span>
-                        </label>
+                        <div class="block input-icon input-icon-right ">
+                            <input type="password" name="password" id="password"
+                                   class="form-control"
+                                   placeholder="设置密码"/>
+                            <i class="icon-lock"></i>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" name="repeat-password"
-                                                                   class="form-control"
-                                                                   placeholder="确认密码"/>
-															<i class="icon-retweet"></i>
-														</span>
-                        </label>
+                        <div class="block input-icon input-icon-right ">
+                            <input type="password" name="repeat-password"
+                                   class="form-control"
+                                   placeholder="确认密码"/>
+                            <i class="icon-retweet"></i>
+                        </div>
                     </div>
                     <label class="block">
                         <input type="checkbox" class="ace"/>
@@ -420,7 +411,7 @@
 
     $(document).ready(function () {
         /**
-        $('#login').on('click', function (e) {
+         $('#login').on('click', function (e) {
             if ($('#loginForm').valid()) {
                 var postData = $('#loginForm').serialize();
                 setTimeout(function () {
@@ -440,9 +431,9 @@
                 }, 1000);
             }
         });
-        **/
+         **/
         /**
-        $('#register').on('click', function (e) {
+         $('#register').on('click', function (e) {
             if ($('#registerForm').valid()) {
                 alert("register");
                 var postData = $('#registerForm').serialize();

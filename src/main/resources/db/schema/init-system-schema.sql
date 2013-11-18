@@ -18,8 +18,6 @@ create table `sys_user`(
   `password`  varchar(100),
   `salt`       varchar(10),
   `status`    varchar(50),
-  `organization_id` int,
-  `organization_name` varchar(255),
   `deleted`   bool,
   `admin`     bool,
   `create_time` datetime default '1970-01-01 00:00:00',
@@ -35,7 +33,7 @@ alter table `sys_user` auto_increment=1000;;
 create table `sys_organization`(
   `id`         bigint not null auto_increment,
   `name`      varchar(100),
-  `type`      varchar(20),
+  `trade_code`      int,
   `icon`       varchar(200),
   `weight`    int,
   `user_count`  int,
@@ -46,10 +44,12 @@ create table `sys_organization`(
   `create_time` datetime default '1970-01-01 00:00:00',
   `modify_time` datetime default '1970-01-01 00:00:00',
   `telephone` varchar(50),
+  `logo` varchar(125),
+  `site` varchar(50),
   `status`   int,
   constraint `pk_sys_organization` primary key(`id`),
   index `idx_sys_organization_name` (`name`),
-  index `idx_sys_organization_type` (`type`)
+  index `idx_sys_organization_trade_code` (`trade_code`)
 ) charset=utf8 ENGINE=InnoDB;;
 alter table `sys_organization` auto_increment=10000;;
 
@@ -57,6 +57,7 @@ create table `sys_user_organization`(
   `id`         bigint not null auto_increment,
   `user_id`      bigint not null,
   `organization_id`      bigint NOT NULL,
+  `modify_time`      datetime default NOW(),
   constraint `pk_sys_user_organization` primary key(`id`)
 ) charset=utf8 ENGINE=InnoDB;;
 

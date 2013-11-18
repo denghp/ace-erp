@@ -1,4 +1,4 @@
-package com.ace.erp.shiro.persistence;
+package com.ace.erp.persistence;
 
 import com.ace.erp.entity.sys.Auth;
 

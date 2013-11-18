@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.ace.erp.persistence.UserOrganizationMapper">
+
+    <resultMap id="userOrganizationResult" type="com.ace.erp.entity.sys.UserOrganization">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="organizationId" column="organization_id"/>
+        <result property="modifyTime" column="modify_time" javaType="java.lang.String" typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+    </resultMap>
+
+
+  <select id="getCount" resultType="int">
+    SELECT count(*) FROM sys_user_organization;
+  </select>
+
+  <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationResult">
+    SELECT id,user_id,organization_id,modify_time FROM sys_user_organization WHERE id = #{id}
+  </select>
+
+  <insert id="save" parameterType="UserOrganization" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO
+      sys_user_organization (user_id,organization_id,modify_time)
+      VALUES
+        (#{userId},#{organizationId},
+      <if test="modifyTime == null">
+          now()
+      </if>
+      <if test="modifyTime != null">
+          #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler}
+      </if>
+      )
+  </insert>
+
+  <delete id="delUserOrganization" parameterType="java.util.Map">
+      delete from sys_user_organization where user_id = #{userId} and organization_id = #{organizationId}
+  </delete>
+
+</mapper>

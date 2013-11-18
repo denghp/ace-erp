@@ -55,13 +55,15 @@ public class RegisterUserController  {
     private MessageSource messageSource;
 
     @RequestMapping(value = {"/register"}, method = RequestMethod.POST)
-    @ResponseBody
     public String registerForm(@Valid User user,BindingResult result,Model model) throws AceException {
         //TODO 验证
         List<ObjectError> errorList = result.getAllErrors();
         for (ObjectError error : errorList) {
             logger.info(error.toString());
         }
-        return "/baseInfo";
+        //step1 注册企业
+
+        //step2 注册用户
+        return "/admin/sys/user/perfectInfo";
     }
 }

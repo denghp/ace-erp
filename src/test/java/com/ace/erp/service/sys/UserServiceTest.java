@@ -46,6 +46,11 @@ public class UserServiceTest extends BaseUserTest {
     }
 
     @Test
+    public void addUserOrganization() throws AceException{
+        userService.saveUserOrOrganization(user);
+    }
+
+    @Test
     public void updateUser()throws AceException {
         userService.update(user);
     }
