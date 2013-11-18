@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with smart-erp.
@@ -77,7 +78,7 @@ public class User implements LogicDeleteable,Serializable {
     /*
      * 用户 组织机构
      */
-    private Integer organizationId;
+    private List<Organization> organizationList;
 
     public User() {
     }
@@ -191,12 +192,12 @@ public class User implements LogicDeleteable,Serializable {
         this.admin = admin;
     }
 
-    public Integer getOrganizationId() {
-        return organizationId;
+    public List<Organization> getOrganizationList() {
+        return organizationList;
     }
 
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
+    public void setOrganizationList(List<Organization> organizationList) {
+        this.organizationList = organizationList;
     }
 
     @Override

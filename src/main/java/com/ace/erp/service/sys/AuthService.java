@@ -57,21 +57,13 @@ public class AuthService {
     /**
      * 根据用户信息获取 角色
      * 1.1、用户  根据用户绝对匹配
-     * 1.2、组织机构 根据组织机构绝对匹配 此处需要注意 祖先需要自己获取
-     *
      * @param userId             必须有
-     * @param organizationId    可选
      * @return
      */
-    public String findRoleIds(Integer userId, Integer organizationId) {
+    public String findRoleIds(Integer userId) {
 
         Map<String, Object> params = new HashMap<String,Object>();
-        //StringBuilder hql = new StringBuilder("select roleIds from Auth where ");
-        //hql.append(" (userId=:userId) ");
         params.put("userId",userId);
-        if (organizationId != null) {
-            params.put("organizationId",organizationId);
-        }
         String roleIds = authMapper.findRoleIds(params);
         logger.info("roleIds:{}",roleIds);
         return roleIds;

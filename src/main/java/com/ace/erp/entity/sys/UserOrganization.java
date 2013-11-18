@@ -13,9 +13,30 @@ import org.joda.time.DateTime;
  */
 public class UserOrganization {
 
+    private Integer id;
     private Integer userId;
     private Integer organizationId;
-    private DateTime modifyTime;
+    private String modifyTime;
+
+    public UserOrganization() {}
+
+    public UserOrganization(Integer userId, Integer organizationId) {
+        this.userId = userId;
+        this.organizationId = organizationId;
+    }
+
+    public UserOrganization(Integer userId, Integer organizationId, String modifyTime) {
+        this(userId, organizationId);
+        this.modifyTime = modifyTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -33,11 +54,11 @@ public class UserOrganization {
         this.organizationId = organizationId;
     }
 
-    public DateTime getModifyTime() {
+    public String getModifyTime() {
         return modifyTime;
     }
 
-    public void setModifyTime(DateTime modifyTime) {
+    public void setModifyTime(String modifyTime) {
         this.modifyTime = modifyTime;
     }
 }

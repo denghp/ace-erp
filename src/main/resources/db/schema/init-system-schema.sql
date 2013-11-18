@@ -1,6 +1,6 @@
 #如果复制到mysql中执行时 加上
 #DELIMITER ;;
-
+use ace;
 drop table if exists `sys_user`;;
 drop table if exists `sys_organization`;;
 drop table if exists `sys_user_organization`;;
@@ -33,14 +33,11 @@ alter table `sys_user` auto_increment=1000;;
 create table `sys_organization`(
   `id`         bigint not null auto_increment,
   `name`      varchar(100),
-  `trade_code`      int,
-  `icon`       varchar(200),
-  `weight`    int,
+  `trade_code_id`      int,
   `user_count`  int,
   `description` varchar(511),
   `address`     varchar(255),
-  `url`  varchar(200),
-  `end_date`    datetime ,
+  `expire_time`    datetime ,
   `create_time` datetime default '1970-01-01 00:00:00',
   `modify_time` datetime default '1970-01-01 00:00:00',
   `telephone` varchar(50),
@@ -49,7 +46,7 @@ create table `sys_organization`(
   `status`   int,
   constraint `pk_sys_organization` primary key(`id`),
   index `idx_sys_organization_name` (`name`),
-  index `idx_sys_organization_trade_code` (`trade_code`)
+  index `idx_sys_organization_trade_code` (`trade_code_id`)
 ) charset=utf8 ENGINE=InnoDB;;
 alter table `sys_organization` auto_increment=10000;;
 
@@ -57,7 +54,7 @@ create table `sys_user_organization`(
   `id`         bigint not null auto_increment,
   `user_id`      bigint not null,
   `organization_id`      bigint NOT NULL,
-  `modify_time`      datetime default NOW(),
+  `modify_time`      datetime default '1970-01-01 00:00:00',
   constraint `pk_sys_user_organization` primary key(`id`)
 ) charset=utf8 ENGINE=InnoDB;;
 
@@ -137,6 +134,23 @@ create table `sys_auth`(
   index `idx_sys_auth_type` (`type`)
 ) charset=utf8 ENGINE=InnoDB;;
 alter table `sys_auth` auto_increment=1000;;
+
+/**
+ * 行业类型，贸易代码
+ */
+create table `sys_trade_code` (
+   `id`         bigint not null auto_increment,
+  `name`      varchar(100),
+  `identity`  varchar(100),
+  `parent_id` bigint,
+  `weight`    int,
+  `is_show`       bool,
+  constraint `pk_sys_resource` primary key(`id`),
+  index `idx_sys_resource_name` (`name`),
+  index `idx_sys_resource_identity` (`identity`),
+  index `idx_sys_resource_parent_id` (`parent_id`)
+) charset=utf8 ENGINE=InnoDB;;
+alter table `sys_trade_code` auto_increment=1000;;
 
 /*** custom function getChildList **/
 DROP FUNCTION IF EXISTS getChildList;

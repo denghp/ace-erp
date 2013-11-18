@@ -47,11 +47,7 @@ public class UserAuthService {
 
         //获取权限
         //1.1、获取用户角色
-        //1.2、获取组织机构角色
-        //1.3、获取工作职务角色
-        //1.4、获取组织机构和工作职务组合的角色
-        //1.5、获取组角色
-        String roleIds = authService.findRoleIds(userId, user.getOrganizationId());
+        String roleIds = authService.findRoleIds(userId);
 
         List<Role> roles = roleService.findShowRoles(roleIds);
         return roles;

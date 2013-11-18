@@ -56,6 +56,13 @@ public class UserServiceTest extends BaseUserTest {
     }
 
     @Test
+    public void getUser()throws AceException {
+        User userB = userService.getOne(1008);
+        Assert.assertNotNull(userB);
+        System.out.println(userB);
+    }
+
+    @Test
     public void timeTest() {
         String time = "2012-12-21";
         //System.out.println(DateTime.parse("2013-10-17", DateTimeFormat.forPattern("yyyy-mm-dd HH:mm:ss")));

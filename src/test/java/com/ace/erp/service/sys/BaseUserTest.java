@@ -19,10 +19,10 @@ public class BaseUserTest extends BaseTest {
     @Autowired
     protected UserService userService;
 
-    private long id = 16l;
-    protected String username = "deng123";
-    protected String email = "dengh11p@163.com";
-    protected String mobilePhoneNumber = "156123456782";
+    private long id = 16;
+    protected String username = "user_"+System.currentTimeMillis();
+    protected String email = System.currentTimeMillis()+"@163.com";
+    protected String mobilePhoneNumber = "138"+System.currentTimeMillis();
     protected String password = "123456";
     private Boolean admin = false;
     private Boolean deleted = true;

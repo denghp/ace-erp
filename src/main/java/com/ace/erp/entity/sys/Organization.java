@@ -1,5 +1,7 @@
 package com.ace.erp.entity.sys;
 
+import com.ace.erp.utils.JsonUtils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -15,18 +17,27 @@ public class Organization {
 
     private Integer id;
     private String name;
-    private String type;
-    private String icon;
-    private Integer weight;
+    private Integer tradeCodeId;
+    private String logo;
+    private String site;
     private Integer userCount;
     private String description;
     private String address;
-    private String url;
-    private Date createDate;
-    private Date endDate;
+    private String createTime;
+    private String expireTime;
+    private String modifyTime;
     private String telephone;
     private Integer status;
     private List<User> userList;
+
+
+    public Organization() {}
+
+    public Organization(String name,Integer tradeCodeId,Integer userCount) {
+        this.name = name;
+        this.tradeCodeId = tradeCodeId;
+        this.userCount = userCount;
+    }
 
     public List<User> getUserList() {
         return userList;
@@ -50,30 +61,6 @@ public class Organization {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Integer getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Integer weight) {
-        this.weight = weight;
     }
 
     public Integer getUserCount() {
@@ -100,28 +87,28 @@ public class Organization {
         this.address = address;
     }
 
-    public String getUrl() {
-        return url;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getExpireTime() {
+        return expireTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getModifyTime() {
+        return modifyTime;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setModifyTime(String modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     public String getTelephone() {
@@ -138,5 +125,39 @@ public class Organization {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getTradeCodeId() {
+        return tradeCodeId;
+    }
+
+    public void setTradeCodeId(Integer tradeCodeId) {
+        this.tradeCodeId = tradeCodeId;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+
+    @Override
+    public String toString() {
+        try {
+            return JsonUtils.mapper.writeValueAsString(this);
+        } catch (Exception ex) {
+            return null;
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
+import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.entity.sys.UserStatus;
 import com.ace.erp.exception.AceException;
+import com.ace.erp.persistence.OrganizationMapper;
 import com.ace.erp.persistence.UserMapper;
 import com.ace.erp.persistence.UserOrganizationMapper;
 import com.ace.erp.utils.Md5Utils;
@@ -44,6 +46,8 @@ public class UserService extends BaseService<User, Integer> {
     @Autowired
     private UserOrganizationMapper userOrganizationMapper;
 
+    @Autowired
+    private OrganizationMapper organizationMapper;
 
     private Cache loginRecordCache;
 
@@ -90,14 +94,20 @@ public class UserService extends BaseService<User, Integer> {
         user.setPassword(encryptPassword(user.getUsername(), user.getPassword(), user.getSalt()));
         if (user.getCreateTime() == null) {
             user.setCreateTime(DateTime.now().toString(TimeUtils.DATETIME_NORMAL_FORMAT));
-        } else {
-            user.setCreateTime("2013-10-17");
         }
+        //添加账户
         super.save(user);
-
-        UserOrganization userOrganization = new UserOrganization();
-        userOrganization.setUserId(user.getId());
-        userOrganization.setOrganizationId(1);
+        UserOrganization userOrganization = null;
+        //添加公司信息
+        //TODO
+        Organization organization = user.getOrganizationList() == null ? null : user.getOrganizationList().get(0);
+        if (organization == null) {
+            organization = new Organization(user.getUsername(),1,2);
+            organizationMapper.save(organization);
+        } else {
+            organizationMapper.save(organization);
+        }
+        userOrganization = new UserOrganization(user.getId(),organization.getId());
         userOrganizationMapper.save(userOrganization);
         logger.info("insert successfully, user {}", user);
         return user;
