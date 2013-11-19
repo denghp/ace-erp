@@ -2,7 +2,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.sys.UserOrganization;
-import com.ace.erp.persistence.UserOrganizationMapper;
+import com.ace.erp.persistence.sys.UserOrganizationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

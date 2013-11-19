@@ -2,7 +2,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.entity.sys.Auth;
 import com.ace.erp.entity.sys.User;
-import com.ace.erp.persistence.AuthMapper;
+import com.ace.erp.persistence.sys.AuthMapper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

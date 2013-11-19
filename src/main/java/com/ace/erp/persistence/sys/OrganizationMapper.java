@@ -1,7 +1,10 @@
-package com.ace.erp.persistence;
+package com.ace.erp.persistence.sys;
 
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Organization;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Project_Name: ace-erp
@@ -11,7 +14,5 @@ import com.ace.erp.entity.sys.Organization;
  * Time: 1:19 PM
  */
 public interface OrganizationMapper extends BaseMapper<Organization,Integer>  {
-
-
 
 }

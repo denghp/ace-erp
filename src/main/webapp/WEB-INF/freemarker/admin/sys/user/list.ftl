@@ -43,7 +43,7 @@
             <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
 
-                Please note that demo server is not configured to save the changes, therefore you may get an error message.
+                请注意: 这里显示您对用户管理的任何操作信息!
                 <button class="close" data-dismiss="alert">
                     <i class="icon-remove"></i>
                 </button>

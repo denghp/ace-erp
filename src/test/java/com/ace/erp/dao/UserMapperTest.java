@@ -2,7 +2,7 @@ package com.ace.erp.dao;
 
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.UserService;
-import com.ace.erp.persistence.UserMapper;
+import com.ace.erp.persistence.sys.UserMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

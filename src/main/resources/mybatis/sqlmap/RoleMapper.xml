@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ace.erp.persistence.RoleMapper">
+<mapper namespace="com.ace.erp.persistence.sys.RoleMapper">
 
     <resultMap id="roleResult" type="com.ace.erp.entity.sys.Role">
         <result property="id" column="id"/>
@@ -14,7 +14,7 @@
         <result property="modifyTime" column="modify_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <collection column="role_id" property="resourcePermissions" ofType="RoleResourcePermission"
-                resultMap="com.ace.erp.persistence.RoleResourcePermissionMapper.roleResourcePermissionMap" />
+                resultMap="com.ace.erp.persistence.sys.RoleResourcePermissionMapper.roleResourcePermissionMap" />
     </resultMap>
 
 

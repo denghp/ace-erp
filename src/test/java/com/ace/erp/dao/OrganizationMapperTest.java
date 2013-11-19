@@ -9,9 +9,9 @@ import com.ace.erp.BaseTest;
 import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
-import com.ace.erp.persistence.OrganizationMapper;
-import com.ace.erp.persistence.UserMapper;
-import com.ace.erp.persistence.UserOrganizationMapper;
+import com.ace.erp.persistence.sys.OrganizationMapper;
+import com.ace.erp.persistence.sys.UserMapper;
+import com.ace.erp.persistence.sys.UserOrganizationMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -43,5 +43,11 @@ public class OrganizationMapperTest extends BaseTest {
         userOrganizationMapper.save(new UserOrganization(user1.getId(),organization.getId()));
         Organization organizatio = organizationMapper.getOne(organization.getId());
         System.out.println(organizatio);
+    }
+
+    @Test
+    public void getOneById() {
+        Organization organization = organizationMapper.getOne(1);
+        System.out.println(organization);
     }
 }

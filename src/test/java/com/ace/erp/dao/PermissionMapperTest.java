@@ -7,8 +7,8 @@ package com.ace.erp.dao;
 
 import com.ace.erp.entity.sys.Permission;
 import com.ace.erp.entity.sys.RoleResourcePermission;
-import com.ace.erp.persistence.PermissionMapper;
-import com.ace.erp.persistence.RoleResourcePermissionMapper;
+import com.ace.erp.persistence.sys.PermissionMapper;
+import com.ace.erp.persistence.sys.RoleResourcePermissionMapper;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

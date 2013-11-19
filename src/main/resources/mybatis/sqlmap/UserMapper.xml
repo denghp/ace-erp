@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ace.erp.persistence.UserMapper">
+<mapper namespace="com.ace.erp.persistence.sys.UserMapper">
 
     <resultMap id="userMap" type="com.ace.erp.entity.sys.User">
         <result property="id" column="id"/>
@@ -18,30 +18,29 @@
     </resultMap>
 
     <resultMap type="User" id="userOrganizationMap" extends="userMap">
-        <collection property="organizationList" ofType="Organization" resultMap="com.ace.erp.persistence.OrganizationMapper.organizationMap"/>
-        <!--
-        <collection property="organizationList" ofType="Organization" >
-            <result property="id" column="organization_id"/>
-            <result property="name" column="name"/>
-            <result property="tradeCodeId" column="trade_code_id"/>
-            <result property="logo" column="logo"/>
-            <result property="site" column="site"/>
-            <result property="userCount" column="user_count" />
-            <result property="status" column="organization_status"/>
-            <result property="address" column="address" />
-            <result property="description" column="description"/>
-            <result property="createTime" column="organization_create_time" javaType="java.lang.String"
-                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-            <result property="expireTime" column="expire_time" javaType="java.lang.String"
-                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-            <result property="modifyTime" column="organization_modify_time" javaType="java.lang.String"
-                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-        </collection>
-        -->
+        <collection property="organizationList" ofType="Organization" resultMap="com.ace.erp.persistence.sys.OrganizationMapper.organizationMap"/>
     </resultMap>
 
-    <select id="getUserByName" parameterType="java.lang.String" resultMap="userMap">
-    SELECT id,username,password,email,mobile_phone_number,salt,status,deleted,admin,create_time,modify_time FROM sys_user WHERE username = #{username}
+  <select id="getUserByName" parameterType="java.lang.String" resultMap="userOrganizationMap">
+    SELECT
+      su.id,su.username,
+      su.password,
+      su.email,su.mobile_phone_number,
+      su.salt,su.status as user_status,
+      su.deleted,
+      su.admin,su.create_time,
+      su.modify_time,
+      so.id as organ_id,so.name,so.user_count,
+      so.address,so.description,
+      so.status as organ_status,
+      so.logo,so.site,so.telephone,
+      so.create_time as organ_create_time,
+      so.modify_time as organ_modify_time,
+      so.expire_time
+    FROM sys_user as su
+     left join sys_user_organization as suo on su.id = suo.user_id
+     left join sys_organization as so on suo.organization_id = so.id
+    WHERE su.username = #{username}
   </select>
 
   <select id="getUserByEmail" parameterType="java.lang.String" resultMap="userMap">

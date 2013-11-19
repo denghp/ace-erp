@@ -1,4 +1,3 @@
-<#assign shiro=JspTaglibs["http://shiro.apache.org/tags"]>
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
         try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -13,7 +12,10 @@
         <li>
             <a href="#">系统设置</a>
         </li>
-        <li class="active">角色列表</li>
+        <li>
+            <a href="#">公司管理</a>
+        </li>
+        <li class="active">职员档案</li>
     </ul><!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
@@ -27,18 +29,6 @@
 </div>
 
 <div class="page-content">
-    <!--
-    <div class="page-header">
-        <h1>
-            角色管理
-            <small>
-                <i class="icon-double-angle-right"></i>
-                Dynamic tables and grids using jqGrid plugin
-            </small>
-        </h1>
-    </div>
-    -->
-    <!-- /.page-header -->
 
     <div class="row">
         <div class="col-xs-12">
@@ -47,7 +37,7 @@
             <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
 
-                请注意: 这里显示您对角色管理的任何操作信息!
+                请注意: 这里显示您对职员档案管理的任何操作信息!
                 <button class="close" data-dismiss="alert">
                     <i class="icon-remove"></i>
                 </button>
@@ -63,31 +53,30 @@
 
             <!-- PAGE CONTENT ENDS -->
         </div><!-- /.col -->
+
     </div><!-- /.row -->
 </div><!-- /.page-content -->
-<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none;"></div>
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
+
 eval('debugger;');
 jQuery(function($) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
         //direction: "rtl",
-        url:$path_base+'/admin/sys/permission/role/list',
+        url:$path_base+'/admin/sys/company/employee/list',
         datatype: "json",
         mtype: 'GET',
-        //data: grid_data,
-        //datatype: "local",
-        height: 400,
-        colNames:[' ', 'ID','角色名','角色', '描述','创建时间','修改时间', '是否可用'],
+        height: 350,
+        colNames:[' ', 'ID','用户名','邮箱', '手机号码','创建时间', '状态','是否管理员'],
         colModel:[
-            {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
+            {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/permission/role/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
+                    delOptions:{url:$path_base+"/admin/sys/company/employee/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
                         afterSubmit : function(response, postdata)  {
                             var resp = response.responseJSON;
                             if (resp.responseHeader != undefined &&
@@ -100,8 +89,7 @@ jQuery(function($) {
                                 return [false,JSON.stringify(resp.error)];
                             }
                             return [false,"删除失败,服务器内部的错误! "];
-                        }
-                    },
+                        }},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
                     onSuccess: function(response) {
@@ -127,20 +115,19 @@ jQuery(function($) {
                     }
                 }
             },
-            {name:'id',index:'id', width:30, editable:false,sorttype:"int"},
-            {name:'name',index:'name', width:120,editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'role',index:'role', width:120, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'description',index:'desc', width:200, editable: true,edittype:"textarea",editoptions:{rows:"2",cols:"10"}},
-            {name:'createTime',index:'cdate',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
-            {name:'modifyTime',index:'mdate',width:90, editable:false,sorttype:"date", formatter:dateFormatter, unformat: pickDate},
-            {name:'show',index:'show', width:50, editable: true, edittype:"checkbox",  editoptions:{value:"true:false"},unformat: aceSwitch}
-
+            {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
+            {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'email',index:'email', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
+            {name:'mobilePhoneNumber',index:'phone', width:90, editable: true, editoptions:{size:"11",maxlength:"11"}},
+            {name:'createTime',index:'createTime',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
+            {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
+            {name:'admin',index:'admin', width:70, editable: true,edittype:"checkbox", editoptions:{value:"Yes:No"}, unformat:aceSwitch}
 
         ],
 
         viewrecords : true,
-        rowNum:10,
-        rowList:[10,20,30],
+        rowNum:20,
+        rowList:[20,40,60],
         pager : pager_selector,
         altRows: true,
         //toppager: true,
@@ -153,15 +140,15 @@ jQuery(function($) {
             var table = this;
             setTimeout(function(){
                 styleCheckbox(table);
-                customButton(table);
+
                 updateActionIcons(table);
                 updatePagerIcons(table);
                 enableTooltips(table);
             }, 0);
         },
 
-        editurl: $path_base+"/admin/sys/permission/role/update",//nothing is saved
-        caption: "角色管理",
+        editurl: $path_base+"/admin/sys/company/employee/update",//nothing is saved
+        caption: "用户信息管理",
 
         autowidth: true
     });
@@ -178,25 +165,15 @@ jQuery(function($) {
                     .after('<span class="lbl"></span>');
         }, 0);
     }
-
     //format date
     function dateFormatter(cellvalue, options, rowObject) {
         return cellvalue.split(" ")[0];
     }
 
-    function getColumnIndexByName(grid, columnName) {
-        var cm = jQuery(grid).jqGrid('getGridParam', 'colModel'), i, l = cm.length;
-        for (i = 0; i < l; i++) {
-            if (cm[i].name === columnName) {
-                return i; // return the index
-            }
-        }
-        return -1;
-    }
     //enable datepicker
     function pickDate( cellvalue, options, cell ) {
         setTimeout(function(){
-            $(cell).find('input[type=text]')
+            $(cell) .find('input[type=text]')
                     .datepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
         }, 0);
     }
@@ -219,8 +196,8 @@ jQuery(function($) {
             },
             {
                 //edit record form
-                closeAfterEdit: true,
-                url:$path_base+"/admin/sys/permission/role/update",
+                url:$path_base+"/admin/sys/company/employee/update",
+                closeAfterEdit:true,
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -243,10 +220,9 @@ jQuery(function($) {
             },
             {
                 //new record form
-                url:$path_base+"/admin/sys/permission/role/add",
+                url:$path_base+"/admin/sys/company/employee/addUser",
                 closeAfterAdd: true,
                 recreateForm: true,
-                modal:true,
                 viewPagerButtons: false,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -254,9 +230,9 @@ jQuery(function($) {
                     style_edit_form(form);
 
                 },
-                serializeEditData: function(data){
-                    //新增数据的时候把默认的id='_empty'设置为id='0'
-                    return $.param($.extend({},data,{id:0}));
+                beforeSubmit: function(posdata,formid) {
+                    console.log(posdata);
+                    return [true,''];
                 },
                 afterSubmit : function(response, postdata)  {
                     var resp = response.responseJSON;
@@ -274,7 +250,7 @@ jQuery(function($) {
             },
             {
                 //delete record form
-                url:$path_base+"/admin/sys/permission/role/delete",
+                url:$path_base+"/admin/sys/company/employee/delete",
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -301,7 +277,7 @@ jQuery(function($) {
             },
             {
                 //search form
-                url:$path_base+"/admin/sys/permission/role/search",
+                url:$path_base+"/admin/sys/company/employee/search",
                 recreateForm: true,
                 afterShowSearch: function(e){
                     var form = $(e[0]);
@@ -331,10 +307,11 @@ jQuery(function($) {
 
 
     function style_edit_form(form) {
-        //enable datepicker on "sdate" field and switches for "stock" field
-        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' ,language:'zh-CN', autoclose:true})
-                .end().find('input[name=show]')
+        //enable datepicker on "createTime" field and switches for "admin" field
+        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' , language:'zh-CN',autoclose:true})
+                .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
@@ -360,6 +337,7 @@ jQuery(function($) {
         form.find('.add-group').addClass('btn btn-xs btn-success');
         form.find('.delete-group').addClass('btn btn-xs btn-danger');
     }
+
     function style_search_form(form) {
         var dialog = form.closest('.ui-jqdialog');
         var buttons = dialog.find('.EditTable')
@@ -383,39 +361,6 @@ jQuery(function($) {
         style_edit_form(form);
     }
 
-    function customButton(table) {
-        var iCol = getColumnIndexByName(table, 'myac');
-        $(table).find(">tbody>tr.jqgrow>td:nth-child(" + (iCol + 1) + ")")
-                .each(function() {
-                    var roleDiv = $("<div>", {
-                                title: "角色授权",
-                                mouseover: function() {
-                                    $(this).addClass('ui-state-hover');
-                                },
-                                mouseout: function() {
-                                    $(this).removeClass('ui-state-hover');
-                                },
-                                click: function(e) {
-                                    //alert("'Custom' button is clicked in the rowis="+
-                                    //        $(e.target).closest("tr.jqgrow").attr("id") +" !");
-                                    $('body').modalmanager('loading');
-                                    var id = $(e.target).closest("tr.jqgrow").attr("id");
-                                    var form = $("#grid-table").jqGrid('getRowData',id);
-                                    setTimeout(function(){
-                                        $modal.load($path_base+'/admin/sys/permission/role/edit', form, function(){
-                                        //$modal.load($path_base+'/admin/sys/permission/role/edit', form, function(){
-                                            $modal.modal();
-                                        });
-                                    }, 1000);
-                                    return false;
-                                }
-                            });
-                    roleDiv.css({"margin-right": "5px", float: "left", cursor: "pointer",position: "relative",overflow:"hidden"})
-                            .addClass("ui-pg-div ui-inline-custom")
-                            .append('<span class="ui-icon  icon-cogs"></span>')
-                            .prependTo($(this).children("div"));
-                });
-    }
 
 
     //it causes some flicker when reloading or navigating grid
@@ -438,10 +383,9 @@ jQuery(function($) {
     //unlike navButtons icons, action icons in rows seem to be hard-coded
     //you can change them like this in here if you want
     function updateActionIcons(table) {
-         /**
+        /**
          var replacement =
          {
-             'ui-icon-pencil' : 'icon-pencil blue',
              'ui-icon-pencil' : 'icon-pencil blue',
              'ui-icon-trash' : 'icon-trash red',
              'ui-icon-disk' : 'icon-ok green',
@@ -452,7 +396,7 @@ jQuery(function($) {
 						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
 					})
-          **/
+         */
     }
 
     //replace icons with FontAwesome icons like above
@@ -469,21 +413,9 @@ jQuery(function($) {
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-        });
-        //TODO: 根据细粒度权限控制
-        /**
-        $('.ui-pg-table > tbody > tr > .ui-pg-button.ui-corner-all:not(.ui-state-disabled)').each(function(){
-            var buttons = $(this);
-            for (var i = 0 ;i < buttons.length; i ++) {
-                var id = buttons[i].id;
-                if (id == "add_grid-table") {
-                    <@shiro.lacksPermission name='sys:permission:role:create'>
-                       buttons[i].remove()
-                    </@shiro.lacksPermission>
-                }
-            }
-        });   **/
+        })
     }
+
 
     function enableTooltips(table) {
         $('.navtable .ui-pg-button').tooltip({container:'body'});
@@ -494,39 +426,4 @@ jQuery(function($) {
 
 
 });
-
-$(function(){
-
-    $.fn.modal.defaults.spinner = $.fn.modalmanager.defaults.spinner =
-            '<div class="loading-spinner" style="width: 200px; margin-left: -100px;">' +
-                    '<div class="progress progress-striped active">' +
-                    '<div class="progress-bar" style="width: 100%;"></div>' +
-                    '</div>' +
-                    '</div>';
-
-    $.fn.modalmanager.defaults.resize = true;
-
-    $('[data-source]').each(function(){
-        var $this = $(this),
-                $source = $($this.data('source'));
-
-        var text = [];
-        $source.each(function(){
-            var $s = $(this);
-            if ($s.attr('type') == 'text/javascript'){
-                text.push($s.html().replace(/(\n)*/, ''));
-            } else {
-                text.push($s.clone().wrap('<div>').parent().html());
-            }
-        });
-
-        $this.text(text.join('\n\n').replace(/\t/g, '    '));
-    });
-
-});
-
-var $modal = $('#ajax-modal');
 </script>
-
-
-

@@ -26,15 +26,6 @@
 </div>
 
 <div class="page-content">
-    <div class="page-header">
-        <h1>
-            jqGrid
-            <small>
-                <i class="icon-double-angle-right"></i>
-                Dynamic tables and grids using jqGrid plugin
-            </small>
-        </h1>
-    </div><!-- /.page-header -->
 
     <div class="row">
         <div class="col-xs-12">
@@ -43,7 +34,7 @@
             <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
 
-                Please note that demo server is not configured to save the changes, therefore you may get an error message.
+                请注意: 这里显示您对资源管理的任何操作信息!
                 <button class="close" data-dismiss="alert">
                     <i class="icon-remove"></i>
                 </button>

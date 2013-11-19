@@ -65,7 +65,7 @@
                                         <#list children.getChildren() as threeChildren>
                                             <li>
                                                 <a href="javascript:void(0);" onclick="loadPage('${rc.getContextPath()}${threeChildren.url}')"  >
-                                                    <i class="icon-double-angle-right"></i>
+                                                    <i class="icon-angle-right"></i>
                                                     ${threeChildren.name}
                                                 </a>
                                             </li>

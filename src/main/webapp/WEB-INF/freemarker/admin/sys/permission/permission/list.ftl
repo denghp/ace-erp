@@ -14,7 +14,7 @@
         </li>
         <li class="active">权限列表</li>
     </ul><!-- .breadcrumb -->
-
+    <!--
     <div class="nav-search" id="nav-search">
         <form class="form-search">
 								<span class="input-icon">
@@ -22,19 +22,24 @@
 									<i class="icon-search nav-search-icon"></i>
 								</span>
         </form>
-    </div><!-- #nav-search -->
+    </div>
+    -->
+    <!-- #nav-search -->
 </div>
 
 <div class="page-content">
+    <!--
     <div class="page-header">
         <h1>
-            jqGrid
+            权限管理
             <small>
                 <i class="icon-double-angle-right"></i>
                 Dynamic tables and grids using jqGrid plugin
             </small>
         </h1>
-    </div><!-- /.page-header -->
+    </div>
+    -->
+    <!-- /.page-header -->
 
     <div class="row">
         <div class="col-xs-12">
@@ -42,8 +47,7 @@
 
             <div id="alert-info" class="alert alert-info">
                 <i class="icon-hand-right"></i>
-
-                Please note that demo server is not configured to save the changes, therefore you may get an error message.
+                请注意: 这里显示您对权限管理的任何操作信息!
                 <button class="close" data-dismiss="alert">
                     <i class="icon-remove"></i>
                 </button>
@@ -152,7 +156,7 @@ jQuery(function($) {
         },
 
         editurl: $path_base+"/admin/sys/permission/permission/update",//nothing is saved
-        caption: "jqGrid with inline editing",
+        caption: "权限管理",
 
         autowidth: true
     });

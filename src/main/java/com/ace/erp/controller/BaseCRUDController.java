@@ -7,18 +7,18 @@
 
 package com.ace.erp.controller;
 
+import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.controller.permission.PermissionList;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.ResponseHeader;
-import com.ace.erp.entity.sys.Role;
+import com.ace.erp.entity.sys.User;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.BaseService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -63,7 +63,11 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
-        return viewName("list");
+        return view("list",model);
+    }
+
+    public String view(String url, Model model) {
+        return viewName(url);
     }
 
     /**
@@ -111,15 +115,16 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
     @RequestMapping(value = "/add")
     @ResponseBody
-    public Response save(M m, BindingResult bindingResult, Model model) throws AceException {
+    public Response save(@CurrentUser User user,M m, BindingResult bindingResult, Model model) throws AceException {
         long starTime = System.currentTimeMillis();
         baseService.save(m);
+
         return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Response list(HttpServletRequest request, HttpServletResponse response) {
+    public Response list(@CurrentUser User user,HttpServletRequest request, HttpServletResponse response) {
         String page = request.getParameter("page"); // 取得当前页数,注意这是jqgrid自身的参数
         String rows = request.getParameter("rows"); // 取得每页显示行数，,注意这是jqgrid自身的参数
         if (StringUtils.isBlank(page)) {

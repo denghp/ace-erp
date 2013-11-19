@@ -34,7 +34,7 @@ insert into `sys_user`
 
 
 delete from `sys_organization` where id>=1 and id<=1000;;
-insert into `sys_organization`(`id`, `user_count`, `name`, `status`) values (1, 2, '组织机构', 0);;
+insert into `sys_organization`(`id`, `user_count`, `name`, `status`) values (1, 2, 'ACE系统有限公司', 0);;
 
 
 delete from `sys_resource` where id>=1 and id<=1000;;
@@ -201,24 +201,24 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`,`icon`)
   values (71, 1, '0/1/', 10, '系统设置', 'sys', '', true,'icon-cogs');;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (72, 71, '0/1/71/', 1, '参数设置', 'params', '', true);;
+  values (72, 71, '0/1/71/', 1, '参数设置', 'parameter', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (73, 72, '0/1/71/72', 1, '货币类型', 'currency', '/admin/sys/parames/currency', true);;;;
+  values (73, 72, '0/1/71/72', 1, '货币类型', 'currency', '/admin/sys/parameter/currency', true);;;;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (74, 72, '0/1/72/72', 2, '单据编码规则', 'receipt', '/admin/sys/parames/receipt', true);;
+  values (74, 72, '0/1/72/72', 2, '单据编码规则', 'receipt', '/admin/sys/parameter/receipt', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (75, 71, '0/1/71/', 2, '公司管理', 'company', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (76, 75, '0/1/71/75/', 1, '公司档案', 'companyInfo', '/admin/sys/company/companyInfo', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (77, 75, '0/1/71/75/', 2, '员工档案', 'personProfile', '/admin/sys/company/person', true);;
+  values (77, 75, '0/1/71/75/', 2, '职员档案', 'employee', '/admin/sys/company/employee', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (78, 75, '0/1/71/75/', 3, '公司列表', 'personProfile', '/admin/sys/company/list', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (79, 75, '0/1/71/75/', 4, '员工/授权', 'auth', '/admin/sys/auth', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (80, 75, '0/1/71/75/', 5, '账户管理', 'account', '/admin/company/account', true);;
+  values (80, 75, '0/1/71/75/', 5, '账户管理', 'account', '/admin/sys/company/account', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (81, 71, '0/1/71/', 3, '权限管理', 'auth', '', true);;
@@ -275,16 +275,29 @@ insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `per
 
 delete from `sys_auth` where id>=1 and id<=1000;;
 insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(1, 0, 1, '1', 'user');;
+  values(1, 1, 1, '1', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`,  `role_ids`, `type`)
-  values(2, 0, 2, '2', 'user');;
+  values(2, 1, 2, '2', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`,  `role_ids`, `type`)
-  values(3, 0, 3, '3', 'user');;
+  values(3, 1, 3, '3', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(4, 0, 4, '4', 'user');;
+  values(4, 1, 4, '4', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(5, 0, 5, '5', 'user');;
+  values(5, 1, 5, '5', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(6, 0, 6, '6', 'user');;
+  values(6, 1, 6, '6', 'user');;
 
+delete from `sys_user_organization` where id>=1 and id<=1000;;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(1, 1, 1, sysdate());;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(2, 1, 2, sysdate());;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(3, 1, 3, sysdate());;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(4, 1, 4, sysdate());;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(5, 1, 5, sysdate());;
+insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)
+  values(6, 1, 6, sysdate());;
 

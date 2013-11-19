@@ -4,7 +4,7 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.ZTree;
 import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.persistence.ResourceMapper;
+import com.ace.erp.persistence.sys.ResourceMapper;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.permission.WildcardPermission;

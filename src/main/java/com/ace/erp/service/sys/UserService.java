@@ -3,7 +3,7 @@ package com.ace.erp.service.sys;
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.persistence.*;
+import com.ace.erp.persistence.sys.*;
 import com.ace.erp.utils.Md5Utils;
 import com.ace.erp.utils.TimeUtils;
 import net.sf.ehcache.Cache;
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

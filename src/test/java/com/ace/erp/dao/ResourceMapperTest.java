@@ -7,7 +7,7 @@ package com.ace.erp.dao;
 
 import com.ace.erp.BaseTest;
 import com.ace.erp.entity.sys.Resource;
-import com.ace.erp.persistence.ResourceMapper;
+import com.ace.erp.persistence.sys.ResourceMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

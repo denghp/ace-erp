@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.ace.erp.persistence.OrganizationMapper">
+<mapper namespace="com.ace.erp.persistence.sys.OrganizationMapper">
 
     <resultMap id="organizationMap" type="com.ace.erp.entity.sys.Organization">
         <result property="id" column="organ_id"/>
@@ -23,7 +23,7 @@
 
     <resultMap type="Organization" id="userOrganizationMap" extends="organizationMap">
         <collection property="userList" ofType="User"
-                    resultMap="com.ace.erp.persistence.UserMapper.userMap" />
+                    resultMap="com.ace.erp.persistence.sys.UserMapper.userMap" />
     </resultMap>
 
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">

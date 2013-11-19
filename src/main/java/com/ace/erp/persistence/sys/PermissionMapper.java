@@ -1,4 +1,4 @@
-package com.ace.erp.persistence;
+package com.ace.erp.persistence.sys;
 
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Permission;
