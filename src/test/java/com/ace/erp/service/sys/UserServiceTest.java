@@ -2,6 +2,7 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.exception.AceException;
+import com.ace.erp.utils.Md5Utils;
 import com.mysql.jdbc.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -57,7 +58,8 @@ public class UserServiceTest extends BaseUserTest {
 
     @Test
     public void getUser()throws AceException {
-        User userB = userService.getOne(1008);
+        User userA = userService.saveUserOrOrganization(user);
+        User userB = userService.getOne(userA.getId());
         Assert.assertNotNull(userB);
         System.out.println(userB);
     }
@@ -99,4 +101,12 @@ public class UserServiceTest extends BaseUserTest {
         System.out.println("/0/1/23/43/".split("/").length);
     }
 
+    @Test
+    public void encryptPassword() {
+        System.out.println(Md5Utils.hash("sys_admin" + "123456" + "MANHOoCpnb"));
+        System.out.println(Md5Utils.hash("sales_admin" + "123456" + "hSSixwNQwt"));
+        System.out.println(Md5Utils.hash("purchase_admin" + "123456" + "iY71e4dtoa"));
+        System.out.println(Md5Utils.hash("stock_admin" + "123456" + "iruPxupgfb"));
+        System.out.println(Md5Utils.hash("finance_admin" + "123456" + "2WQx5LmvlV"));
+    }
 }

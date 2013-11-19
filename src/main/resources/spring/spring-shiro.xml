@@ -127,6 +127,7 @@
                 /assets/** = anon
                 /jcaptcha* = anon
                 /register* = anon
+                /validate* = anon
                 /forgot* = anon
                 /logout = logout
                 /login = jCaptchaValidate,authc

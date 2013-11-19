@@ -17,6 +17,8 @@
     <bean id="permissionService" class="com.ace.erp.service.sys.PermissionService"/>
     <bean id="resourceService" class="com.ace.erp.service.sys.ResourceService"/>
     <bean id="roleService" class="com.ace.erp.service.sys.RoleService"/>
+
     <bean id="organizationService" class="com.ace.erp.service.sys.OrganizationService"/>
+    <bean id="userOrganizationService" class="com.ace.erp.service.sys.UserOrganizationService"/>
 
 </beans>

@@ -1,5 +1,10 @@
 package com.ace.erp.service.sys;
 
+import com.ace.erp.annotation.BaseComponent;
+import com.ace.erp.entity.sys.UserOrganization;
+import com.ace.erp.persistence.UserOrganizationMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Project_Name: ace
  * File: UserOrganizationService
@@ -9,5 +14,10 @@ package com.ace.erp.service.sys;
  * Time: 6:26 PM
  * Description:
  */
-public class UserOrganizationService {
+public class UserOrganizationService extends BaseService<UserOrganization,Integer> {
+
+    @Autowired
+    @BaseComponent
+    private UserOrganizationMapper userOrganizationMapper;
+
 }

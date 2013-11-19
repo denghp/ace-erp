@@ -83,10 +83,20 @@ public class User implements LogicDeleteable,Serializable {
     public User() {
     }
 
-    public User(int id, String username, String password) {
-        this.id = id ;
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(Integer id, String username, String password) {
+        this(username,password);
+        this.id = id;
+    }
+
+    public User(String username, String password,String email) {
+        this(username,password);
+        this.email = email;
     }
 
 

@@ -42,6 +42,14 @@ public class Auth {
 
     private AuthType type;
 
+    public Auth() {}
+
+    public Auth(Integer userId, String roleIds, Integer organizationId) {
+        this.userId = userId;
+        this.roleIds = roleIds;
+        this.organizationId = organizationId;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -6,53 +6,31 @@ delete from `sys_user` where id>=1 and id<=1000;;
 insert into `sys_user`
 (`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
   values
-  (1, 'admin', 'admin@sishuok.com', '13412345671', 'ec21fa1738f39d5312c6df46002d403d', 'yDd1956wn1', sysdate(), 'normal', 1, 0);;
+  (1, 'admin', 'admin@ace.com', '13412345671', 'ec21fa1738f39d5312c6df46002d403d', 'yDd1956wn1', sysdate(), 'normal', 1, 0);;
+insert into `sys_user`
+(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
+  values
+  (2, 'sys_admin', 'sys_admin@ace.com', '13412345673', '3152e2566dc8075b2b2ac0ee0ee2424d', 'MANHOoCpnb', sysdate(), 'normal', 0, 0);;
+insert into `sys_user`
+(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
+  values
+  (3, 'sales_admin', 'sales_admin@ace.com', '13412345672', 'aa54c5ee4922d3ee19db7009f541e0d6', 'hSSixwNQwt', sysdate(), 'normal', 0, 0);;
 
 insert into `sys_user`
 (`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
   values
-  (2, 'showcase', 'showcase@sishuok.com', '13412345672', '5f915c55c6d43da136a42e3ebabbecfc', 'hSSixwNQwt', sysdate(), 'normal', 1, 0);;
+  (4, 'purchase_admin', 'purchase_admin@ace.com', '13412345674', 'e75a4379059f918256aa6a2f0b81bfa5', 'iY71e4dtoa', sysdate(), 'normal', 0, 0);;
 
 insert into `sys_user`
 (`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
   values
-  (3, 'sys', 'sys@sishuok.com', '13412345673', 'a10b3c7af051a81fe2506318f982ce28', 'MANHOoCpnb', sysdate(), 'normal', 1, 0);;
+  (5, 'stock_admin', 'stock_admin@ace.com', '13412345675', '1c7f3d8e6fa84d92f43c88bd6082b9ce', 'iruPxupgfb', sysdate(), 'normal', 0, 0);;
 
 insert into `sys_user`
 (`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
   values
-  (4, 'maintain', 'maintain@sishuok.com', '13412345674', '594813c5eb02b210dacc1a36c2482fc1', 'iY71e4dtoa', sysdate(), 'normal', 1, 0);;
+  (6, 'finance_admin', 'finance_admin@ace.com', '13412345676', 'f30527ae456a700c5cfd079b847989fc', '2WQx5LmvlV', sysdate(), 'normal', 0, 0);;
 
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (5, 'create', 'create@sishuok.com', '13412345675', 'a6d5988a698dec63c6eea71994dd7be0', 'iruPxupgfb', sysdate(), 'normal', 0, 0);;
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (6, 'update', 'update@sishuok.com', '13412345676', 'fffa26ac5c47ec1bf9a37d9823816074', '2WQx5LmvlV', sysdate(), 'normal', 1, 0);;
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (7, 'delete', 'delete@sishuok.com', '13412345677', '4c472bf1d56f440d2953803ab4eea8d4', 'E8KSvr1C7d', sysdate(), 'normal', 1, 0);;
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (8, 'view', 'view@sishuok.com', '13412345678', 'c919215efcef4064858bf02f8776c00d', 'XFJZQOXWZW', sysdate(), 'normal', 1, 0);;
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (9, 'audit', 'audit@sishuok.com', '13412345679', '15d8f7b8da8045d24c71a92a142ffad7', 'BI2XbXMUr7', sysdate(), 'normal', 1, 0);;
-
-insert into `sys_user`
-(`id`, `username`, `email`, `mobile_phone_number`, `password`, `salt`, `create_time`, `status`, `admin`, `deleted`)
-  values
-  (10, 'monitor', 'monitor@sishuok.com', '1341234580', 'e1549e68ad21fe888ae36ec4965116cd', 'iY71e4d123', sysdate(), 'normal', 1, 0);;
 
 
 delete from `sys_organization` where id>=1 and id<=1000;;
@@ -92,19 +70,19 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
 
 /** 库存资源 ***/
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`,`icon`)
-  values (14, 1, '0/1/', 3, '库存管理', 'inventory', '', true,'icon-home');;
+  values (14, 1, '0/1/', 3, '库存管理', 'stock', '', true,'icon-home');;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (15, 14, '0/1/14/', 1, '新增货品', 'addInv', '/inventory/addInv', true);;
+  values (15, 14, '0/1/14/', 1, '新增货品', 'addInv', '/stock/addInv', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (16, 14, '0/1/14/', 2, '库存列表', 'invList', '/inventory/invList', true);;
+  values (16, 14, '0/1/14/', 2, '库存列表', 'invList', '/stock/invList', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (17, 14, '0/1/14/', 3, '新增调拨单', 'addTransfer', '/inventory/addTransfer', true);;
+  values (17, 14, '0/1/14/', 3, '新增调拨单', 'addTransfer', '/stock/addTransfer', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (18, 14, '0/1/14/', 4, '调拨单列表', 'transferList', '/inventory/transferList', true);;
+  values (18, 14, '0/1/14/', 4, '调拨单列表', 'transferList', '/stock/transferList', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (19, 14, '0/1/14/', 5, '借入单', 'borrowed', '/inventory/borrowedOrder', true);;
+  values (19, 14, '0/1/14/', 5, '借入单', 'borrowed', '/stock/borrowedOrder', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (20, 14, '0/1/14/', 6, '借出单', 'loan', '/inventory/loanOrder', true);;
+  values (20, 14, '0/1/14/', 6, '借出单', 'loan', '/stock/loanOrder', true);;
 
 /**  资金流 ---***/
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`,`icon`)
@@ -217,7 +195,7 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (69, 58, '0/1/58/', 3, '仓库管理', '', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (70, 69, '0/1/58/69/', 1, '仓库信息管理', '', '/baseInfo/inventory', true);;
+  values (70, 69, '0/1/58/69/', 1, '仓库信息管理', '', '/baseInfo/stock', true);;
 
 /**  系统设置 **/
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`,`icon`)
@@ -230,9 +208,9 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
   values (74, 72, '0/1/72/72', 2, '单据编码规则', 'receipt', '/admin/sys/parames/receipt', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (75, 71, '0/1/71/', 2, '公司管理', '', '', true);;
+  values (75, 71, '0/1/71/', 2, '公司管理', 'company', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (76, 75, '0/1/71/75/', 1, '公司档案', 'company', '/admin/sys/company', true);;
+  values (76, 75, '0/1/71/75/', 1, '公司档案', 'companyInfo', '/admin/sys/company/companyInfo', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (77, 75, '0/1/71/75/', 2, '员工档案', 'personProfile', '/admin/sys/company/person', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
@@ -243,7 +221,7 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
   values (80, 75, '0/1/71/75/', 5, '账户管理', 'account', '/admin/company/account', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (81, 71, '0/1/71/', 3, '权限管理', '', '', true);;
+  values (81, 71, '0/1/71/', 3, '权限管理', 'auth', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (82, 81, '0/1/71/81/', 1, '权限列表', 'permission', '/admin/sys/permission/permission', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
@@ -252,9 +230,9 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
   values (84, 81, '0/1/71/81/', 3, '资源列表', 'resource', '/admin/sys/resource', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (85, 71, '0/1/71/', 4, '用户管理', '', '', true);;
+  values (85, 71, '0/1/71/', 4, '用户管理', 'user', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (86, 85, '0/1/71/85/', 1, '用户列表', 'user', '/admin/sys/user', true);;
+  values (86, 85, '0/1/71/85/', 1, '用户列表', 'userList', '/admin/sys/user', true);;
 
 
 
@@ -268,53 +246,31 @@ insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_sho
 
 delete from `sys_role` where id>=1 and id<=1000;;
 insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (1,  '超级管理员', 'admin', '拥有所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (2,  '示例管理员', 'example_admin', '拥有示例管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (3,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (4,  '维护管理员', 'conf_admin', '拥有维护管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (5,  '新增管理员', 'create_admin', '拥有新增/查看管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (6,  '修改管理员', 'update_admin', '拥有修改/查看管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (7,  '删除管理员', 'delete_admin', '拥有删除/查看管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (8,  '查看管理员', 'view_admin', '拥有查看管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (9,  '审核管理员', 'audit_admin', '拥有审核管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (10,  '监控管理员', 'audit_admin', '拥有审核管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (2,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (3,  '销售管理员', 'sales_admin', '拥有示例管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (4,  '采购管理员', 'purchase_admin', '拥有维护管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (5,  '库存管理员', 'stock_admin', '拥有新增/查看管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (6,  '财务管理员', 'finance_admin', '拥有修改/查看管理的所有权限', 1);;
 
 delete from `sys_role_resource_permission` where id>=1 and id<=1000;;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(1, 1, 1, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(2, 1, 2, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(3, 1, 16, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(4, 1, 33, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(5, 1, 39, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(1, 2, 2, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(2, 2, 8, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(3, 2, 14, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(4, 2, 21, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(5, 2, 29, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(6, 2, 34, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(7, 2, 42, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(8, 2, 53, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(9, 2, 58, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(10, 2, 72, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(11, 2, 75, '1');;
 
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(6, 2, 2, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(7, 3, 16, '1');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(8, 4, 33, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(12, 3, 8, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(13, 4, 2, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(14, 5, 14, '1');;
 
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(9, 5, 2, '2,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(10, 5, 14, '2,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(11, 5, 33,  '2,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(12, 5, 39,  '2,5');;
-
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(13, 6, 2, '3,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(14, 6, 16, '3,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(15, 6, 33,  '3,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(16, 6, 39,  '3,5');;
-
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(17, 7, 2, '4,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(18, 7, 16, '4,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(19, 7, 33,  '4,5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(20, 7, 39,  '4,5');;
-
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(21, 8, 2, '5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(22, 8, 16, '5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(23, 8, 33,  '5');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(24, 8, 39,  '5');;
-
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(25, 9, 7, '5,6');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(26, 9, 14, '5,6');;
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(27, 9, 15, '5,6');;
-
-insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(28, 10, 39, '1');;
-
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(15, 6, 21, '1');;
+insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(16, 6, 34, '1');;
 
 
 delete from `sys_auth` where id>=1 and id<=1000;;
@@ -330,12 +286,5 @@ insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
   values(5, 0, 5, '5', 'user');;
 insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
   values(6, 0, 6, '6', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(7, 0, 7, '7', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(8, 0, 8, '8', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(9, 0, 9, '9', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(10, 0, 10, '10', 'user');;
+
 

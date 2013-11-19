@@ -1,46 +1,7 @@
 <#import "commons/showMessage.ftl" as show>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Login Page - Ace Admin</title>
-
-    <meta name="description" content="User login page"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <!-- basic styles -->
-
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
-
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css"/>
-    <![endif]-->
-
-    <!-- page specific plugin styles -->
-
-    <!-- fonts -->
-
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300"/>
-
-    <!-- erp styles -->
-
-    <link rel="stylesheet" href="assets/css/ace.min.css"/>
-    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
-
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="assets/css/erp-ie.min.css"/>
-    <![endif]-->
-
-    <!-- inline styles related to this page -->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-    <!--[if lt IE 9]>
-    <script src="assets/js/html5shiv.js"></script>
-    <script src="assets/js/respond.min.js"></script>
-    <![endif]-->
-</head>
+<#include "commons/header.ftl" >
 
 <body class="login-layout">
 <div class="main-container">
@@ -218,7 +179,7 @@
             <div class="space-6"></div>
             <p> 开始输入你的详细信息: </p>
 
-            <form id="registerForm" name="registerForm" method="post" action="${rc.getContextPath()}/register">
+            <form id="register-form" name="registerForm" method="post" action="${rc.getContextPath()}/register">
                 <fieldset>
                     <div class="form-group">
                         <div class="block input-icon input-icon-right ">
@@ -245,7 +206,7 @@
                     </div>
                     <div class="form-group">
                         <div class="block input-icon input-icon-right ">
-                            <input type="password" name="repeat-password"
+                            <input type="password" name="repeat_password"
                                    class="form-control"
                                    placeholder="确认密码"/>
                             <i class="icon-retweet"></i>
@@ -267,7 +228,7 @@
                             重置
                         </button>
 
-                        <button type="submit" id="register" class="width-65 pull-right btn btn-sm btn-success">
+                        <button type="button" id="registerBtn" class="width-65 pull-right btn btn-sm btn-success">
                             注册
                             <i class="icon-arrow-right icon-on-right"></i>
                         </button>
@@ -298,36 +259,10 @@
 <!-- /.main-container -->
 
 <!-- basic scripts -->
+<#include "commons/common-script.ftl" >
 
-<!--[if !IE]> -->
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<![endif]-->
-
-<!--[if !IE]> -->
-
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
-</script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>" + "<" + "/script>");
-</script>
-<![endif]-->
-
-<script type="text/javascript">
-    if ("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-</script>
 <script src="assets/js/jquery.validate.min.js"></script>
-
+<script src="assets/js/jquery.validate.locale-cn.js"></script>
 <!-- inline scripts related to this page -->
 
 <script type="text/javascript">
@@ -364,7 +299,6 @@
             },
 
             highlight: function (element) {
-                //$(element).closest('.form-group').removeClass('success').addClass('error');
                 $(element).closest('.form-group').removeClass('has-info').addClass('has-error');
             },
             success: function (element) {
@@ -375,27 +309,75 @@
                 $(element).remove();
             }
         });
-        $('#registerForm').validate({
+        $('#register-form').validate({
             errorElement: 'div',
             errorClass: 'help-block',
             focusInvalid: false,
             rules: {
                 username: {
                     minlength: 2,
-                    required: true
+                    required: true,
+                    remote : {
+                        url: "${rc.getContextPath()}/validate",
+                        type: "get",
+                        dataType: "json",
+                        data: {                     //要传递的数据
+                            username: function() {
+                                return $("#username").val();
+                            }
+                        }
+                    }
+
                 },
                 email: {
                     required: true,
-                    email: true
+                    email: true,
+                    remote : {
+                        url: "${rc.getContextPath()}/validate",
+                        type: "get",
+                        dataType: "json",
+                        data: {                     //要传递的数据
+                            email: function() {
+                                return $("#email").val();
+                            }
+                        }
+                    }
                 },
                 password: {
-                    minlength: 2,
+                    minlength: 5,
                     required: true
+                },
+                repeat_password: {
+                    required:true,
+                    minlength: 5,
+                    equalTo: "#password"
+                }
+
+            },
+            messages: {
+                username: {
+                    required: "请输入用户名.",
+                    minlength: "用户名不能少于6个字符.",
+                    remote: "用户名经被使用，请重新输入."
+                },
+                email: {
+                    required: "请输入Email地址.",
+                    email:"请输入正确的email地址.",
+                    remote: "邮箱已经被使用，请重新输入."
+                },
+                password: {
+                    required: "请输入密码.",
+                    minlength: "密码不能小于5个字符."
+                },
+                repeat_password: {
+                    required: "请输入确认密码.",
+                    minlength: "确认密码不能小于5个字符.",
+                    equalTo: "两次输入密码不一致."
                 }
             },
 
             invalidHandler: function (event, validator) { //display error alert on form submit
-                $('.alert-danger', $('.login-form')).show();
+                $('.alert-danger', $('.registerForm')).show();
             },
 
             highlight: function (e) {
@@ -407,55 +389,34 @@
                 $(e).remove();
             }
         });
+
+        $('#registerBtn').on('click', function (e) {
+                if ($('#register-form').valid()) {
+                    var postData = $('#register-form').serialize();
+                    setTimeout(function () {
+                        $.ajax({
+                            type: 'POST',
+                            url: '${rc.getContextPath()}/register',
+                            dataType: "json",
+                            data: postData,
+                            traditional: true,
+                            success: function (data, status) {
+                                //alert("success : " + data);
+                                var resp = JSON.stringify(data);
+                                $('#signup-box').find('.widget-main').prepend('<div class="alert alert-info fade in">' +
+                                                resp + '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                                                '</div>');
+                            },
+                            error: function () {
+                                alert('操作错误,请与系统管理员联系!');
+                            }
+                        });
+                    }, 1000);
+                }
+        } );
+
     }); // end document.ready
 
-    $(document).ready(function () {
-        /**
-         $('#login').on('click', function (e) {
-            if ($('#loginForm').valid()) {
-                var postData = $('#loginForm').serialize();
-                setTimeout(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url:  "${rc.getContextPath()}/login",
-                        dataType: "json",
-                        data: postData,
-                        traditional: true,
-                        success: function (data, status) {
-                            alert("success : " + data);
-                        },
-                        error: function () {
-                            alert('登录失败,请与系统管理员联系!');
-                        }
-                    });
-                }, 1000);
-            }
-        });
-         **/
-        /**
-         $('#register').on('click', function (e) {
-            if ($('#registerForm').valid()) {
-                alert("register");
-                var postData = $('#registerForm').serialize();
-                setTimeout(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url:  "${rc.getContextPath()}/register",
-                        dataType: "json",
-                        data: postData,
-                        traditional: true,
-                        success: function (data, status) {
-                            alert("success : " + data);
-                        },
-                        error: function () {
-                            alert('注册失败,请与系统管理员联系!');
-                        }
-                    });
-                }, 1000);
-            }
-        });
-         **/
-    });
 </script>
 
 </body>

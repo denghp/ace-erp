@@ -14,13 +14,13 @@
 
   <insert id="save" parameterType="Auth" useGeneratedKeys="true" keyProperty="id">
       INSERT INTO
-        sys_Auth (organization_id,user_id,role_ids,type)
+        sys_auth (organization_id,user_id,role_ids,type)
       VALUES
         (#{organizationId},#{userId},#{roleIds},#{type})
   </insert>
 
   <update id="update" parameterType="Auth">
-      update sys_Auth set
+      update sys_auth set
         <if test="organization_id != null">
             organization_id = #{organizationId},
         </if>

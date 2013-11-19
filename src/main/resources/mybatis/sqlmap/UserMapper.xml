@@ -18,6 +18,8 @@
     </resultMap>
 
     <resultMap type="User" id="userOrganizationMap" extends="userMap">
+        <collection property="organizationList" ofType="Organization" resultMap="com.ace.erp.persistence.OrganizationMapper.organizationMap"/>
+        <!--
         <collection property="organizationList" ofType="Organization" >
             <result property="id" column="organization_id"/>
             <result property="name" column="name"/>
@@ -35,6 +37,7 @@
             <result property="modifyTime" column="organization_modify_time" javaType="java.lang.String"
                     typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         </collection>
+        -->
     </resultMap>
 
     <select id="getUserByName" parameterType="java.lang.String" resultMap="userMap">
@@ -66,10 +69,12 @@
       su.deleted,
       su.admin,su.create_time,
       su.modify_time,
-      so.id as organization_id,so.name,so.user_count,
-      so.address,so.description,so.logo,so.site,so.telephone,
-      so.create_time as organization_create_time,
-      so.modify_time as organization_modify_time,
+      so.id as organ_id,so.name,so.user_count,
+      so.address,so.description,
+      so.status as organ_status,
+      so.logo,so.site,so.telephone,
+      so.create_time as organ_create_time,
+      so.modify_time as organ_modify_time,
       so.expire_time
     FROM sys_user as su
      left join sys_user_organization as suo on su.id = suo.user_id

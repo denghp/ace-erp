@@ -38,5 +38,11 @@ public interface RoleMapper extends BaseMapper<Role,Integer> {
      */
     public List<Role> getAllRoles();
 
+    /**
+     *  获取系统管理员角色
+     * @return
+     */
+    public Role getSysAdminRole();
+
 
 }

@@ -4,7 +4,7 @@
 <mapper namespace="com.ace.erp.persistence.OrganizationMapper">
 
     <resultMap id="organizationMap" type="com.ace.erp.entity.sys.Organization">
-        <result property="id" column="id"/>
+        <result property="id" column="organ_id"/>
         <result property="name" column="name"/>
         <result property="tradeCodeId" column="trade_code_id"/>
         <result property="logo" column="logo"/>
@@ -12,18 +12,18 @@
         <result property="userCount" column="user_count" />
         <result property="address" column="address" />
         <result property="description" column="description"/>
-        <result property="status" column="status" />
-        <result property="createTime" column="create_time" javaType="java.lang.String"
+        <result property="status" column="organ_status" />
+        <result property="createTime" column="organ_create_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="expireTime" column="expire_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-        <result property="modifyTime" column="modify_time" javaType="java.lang.String"
+        <result property="modifyTime" column="organ_modify_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
     </resultMap>
 
     <resultMap type="Organization" id="userOrganizationMap" extends="organizationMap">
-        <collection column="organization_id" property="userList" ofType="User"
-                    resultMap="com.ace.erp.persistence.UserMapper.userResult" />
+        <collection property="userList" ofType="User"
+                    resultMap="com.ace.erp.persistence.UserMapper.userMap" />
     </resultMap>
 
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
@@ -52,10 +52,24 @@
         )
     </insert>
 
-    <select id="getOne" parameterType="java.lang.Integer" resultMap="organizationMap">
+    <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationMap">
     SELECT
-      id,name,trade_code_id,user_count,logo,site,description,address,status,create_time,expire_time,modify_time,telephone
-    FROM sys_organization  WHERE id = #{id}
+      so.id as organ_id,so.name,so.trade_code_id,so.user_count,
+      so.logo,so.site,so.description,so.address,so.status as organ_status,
+      so.create_time as organ_create_time,
+      so.expire_time,so.modify_time as organ_modify_time,
+      so.telephone,
+      su.id,su.username,
+      su.password,
+      su.email,su.mobile_phone_number,
+      su.salt,su.status as user_status,
+      su.deleted,
+      su.admin,su.create_time,
+      su.modify_time
+    FROM sys_organization as so
+    LEFT JOIN sys_user_organization AS suo ON so.id = suo.organization_id
+    LEFT JOIN sys_user AS su ON suo.user_id = su.id
+    WHERE so.id = #{id}
   </select>
 
 </mapper>

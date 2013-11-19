@@ -1,14 +1,9 @@
 package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
-import com.ace.erp.entity.sys.Organization;
-import com.ace.erp.entity.sys.User;
-import com.ace.erp.entity.sys.UserOrganization;
-import com.ace.erp.entity.sys.UserStatus;
+import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.persistence.OrganizationMapper;
-import com.ace.erp.persistence.UserMapper;
-import com.ace.erp.persistence.UserOrganizationMapper;
+import com.ace.erp.persistence.*;
 import com.ace.erp.utils.Md5Utils;
 import com.ace.erp.utils.TimeUtils;
 import net.sf.ehcache.Cache;
@@ -20,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -48,6 +44,12 @@ public class UserService extends BaseService<User, Integer> {
 
     @Autowired
     private OrganizationMapper organizationMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Autowired
+    private AuthMapper authMapper;
 
     private Cache loginRecordCache;
 
@@ -95,10 +97,10 @@ public class UserService extends BaseService<User, Integer> {
         if (user.getCreateTime() == null) {
             user.setCreateTime(DateTime.now().toString(TimeUtils.DATETIME_NORMAL_FORMAT));
         }
-        //添加账户
+        //step1 添加账户
         super.save(user);
         UserOrganization userOrganization = null;
-        //添加公司信息
+        //step2 添加公司信息
         //TODO
         Organization organization = user.getOrganizationList() == null ? null : user.getOrganizationList().get(0);
         if (organization == null) {
@@ -108,7 +110,12 @@ public class UserService extends BaseService<User, Integer> {
             organizationMapper.save(organization);
         }
         userOrganization = new UserOrganization(user.getId(),organization.getId());
+        //step3 存储账户与企业关联信息
         userOrganizationMapper.save(userOrganization);
+        //step4 分配权限
+        //TODO 获取给新注册帐号分配的角色,可以由几个角色组成
+        Role role = roleMapper.getSysAdminRole();
+        authMapper.save(new Auth(user.getId(),role.getId()+"",organization.getId()));
         logger.info("insert successfully, user {}", user);
         return user;
     }
