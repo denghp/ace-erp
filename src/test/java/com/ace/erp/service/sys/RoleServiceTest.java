@@ -27,7 +27,7 @@ public class RoleServiceTest extends BaseTest {
 
     @Test
     public void getAllRolesTest() {
-        List<Role> roleList = roleService.getAllRoles();
+        List<Role> roleList = roleService.getAllRoles(true);
         for (Role role : roleList) {
             System.out.println(role);
         }

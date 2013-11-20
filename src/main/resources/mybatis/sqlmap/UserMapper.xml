@@ -214,4 +214,18 @@
      left join sys_role_resource_permission as rrp on sr.id = rrp.role_id
     WHERE su.id = #{id}
     </select>
+
+    <insert id="saveUserOrganization" parameterType="UserOrganization" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        sys_user_organization (user_id,organization_id,modify_time)
+        VALUES
+        (#{user.id},#{organization.id},
+        <if test="modifyTime == null">
+            now()
+        </if>
+        <if test="modifyTime != null">
+            #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler}
+        </if>
+        )
+    </insert>
 </mapper>

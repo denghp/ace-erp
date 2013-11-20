@@ -1,6 +1,9 @@
 <div class="breadcrumbs" id="breadcrumbs">
     <script type="text/javascript">
-        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        try {
+            ace.settings.check('breadcrumbs', 'fixed')
+        } catch (e) {
+        }
     </script>
 
     <ul class="breadcrumb">
@@ -16,16 +19,19 @@
             <a href="#">公司管理</a>
         </li>
         <li class="active">职员档案</li>
-    </ul><!-- .breadcrumb -->
+    </ul>
+    <!-- .breadcrumb -->
 
     <div class="nav-search" id="nav-search">
         <form class="form-search">
 								<span class="input-icon">
-									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<input type="text" placeholder="Search ..." class="nav-search-input"
+                                           id="nav-search-input" autocomplete="off"/>
 									<i class="icon-search nav-search-icon"></i>
 								</span>
         </form>
-    </div><!-- #nav-search -->
+    </div>
+    <!-- #nav-search -->
 </div>
 
 <div class="page-content">
@@ -52,81 +58,83 @@
             </script>
 
             <!-- PAGE CONTENT ENDS -->
-        </div><!-- /.col -->
+        </div>
+        <!-- /.col -->
 
-    </div><!-- /.row -->
+    </div>
+    <!-- /.row -->
 </div><!-- /.page-content -->
 <!-- inline scripts related to this page -->
-
 <script type="text/javascript">
 
 eval('debugger;');
-jQuery(function($) {
+var roles = [];
+var roleSelect;
+jQuery(function ($) {
     var grid_selector = "#grid-table";
     var pager_selector = "#grid-pager";
     jQuery(grid_selector).jqGrid({
-        //direction: "rtl",
-        url:$path_base+'/admin/sys/company/employee/list',
+        url: $path_base + '/admin/sys/company/employee/list',
         datatype: "json",
         mtype: 'GET',
-        height: 450,
-        colNames:[' ', 'ID','用户名','邮箱', '手机号码','创建时间', '状态'],
-        colModel:[
-            {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
-                formatter:'actions',
-                formatoptions:{
-                    keys:true,
-                    delOptions:{url:$path_base+"/admin/sys/company/employee/delete",recreateForm: true, beforeShowForm:beforeDeleteCallback,
-                        afterSubmit : function(response, postdata)  {
+        height: 350,
+        colNames: [' ', 'ID', '用户名', '邮箱', '手机号码', '创建时间', '状态'],
+        colModel: [
+            {name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
+                formatter: 'actions',
+                formatoptions: {
+                    keys: true,
+                    delOptions: {url: $path_base + "/admin/sys/company/employee/delete", recreateForm: true, beforeShowForm: beforeDeleteCallback,
+                        afterSubmit: function (response, postdata) {
                             var resp = response.responseJSON;
                             if (resp.responseHeader != undefined &&
                                     resp.responseHeader.status != undefined &&
-                                    resp.responseHeader.status == "200" ) {
+                                    resp.responseHeader.status == "200") {
                                 ace.show_msg("删除成功!");
                                 return [true];
                             }
-                            if (resp.error != undefined ) {
-                                return [false,JSON.stringify(resp.error)];
+                            if (resp.error != undefined) {
+                                return [false, JSON.stringify(resp.error)];
                             }
-                            return [false,"删除失败,服务器内部的错误! "];
+                            return [false, "删除失败,服务器内部的错误! "];
                         }},
                     //editformbutton:true,
                     //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
-                    onSuccess: function(response) {
+                    onSuccess: function (response) {
                         var resp = response.responseJSON;
                         if (resp.responseHeader != undefined &&
                                 resp.responseHeader.status != undefined &&
-                                resp.responseHeader.status == "200" ) {
+                                resp.responseHeader.status == "200") {
                             ace.show_msg("更新成功!");
                             return [true];
                         }
                         return [false];
 
                     },
-                    onError: function(response) {
+                    onError: function (response) {
                         if (response.responseJSON != undefined) {
                             var resp = response.responseJSON;
                             //获取error
-                            var errorMsg  = JSON.stringify(resp);
-                            ace.show_msg("更新失败! "+ errorMsg);
+                            var errorMsg = JSON.stringify(resp);
+                            ace.show_msg("更新失败! " + errorMsg);
                         }
                         ace.show_msg("更新失败! ");
                         return [true];
                     }
                 }
             },
-            {name:'id',index:'id', width:60, hidden:true,sorttype:"int", editable: true},
-            {name:'username',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'email',index:'email', width:150, editable: true,editoptions:{size:"20",maxlength:"50"}},
-            {name:'mobilePhoneNumber',index:'phone', width:90, editable: true, editoptions:{size:"11",maxlength:"11"}},
-            {name:'createTime',index:'createTime',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
-            {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
+            {name: 'id', index: 'id', width: 60, hidden: true, sorttype: "int", editable: true},
+            {name: 'username', index: 'name', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
+            {name: 'email', index: 'email', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
+            {name: 'mobilePhoneNumber', index: 'phone', width: 90, editable: true, editoptions: {size: "11", maxlength: "11"}},
+            {name: 'createTime', index: 'createTime', width: 90, editable: true, sorttype: "date", formatter: dateFormatter, unformat: pickDate},
+            {name: 'status', index: 'status', width: 70, editable: true, edittype: "select", formatter: "select", editoptions: {value: "normal:正常;blocked:封禁"}},
         ],
 
-        viewrecords : true,
-        rowNum:20,
-        rowList:[20,40,60],
-        pager : pager_selector,
+        viewrecords: true,
+        rowNum: 20,
+        rowList: [20, 40, 60],
+        pager: pager_selector,
         altRows: true,
         //toppager: true,
 
@@ -134,9 +142,9 @@ jQuery(function($) {
         //multikey: "ctrlKey",
         multiboxonly: true,
 
-        loadComplete : function() {
+        loadComplete: function () {
             var table = this;
-            setTimeout(function(){
+            setTimeout(function () {
                 styleCheckbox(table);
 
                 updateActionIcons(table);
@@ -145,7 +153,7 @@ jQuery(function($) {
             }, 0);
         },
 
-        editurl: $path_base+"/admin/sys/company/employee/update",//nothing is saved
+        editurl: $path_base + "/admin/sys/company/employee/update",//nothing is saved
         caption: "用户信息管理",
 
         autowidth: true
@@ -155,141 +163,137 @@ jQuery(function($) {
     //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
 
     //switch element when editing inline
-    function aceSwitch( cellvalue, options, cell ) {
-        setTimeout(function(){
-            $(cell) .find('input[type=checkbox]')
+    function aceSwitch(cellvalue, options, cell) {
+        setTimeout(function () {
+            $(cell).find('input[type=checkbox]')
                     .wrap('<label class="inline" />')
                     .addClass('ace ace-switch ace-switch-5')
                     .after('<span class="lbl"></span>');
         }, 0);
     }
+
     //format date
     function dateFormatter(cellvalue, options, rowObject) {
         if (cellvalue != null)
-        return cellvalue.split(" ")[0];
+            return cellvalue.split(" ")[0];
     }
 
     //enable datepicker
-    function pickDate( cellvalue, options, cell ) {
-        setTimeout(function(){
-            $(cell) .find('input[type=text]')
-                    .datepicker({format:'yyyy-mm-dd' , language:'zh-CN', autoclose:true});
+    function pickDate(cellvalue, options, cell) {
+        setTimeout(function () {
+            $(cell).find('input[type=text]')
+                    .datepicker({format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true});
         }, 0);
     }
 
     //navButtons
-    jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+    jQuery(grid_selector).jqGrid('navGrid', pager_selector,
             { 	//navbar options
                 edit: true,
-                editicon : 'icon-pencil blue',
+                editicon: 'icon-pencil blue',
                 add: true,
-                addicon : 'icon-plus-sign purple',
+                addicon: 'icon-plus-sign purple',
                 del: true,
-                delicon : 'icon-trash red',
+                delicon: 'icon-trash red',
                 search: true,
-                searchicon : 'icon-search orange',
+                searchicon: 'icon-search orange',
                 refresh: true,
-                refreshicon : 'icon-refresh green',
+                refreshicon: 'icon-refresh green',
                 view: true,
-                viewicon : 'icon-zoom-in grey'
+                viewicon: 'icon-zoom-in grey'
             },
             {
                 //edit record form
-                url:$path_base+"/admin/sys/company/employee/update",
-                closeAfterEdit:true,
+                url: $path_base + "/admin/sys/company/employee/update",
+                closeAfterEdit: true,
                 recreateForm: true,
-                beforeShowForm : function(e) {
+                beforeShowForm: function (e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
                 },
-                afterSubmit : function(response, postdata)  {
+                afterSubmit: function (response, postdata) {
                     var resp = response.responseJSON;
                     if (resp.responseHeader != undefined &&
                             resp.responseHeader.status != undefined &&
-                            resp.responseHeader.status == "200" ) {
+                            resp.responseHeader.status == "200") {
                         ace.show_msg("更新成功!");
-                        return [true,'更新成功!'];
+                        return [true, '更新成功!'];
                     }
-                    if (resp.error != undefined ) {
-                        return [false,JSON.stringify(resp.error)];
+                    if (resp.error != undefined) {
+                        return [false, JSON.stringify(resp.error)];
                     }
-                    return [false,"更新失败,服务器内部的错误! "];
+                    return [false, "更新失败,服务器内部的错误! "];
                 }
             },
             {
                 //new record form
-                url:$path_base+"/admin/sys/company/employee/addUser",
+                url: $path_base + "/admin/sys/company/employee/addUser",
                 closeAfterAdd: true,
                 recreateForm: true,
                 viewPagerButtons: false,
-                beforeShowForm : function(e) {
+                beforeShowForm: function (e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-                    form.find('table').append('<tr rowpos="7" class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID"><select class="form-control" style="width:130px;height:80px" id="role" name="role" multiple="multiple"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>' +
-                            '<option value="AZ">Arizona</option><option value="AZ">Arizona</option><option value="AZ">Arizona</option></select></td></tr>');
                     style_edit_form(form);
-
-
                 },
-                beforeSubmit: function(posdata,formid) {
+                beforeSubmit: function (posdata, formid) {
                     console.log(posdata);
-                    return [true,''];
+                    return [true, ''];
                 },
-                afterSubmit : function(response, postdata)  {
+                afterSubmit: function (response, postdata) {
                     var resp = response.responseJSON;
                     if (resp.responseHeader != undefined &&
                             resp.responseHeader.status != undefined &&
-                            resp.responseHeader.status == "200" ) {
+                            resp.responseHeader.status == "200") {
                         ace.show_msg("添加成功!");
-                        return [true,'添加成功!'];
+                        return [true, '添加成功!'];
                     }
-                    if (resp.error != undefined ) {
-                        return [false,JSON.stringify(resp.error)];
+                    if (resp.error != undefined) {
+                        return [false, JSON.stringify(resp.error)];
                     }
-                    return [false,"添加失败,服务器内部的错误! "];
+                    return [false, "添加失败,服务器内部的错误! "];
                 }
             },
             {
                 //delete record form
-                url:$path_base+"/admin/sys/company/employee/delete",
+                url: $path_base + "/admin/sys/company/employee/delete",
                 recreateForm: true,
-                beforeShowForm : function(e) {
+                beforeShowForm: function (e) {
                     var form = $(e[0]);
-                    if(form.data('styled')) return false;
+                    if (form.data('styled')) return false;
 
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_delete_form(form);
 
                     form.data('styled', true);
                 },
-                afterSubmit : function(response, postdata)  {
+                afterSubmit: function (response, postdata) {
                     var resp = response.responseJSON;
                     if (resp.responseHeader != undefined &&
                             resp.responseHeader.status != undefined &&
-                            resp.responseHeader.status == "200" ) {
+                            resp.responseHeader.status == "200") {
                         ace.show_msg("删除成功!");
-                        return [true,'删除成功!'];
+                        return [true, '删除成功!'];
                     }
-                    if (resp.error != undefined ) {
-                        return [false,JSON.stringify(resp.error)];
+                    if (resp.error != undefined) {
+                        return [false, JSON.stringify(resp.error)];
                     }
-                    return [false,"删除失败,服务器内部的错误! "];
+                    return [false, "删除失败,服务器内部的错误! "];
                 }
             },
             {
                 //search form
-                url:$path_base+"/admin/sys/company/employee/search",
+                url: $path_base + "/admin/sys/company/employee/search",
                 recreateForm: true,
-                afterShowSearch: function(e){
+                afterShowSearch: function (e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                     style_search_form(form);
                 },
-                afterRedraw: function(){
+                afterRedraw: function () {
                     style_search_filters($(this));
-                }
-                ,
+                },
                 multipleSearch: true
                 /**
                  multipleGroup:true,
@@ -299,7 +303,7 @@ jQuery(function($) {
             {
                 //view record form
                 recreateForm: true,
-                beforeShowForm: function(e){
+                beforeShowForm: function (e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                 }
@@ -307,13 +311,16 @@ jQuery(function($) {
     )
 
 
-
     function style_edit_form(form) {
         //enable datepicker on "createTime" field and switches for "admin" field
-        form.find('input[name=createTime]').datepicker({format:'yyyy-mm-dd' , language:'zh-CN',autoclose:true})
+        form.find('input[name=createTime]').datepicker({format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true})
                 .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
+        //append role select
+        //form.find('table').append('<tr rowpos="7" class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID"><select class="form-control" style="width:130px;height:80px" id="role" name="role" multiple="multiple"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>' +
+        //        '<option value="AZ">Arizona</option><option value="AZ">Arizona</option><option value="AZ">Arizona</option></select></td></tr>');
+        form.find('table').append('<tr class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID">'+roleSelect+'</td></tr>');
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
@@ -350,7 +357,7 @@ jQuery(function($) {
 
     function beforeDeleteCallback(e) {
         var form = $(e[0]);
-        if(form.data('styled')) return false;
+        if (form.data('styled')) return false;
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
         style_delete_form(form);
 
@@ -362,7 +369,6 @@ jQuery(function($) {
         form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
         style_edit_form(form);
     }
-
 
 
     //it causes some flicker when reloading or navigating grid
@@ -405,27 +411,50 @@ jQuery(function($) {
     function updatePagerIcons(table) {
         var replacement =
         {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+            'ui-icon-seek-first': 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev': 'icon-angle-left bigger-140',
+            'ui-icon-seek-next': 'icon-angle-right bigger-140',
+            'ui-icon-seek-end': 'icon-double-angle-right bigger-140'
         };
-        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+            if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
         })
     }
 
 
     function enableTooltips(table) {
-        $('.navtable .ui-pg-button').tooltip({container:'body'});
-        $(table).find('.ui-pg-div').tooltip({container:'body'});
+        $('.navtable .ui-pg-button').tooltip({container: 'body'});
+        $(table).find('.ui-pg-div').tooltip({container: 'body'});
     }
 
     //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 
+    //获取角色列表数据
+    setTimeout(function () {
+        $.ajax({
+            url: $path_base + "/admin/sys/permission/role/list",
+            dataType: "json",
+            async: false,
+            success: function (roleData) {
+                roles = eval(roleData);
+                roleSelect = initMultiSelect();
+            },
+            error: function () {
+                ace.show_msg("角色信息加载失败！");
+            }
+        });
+    }, 1000);
 
+    function initMultiSelect() {
+        var selectElement = '<select class="form-control" style="width:150px;height:80px" id="role" name="role" multiple="multiple">';
+        for (var i = 0; i < roles.records; i++) {
+            selectElement += '<option value="' + roles.rows[i].id + '">' + roles.rows[i].name + '</option>';
+        }
+        selectElement += '</select>';
+        return selectElement;
+    }
 });
 </script>

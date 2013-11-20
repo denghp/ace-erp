@@ -3,6 +3,7 @@ package com.ace.erp.persistence.sys;
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
+import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.entity.sys.UserRole;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface UserMapper extends BaseMapper<User,Integer> {
     User getByMobilePhoneNumber(String mobilePhoneNumber);
 
     void saveUserRole(UserRole userRole);
+
+    void saveUserOrganization(UserOrganization userOrganization);
 
     User getUserRoleList(Integer userId);
 

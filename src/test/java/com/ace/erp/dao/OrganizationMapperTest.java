@@ -12,6 +12,7 @@ import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.persistence.sys.OrganizationMapper;
 import com.ace.erp.persistence.sys.UserMapper;
 import com.ace.erp.persistence.sys.UserOrganizationMapper;
+import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -37,10 +38,12 @@ public class OrganizationMapperTest extends BaseTest {
         organizationMapper.save(organization);
         User user = new User("demo","12345","demo@126.com");
         userMapper.save(user);
-        userOrganizationMapper.save(new UserOrganization(user.getId(),organization.getId()));
+        UserOrganization userOrganization = new UserOrganization(user,organization);
+        userMapper.saveUserOrganization(userOrganization);
+
         User user1 = new User("demo1","12345","demo1@126.com");
         userMapper.save(user1);
-        userOrganizationMapper.save(new UserOrganization(user1.getId(),organization.getId()));
+        userMapper.saveUserOrganization(new UserOrganization(user1,organization));
         Organization organizatio = organizationMapper.getOne(organization.getId());
         System.out.println(organizatio);
     }
@@ -49,5 +52,14 @@ public class OrganizationMapperTest extends BaseTest {
     public void getOneById() {
         Organization organization = organizationMapper.getOne(1);
         System.out.println(organization);
+    }
+
+    @Test
+    public void getCountTest() {
+        Organization organization = new Organization();
+        organization.setId(1);
+        Integer count = organizationMapper.getUserCount(new UserOrganization(null,organization));
+        System.out.println(count);
+        Assert.assertNotNull(count);
     }
 }

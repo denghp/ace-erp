@@ -245,12 +245,12 @@ insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_sho
 insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_show`) values (6,  '审核', 'audit', '审核数据操作的权限', 1);;
 
 delete from `sys_role` where id>=1 and id<=1000;;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (1,  '超级管理员', 'admin', '拥有所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (2,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (3,  '销售管理员', 'sales_admin', '拥有示例管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (4,  '采购管理员', 'purchase_admin', '拥有维护管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (5,  '库存管理员', 'stock_admin', '拥有新增/查看管理的所有权限', 1);;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (6,  '财务管理员', 'finance_admin', '拥有修改/查看管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (1,  '超级管理员', 'admin', '拥有所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (2,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (3,  '销售管理员', 'sales_admin', '拥有销售管理的所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (4,  '采购管理员', 'purchase_admin', '拥有采购管理的所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (5,  '库存管理员', 'stock_admin', '拥有库存管理的所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (6,  '财务管理员', 'finance_admin', '拥有财务管理的所有权限', 1, sysdate(), sysdate());;
 
 delete from `sys_role_resource_permission` where id>=1 and id<=1000;;
 insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(1, 2, 2, '1');;

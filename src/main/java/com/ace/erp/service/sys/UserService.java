@@ -39,9 +39,6 @@ public class UserService extends BaseService<User, Integer> {
     private CacheManager ehcacheManager;
 
     @Autowired
-    private UserOrganizationMapper userOrganizationMapper;
-
-    @Autowired
     private OrganizationMapper organizationMapper;
 
     @Autowired
@@ -105,9 +102,9 @@ public class UserService extends BaseService<User, Integer> {
         } else {
             organizationMapper.save(organization);
         }
-        userOrganization = new UserOrganization(user.getId(),organization.getId());
+        userOrganization = new UserOrganization(user,organization);
         //step3 存储账户与企业关联信息
-        userOrganizationMapper.save(userOrganization);
+        userMapper.saveUserOrganization(userOrganization);
         //step4 分配权限
         //TODO 获取给新注册帐号分配的角色,可以由几个角色组成
         Role role = roleMapper.getSysAdminRole();

@@ -11,14 +11,17 @@ import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.Organization;
+import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.OrganizationService;
+import com.ace.erp.service.sys.RoleService;
 import com.ace.erp.service.sys.UserOrganizationService;
 import com.ace.erp.service.sys.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +51,13 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
     private UserService userService;
 
     @Autowired
+    private MessageSource messageSource;
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private UserOrganizationService userOrganizationService;
+
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -63,15 +72,21 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
         return responseJson;
     }
     @RequestMapping(value = "/addUser")
-    @ResponseBody
-    public Response save(@CurrentUser User user,User m, BindingResult bindingResult) throws AceException {
+    public String save(@CurrentUser User user,User m, BindingResult bindingResult) throws AceException {
         long starTime = System.currentTimeMillis();
         if (user.getOrganizationList() == null || user.getOrganizationList().size() <= 0) {
             throw AceException.create(AceException.Code.BAD_REQUEST,"当前账户没有权限创建用户!");
         }
-        userService.save(m);
-
-        userOrganizationService.save(new UserOrganization(m.getId(),user.getOrganizationList().get(0).getId()));
-        return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
+        try {
+            organizationService.addUser(user,m);
+        } catch (AceException.BadRequestException e) {
+            String msg = messageSource.getMessage(e.getMessage(),null,null);
+            return msg == null ? e.getMessage() : msg;
+        } catch (AceException.SystemErrorException e) {
+            String msg = messageSource.getMessage(e.getMessage(),null,null);
+            return msg == null ? e.getMessage() : msg;
+        }
+        return "用户添加成功!";
+        //return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 }

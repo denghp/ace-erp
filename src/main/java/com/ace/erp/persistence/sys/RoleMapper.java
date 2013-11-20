@@ -44,5 +44,10 @@ public interface RoleMapper extends BaseMapper<Role,Integer> {
      */
     public Role getSysAdminRole();
 
+    /**
+     * 获取所有普通角色
+     * @return
+     */
+    public List<Role> getCommonRoles();
 
 }

@@ -72,4 +72,9 @@
     WHERE so.id = #{id}
   </select>
 
+  <select id="getUserCount" parameterType="UserOrganization" resultType="java.lang.Integer">
+        select count(*) from sys_user_organization where organization_id = #{organization.id}
+  </select>
+
+
 </mapper>

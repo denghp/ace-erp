@@ -52,6 +52,16 @@ public class RoleController extends BaseCRUDController<Role, Integer> {
     private PermissionService permissionService;
 
 
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Response list(@CurrentUser User user,HttpServletRequest request, HttpServletResponse response) {
+        List<Role> list = roleService.getAllRoles(user.getAdmin());
+        Response responseJson = new Response();
+        responseJson.setRows(list);
+        responseJson.setRecords(list.size());
+        return responseJson;
+    }
+
     @RequestMapping(value = "/{edit:edit;?.*}", method = RequestMethod.POST)
     public String editIndex(Role role, Model model) {
         List<Permission> permissionList = permissionService.getPageList(0, 50);

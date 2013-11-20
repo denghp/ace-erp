@@ -14,19 +14,19 @@ import org.joda.time.DateTime;
 public class UserOrganization {
 
     private Integer id;
-    private Integer userId;
-    private Integer organizationId;
+    private User user;
+    private Organization organization;
     private String modifyTime;
 
     public UserOrganization() {}
 
-    public UserOrganization(Integer userId, Integer organizationId) {
-        this.userId = userId;
-        this.organizationId = organizationId;
+    public UserOrganization(User user, Organization organization) {
+        this.user = user;
+        this.organization = organization;
     }
 
-    public UserOrganization(Integer userId, Integer organizationId, String modifyTime) {
-        this(userId, organizationId);
+    public UserOrganization(User user, Organization organization, String modifyTime) {
+        this(user, organization);
         this.modifyTime = modifyTime;
     }
 
@@ -38,20 +38,20 @@ public class UserOrganization {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getOrganizationId() {
-        return organizationId;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     public String getModifyTime() {

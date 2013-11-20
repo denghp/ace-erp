@@ -23,7 +23,7 @@ import java.util.*;
  * Description:
  */
 @Service
-public class RoleService extends BaseService<Role,Integer> {
+public class RoleService extends BaseService<Role, Integer> {
     private Logger logger = LoggerFactory.getLogger(RoleService.class);
 
     @Autowired
@@ -36,18 +36,18 @@ public class RoleService extends BaseService<Role,Integer> {
     public List<RoleResourcePermission> getRoleResourcePermissions(Integer roleId) {
         List<Role> roles = roleMapper.getRoleResourcePermissions(roleId);
         if (roles != null && roles.size() > 0) {
-           return roles.get(0).getResourcePermissions();
+            return roles.get(0).getResourcePermissions();
         }
         return null;
     }
 
-    public Map<Integer,RoleResourcePermission> getRoleResourceMaps(Integer roleId) {
+    public Map<Integer, RoleResourcePermission> getRoleResourceMaps(Integer roleId) {
         List<Role> roles = roleMapper.getRoleResourcePermissions(roleId);
         Map<Integer, RoleResourcePermission> rrpMaps = new HashMap<Integer, RoleResourcePermission>();
         if (roles != null && roles.size() > 0) {
             List<RoleResourcePermission> rrpList = roles.get(0).getResourcePermissions();
             for (RoleResourcePermission rrp : rrpList) {
-                rrpMaps.put(rrp.getResourceId(),rrp);
+                rrpMaps.put(rrp.getResourceId(), rrp);
             }
         }
         return rrpMaps;
@@ -69,16 +69,19 @@ public class RoleService extends BaseService<Role,Integer> {
         return roleMapper.getListRolesByRoleIds(params);
     }
 
-    public List<Role> getAllRoles() {
-       return roleMapper.getAllRoles();
+    public List<Role> getAllRoles(boolean isAdmin) {
+        if (isAdmin) {
+            return roleMapper.getAllRoles();
+        }
+        return roleMapper.getCommonRoles();
     }
 
 
-    public void updateWithResourcePermission(Integer[] resourceIds,Role role) throws AceException{
+    public void updateWithResourcePermission(Integer[] resourceIds, Role role) throws AceException {
         if (role == null || role.getId() == null || resourceIds == null
                 && resourceIds.length <= 0) {
             logger.warn("updateWithResourcePermission failed, this params invalid");
-            return ;
+            return;
         }
 
         try {
@@ -88,30 +91,31 @@ public class RoleService extends BaseService<Role,Integer> {
             rrpMapper.deleteRRPByRoleId(role.getId());
             for (Integer resourceId : resourceIds) {
                 if (resourceId != null) {
-                    RoleResourcePermission rrp = new RoleResourcePermission(role.getId(),resourceId,"1");
+                    RoleResourcePermission rrp = new RoleResourcePermission(role.getId(), resourceId, "1");
                     rrpMapper.save(rrp);
                 }
             }
         } catch (Exception ex) {
             logger.error("updateWithResourcePermission error , {}", ex);
-            throw AceException.create(AceException.Code.SYSTEM_ERROR,"UpdateWithResourcePermission failed!");
+            throw AceException.create(AceException.Code.SYSTEM_ERROR, "UpdateWithResourcePermission failed!");
         }
 
     }
 
     /**
      * 根据当前角色获取对应的所有资源
+     *
      * @param roleId
      * @return
      */
-    public Map<String,RoleResourcePermission> getMapRRPSByRoleId(int roleId) {
+    public Map<String, RoleResourcePermission> getMapRRPSByRoleId(int roleId) {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("roleId",roleId);
+        params.put("roleId", roleId);
         //params.put("resourceIds",resourceIds);
         List<RoleResourcePermission> rrpList = rrpMapper.getRRPListByRId(roleId);
         Map<String, RoleResourcePermission> rrpMaps = new HashMap<String, RoleResourcePermission>();
         for (RoleResourcePermission rrp : rrpList) {
-            rrpMaps.put(rrp.getRoleId()+"_"+rrp.getResourceId(),rrp);
+            rrpMaps.put(rrp.getRoleId() + "_" + rrp.getResourceId(), rrp);
         }
         return rrpMaps;
     }
