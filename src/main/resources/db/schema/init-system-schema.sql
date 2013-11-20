@@ -8,7 +8,7 @@ drop table if exists `sys_resource`;;
 drop table if exists `sys_permission`;;
 drop table if exists `sys_role`;;
 drop table if exists `sys_role_resource_permission`;;
-drop table if exists `sys_auth`;;
+drop table if exists `sys_user_role`;;
 ##user
 create table `sys_user`(
   `id`         bigint not null auto_increment,
@@ -120,20 +120,18 @@ alter table `sys_role_resource_permission` auto_increment=1000;;
 
 
 /**
- * user 与 role ,organization
+ * user与role 的关系表
  */
-create table `sys_auth`(
+create table `sys_user_role`(
   `id`         bigint not null auto_increment,
-  `organization_id`       bigint,
   `user_id`        bigint,
-  `role_ids`       varchar(500),
+  `role_id`       bigint,
   `type`           varchar(50),
-  constraint `pk_sys_auth` primary key(`id`),
-  index `idx_sys_auth_organization` (`organization_id`),
-  index `idx_sys_auth_user` (`user_id`),
+  `modify_time`   datetime NOT NULL default '1970-01-01 00:00:00',
+  constraint `pk_user_role` primary key(`id`),
   index `idx_sys_auth_type` (`type`)
 ) charset=utf8 ENGINE=InnoDB;;
-alter table `sys_auth` auto_increment=1000;;
+alter table `sys_user_role` auto_increment=1000;;
 
 /**
  * 行业类型，贸易代码

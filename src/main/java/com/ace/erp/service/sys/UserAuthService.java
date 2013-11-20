@@ -28,7 +28,7 @@ public class UserAuthService {
     private OrganizationService organizationService;
 
     @Autowired
-    private AuthService authService;
+    private UserService userService;
 
     @Autowired
     private RoleService roleService;
@@ -40,18 +40,13 @@ public class UserAuthService {
     private PermissionService permissionService;
 
     public List<Role> findRoles(User user) {
-
-        int userId = user.getId();
-
-        //过滤工作职务 仅获取目前可用的工作职务数据
-
+        if (user == null || user.getId() == null) {
+            logger.error("findRoles ");
+            return null;
+        }
         //获取权限
         //1.1、获取用户角色
-        String roleIds = authService.findRoleIds(userId);
-
-        List<Role> roles = roleService.findShowRoles(roleIds);
-        return roles;
-
+        return userService.getUserRoleList(user.getId());
     }
 
     public Set<String> findStringRoles(User user) {

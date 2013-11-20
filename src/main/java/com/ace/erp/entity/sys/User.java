@@ -80,6 +80,8 @@ public class User implements LogicDeleteable,Serializable {
      */
     private List<Organization> organizationList;
 
+    private List<Role> roleList;
+
     public User() {
     }
 
@@ -99,6 +101,14 @@ public class User implements LogicDeleteable,Serializable {
         this.email = email;
     }
 
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
     public Integer getId() {
         return id;

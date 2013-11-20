@@ -90,7 +90,9 @@ public class LoginUserController {
         Exception shiroLoginFailureEx =
                 (Exception) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
         if (shiroLoginFailureEx != null) {
-            model.addAttribute(Constants.ERROR, shiroLoginFailureEx.getMessage());
+            //model.addAttribute(Constants.ERROR, shiroLoginFailureEx.getMessage());
+            String msg = messageSource.getMessage(shiroLoginFailureEx.getMessage(),null,null);
+            model.addAttribute(Constants.ERROR, msg == null ? shiroLoginFailureEx.getMessage() : msg);
         }
 
         //如果用户直接到登录页面 先退出一下

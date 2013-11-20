@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 20095-2013 https://github.com/zhangkaitao
- *
- *
- */
-
-
 package com.ace.erp.handler.mybatis;
 
 import com.ace.erp.utils.TimeUtils;

@@ -50,8 +50,8 @@ public abstract class AceException extends Exception {
                 return new ConnectionLossException();
             case USER_EXISTS:
                 return new UserExistsException();
-            case NO_USER:
-                return new NoUserException();
+            case USER_NOT_FOUND:
+                return new UserNotFoundException();
             case OPERATION_TIMEOUT:
                 return new OperationTimeoutException();
             case BAD_ARGUMENTS:
@@ -86,7 +86,7 @@ public abstract class AceException extends Exception {
                 return "ConnectionLoss";
             case USER_EXISTS:
                 return "UserExists";
-            case NO_USER:
+            case USER_NOT_FOUND:
                 return "UserNotFound";
             case OPERATION_TIMEOUT:
                 return "OperationTimeout";
@@ -138,7 +138,7 @@ public abstract class AceException extends Exception {
         //该用户没有绑定手机
         USER_NO_REL_PHONE(20003),
         //该用户不存在
-        NO_USER(20004),
+        USER_NOT_FOUND(20004),
         //用户存在
         USER_EXISTS(20005),
         //用户封禁
@@ -288,15 +288,15 @@ public abstract class AceException extends Exception {
     }
 
     /**
-     * @see Code#NO_USER
+     * @see Code#USER_NOT_FOUND
      */
-    public static class NoUserException extends AceException {
-        public NoUserException () {
-            super(Code.NO_USER);
+    public static class UserNotFoundException extends AceException {
+        public UserNotFoundException () {
+            super(Code.USER_NOT_FOUND);
         }
 
-        public NoUserException (String message) {
-            super(Code.NO_USER,message);
+        public UserNotFoundException (String message) {
+            super(Code.USER_NOT_FOUND,message);
         }
     }
 

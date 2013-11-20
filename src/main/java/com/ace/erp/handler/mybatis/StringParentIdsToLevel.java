@@ -1,23 +1,10 @@
-/**
- * Copyright (c) 20095-2013 https://github.com/zhangkaitao
- *
- *
- */
-
-
 package com.ace.erp.handler.mybatis;
 
-import com.ace.erp.utils.TimeUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import java.sql.*;
-import java.util.Date;
-
 
 /**
  * Project_Name: ace

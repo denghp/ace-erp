@@ -108,5 +108,6 @@ public class UserServiceTest extends BaseUserTest {
         System.out.println(Md5Utils.hash("purchase_admin" + "123456" + "iY71e4dtoa"));
         System.out.println(Md5Utils.hash("stock_admin" + "123456" + "iruPxupgfb"));
         System.out.println(Md5Utils.hash("finance_admin" + "123456" + "2WQx5LmvlV"));
+        System.out.println(Md5Utils.hash("demo" + "123456" + "GyapmIJVcZ"));
     }
 }

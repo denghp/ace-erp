@@ -69,8 +69,8 @@ jQuery(function($) {
         url:$path_base+'/admin/sys/company/employee/list',
         datatype: "json",
         mtype: 'GET',
-        height: 350,
-        colNames:[' ', 'ID','用户名','邮箱', '手机号码','创建时间', '状态','是否管理员'],
+        height: 450,
+        colNames:[' ', 'ID','用户名','邮箱', '手机号码','创建时间', '状态'],
         colModel:[
             {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
@@ -121,8 +121,6 @@ jQuery(function($) {
             {name:'mobilePhoneNumber',index:'phone', width:90, editable: true, editoptions:{size:"11",maxlength:"11"}},
             {name:'createTime',index:'createTime',width:90, editable:true,sorttype:"date", formatter:dateFormatter,unformat: pickDate},
             {name:'status',index:'status', width:70, editable: true, edittype:"select", formatter:"select", editoptions: {value:"normal:正常;blocked:封禁"}},
-            {name:'admin',index:'admin', width:70, editable: true,edittype:"checkbox", editoptions:{value:"Yes:No"}, unformat:aceSwitch}
-
         ],
 
         viewrecords : true,
@@ -167,6 +165,7 @@ jQuery(function($) {
     }
     //format date
     function dateFormatter(cellvalue, options, rowObject) {
+        if (cellvalue != null)
         return cellvalue.split(" ")[0];
     }
 
@@ -227,7 +226,10 @@ jQuery(function($) {
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+                    form.find('table').append('<tr rowpos="7" class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID"><select class="form-control" style="width:130px;height:80px" id="role" name="role" multiple="multiple"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>' +
+                            '<option value="AZ">Arizona</option><option value="AZ">Arizona</option><option value="AZ">Arizona</option></select></td></tr>');
                     style_edit_form(form);
+
 
                 },
                 beforeSubmit: function(posdata,formid) {

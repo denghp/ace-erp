@@ -1,8 +1,7 @@
 package com.ace.erp.service.sys;
 
-import com.ace.erp.entity.sys.Auth;
+import com.ace.erp.entity.sys.UserRole;
 import com.ace.erp.entity.sys.User;
-import com.ace.erp.persistence.sys.AuthMapper;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +22,8 @@ public class AuthService {
     private Logger logger = LoggerFactory.getLogger(AuthService.class);
     @Autowired
     private UserService userService;
-    @Autowired
-    private AuthMapper authMapper;
 
-    public void addUserAuth(Integer[] userIds, Auth m) {
+    public void addUserAuth(Integer[] userIds, UserRole m) {
 
         if (ArrayUtils.isEmpty(userIds)) {
             logger.warn("addUserAuth userIds is null.");
@@ -41,32 +38,18 @@ public class AuthService {
                 return ;
             }
 
-//            //Auth auth = authRepository.findByUserId(userId);
+//            //UserRole auth = authRepository.findByUserId(userId);
 //            if (auth != null) {
 //                auth.addRoleIds(m.getRoleIds());
 //                continue;
 //            }
-            Auth auth = new Auth();
-            auth.setUserId(userId);
+            UserRole auth = new UserRole();
+            //auth.setUserId(userId);
             auth.setType(m.getType());
-            auth.setRoleIds(m.getRoleIds());
+            //auth.setRoleIds(m.getRoleIds());
             //save(auth);
         }
     }
 
-    /**
-     * 根据用户信息获取 角色
-     * 1.1、用户  根据用户绝对匹配
-     * @param userId             必须有
-     * @return
-     */
-    public String findRoleIds(Integer userId) {
-
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("userId",userId);
-        String roleIds = authMapper.findRoleIds(params);
-        logger.info("roleIds:{}",roleIds);
-        return roleIds;
-    }
 
 }

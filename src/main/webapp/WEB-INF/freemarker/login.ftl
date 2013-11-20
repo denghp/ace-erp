@@ -1,4 +1,3 @@
-<#import "commons/showMessage.ftl" as show>
 <!DOCTYPE html>
 <html lang="en">
 <#include "commons/header.ftl" >
@@ -25,7 +24,12 @@
     <div class="widget-body">
         <div class="widget-main">
             <h4 class="header blue lighter bigger">
-            <@show.errorMesage />
+            <#if error?exists >
+                <div class="alert alert-info fade in">
+                    ${error}
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+            </#if>
                 <i class="icon-coffee green"></i>
                 Please Enter Your Information
             </h4>

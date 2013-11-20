@@ -14,6 +14,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Set;
 
@@ -35,6 +36,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
 
     @Autowired
     private UserAuthService userAuthService;
+
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -68,14 +70,14 @@ public class AuthenticationRealm extends AuthorizingRealm {
 
         try {
             user = userService.login(username, password);
-        } catch (AceException.NoUserException e) {
-            throw new UnknownAccountException(e.getMessage(), e);
+        } catch (AceException.UserNotFoundException e) {
+            throw new UnknownAccountException("user.not.exists", e);
         } catch (AceException.UserPasswordNotMatchException e) {
-            throw new AuthenticationException(e.getMessage(), e);
+            throw new AuthenticationException("user.password.not.match", e);
         } catch (AceException.UserPasswordRetryCount e) {
-            throw new ExcessiveAttemptsException(e.getMessage(), e);
+            throw new ExcessiveAttemptsException("user.password.retry.limit.exceed", e);
         } catch (AceException.UserBlockedException e) {
-            throw new LockedAccountException(e.getMessage(), e);
+            throw new LockedAccountException("user.blocked", e);
         } catch (Exception e) {
             logger.error("login error", e);
             throw new AuthenticationException("user.unknown.error",e);

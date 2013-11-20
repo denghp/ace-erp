@@ -9,8 +9,10 @@
         <result property="password" column="password"/>
         <result property="email" column="email"/>
         <result property="mobilePhoneNumber" column="mobile_phone_number"/>
-        <result property="createTime" column="create_time" javaType="java.lang.String" typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-        <result property="modifyTime" column="modify_time" javaType="java.lang.String" typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+        <result property="createTime" column="create_time" javaType="java.lang.String"
+                typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+        <result property="modifyTime" column="modify_time" javaType="java.lang.String"
+                typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="salt" column="salt"/>
         <result property="status" column="status"/>
         <result property="admin" column="admin"/>
@@ -18,10 +20,31 @@
     </resultMap>
 
     <resultMap type="User" id="userOrganizationMap" extends="userMap">
-        <collection property="organizationList" ofType="Organization" resultMap="com.ace.erp.persistence.sys.OrganizationMapper.organizationMap"/>
+        <collection property="organizationList" ofType="Organization"
+                    resultMap="com.ace.erp.persistence.sys.OrganizationMapper.organizationMap"/>
     </resultMap>
 
-  <select id="getUserByName" parameterType="java.lang.String" resultMap="userOrganizationMap">
+    <resultMap type="User" id="userRoleMap" extends="userMap">
+        <collection property="roleList" ofType="Role">
+            <result property="id" column="role_id"/>
+            <result property="name" column="name"/>
+            <result property="role" column="role"/>
+            <result property="description" column="description"/>
+            <result property="show" column="is_show"/>
+            <result property="createTime" column="role_create_time" javaType="java.lang.String"
+                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+            <result property="modifyTime" column="role_modify_time" javaType="java.lang.String"
+                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+            <collection property="resourcePermissions" ofType="RoleResourcePermission">
+                <result property="id" column="rrp_id"/>
+                <result property="roleId" column="rrp_role_id"/>
+                <result property="resourceId" column="rrp_resource_id"/>
+                <result property="permissionIds" column="rrp_permission_ids"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getUserByName" parameterType="java.lang.String" resultMap="userOrganizationMap">
     SELECT
       su.id,su.username,
       su.password,
@@ -43,23 +66,23 @@
     WHERE su.username = #{username}
   </select>
 
-  <select id="getUserByEmail" parameterType="java.lang.String" resultMap="userMap">
+    <select id="getUserByEmail" parameterType="java.lang.String" resultMap="userMap">
     SELECT id,username,password,email,mobile_phone_number,salt,status,deleted,admin,create_time,modify_time  FROM sys_user WHERE email = #{email}
   </select>
 
-   <select id="getList" resultMap="userMap">
+    <select id="getList" resultMap="userMap">
     SELECT id,username,password,email,mobile_phone_number,salt,status,deleted,admin,create_time,modify_time  FROM sys_user limit 100;
   </select>
 
-  <select id="getPageList" parameterType="java.util.Map" resultMap="userMap">
+    <select id="getPageList" parameterType="java.util.Map" resultMap="userMap">
     SELECT id,username,password,email,mobile_phone_number,salt,status,deleted,admin,create_time,modify_time  FROM sys_user limit #{offset},#{limit};
   </select>
 
-  <select id="getCount" resultType="int">
+    <select id="getCount" resultType="int">
     SELECT count(*) FROM sys_user;
   </select>
 
-  <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationMap">
+    <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationMap">
     SELECT
       su.id,su.username,
       su.password,
@@ -81,64 +104,64 @@
     WHERE su.id = #{id}
   </select>
 
-  <select id="getByMobilePhoneNumber" parameterType="java.lang.String" resultMap="userMap">
+    <select id="getByMobilePhoneNumber" parameterType="java.lang.String" resultMap="userMap">
     SELECT id,username,password,email,mobile_phone_number,salt,status,deleted,admin,create_time,modify_time FROM sys_user WHERE mobile_phone_number = #{mobilePhoneNumber}
   </select>
 
-  <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
-      INSERT INTO
+    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
         sys_user (username,password,email,mobile_phone_number,salt,create_time,modify_time,status,deleted,admin)
-      VALUES
+        VALUES
         (#{username},#{password},#{email},#{mobilePhoneNumber},#{salt},
         <if test="createTime == null">
-           now(),
+            now(),
         </if>
-       <if test="createTime != null">
-           #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
-       </if>
-      <if test="modifyTime == null">
-          now(),
-      </if>
-      <if test="modifyTime != null">
-          #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
-      </if>
-      #{status},#{deleted},#{admin})
-  </insert>
+        <if test="createTime != null">
+            #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+        </if>
+        <if test="modifyTime == null">
+            now(),
+        </if>
+        <if test="modifyTime != null">
+            #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+        </if>
+        #{status},#{deleted},#{admin})
+    </insert>
 
-  <update id="update" parameterType="User">
-      update sys_user set
-      <if test="username != null">
-        username = #{username},
-      </if>
-      <if test="password != null">
-        password = #{password},
-      </if>
-      <if test="email != null">
-        email = #{email},
-      </if>
-      <if test="mobilePhoneNumber != null">
-        mobile_phone_number = #{mobilePhoneNumber},
-      </if>
-      <if test="salt != null">
-        salt = #{salt},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
-      </if>
-      <if test="status != null">
-        status = #{status},
-      </if>
-      <if test="deleted != null">
-        deleted = ${deleted},
-      </if>
-      <if test="admin != null">
-        admin = ${admin},
-      </if>
-      modify_time = now()
-      where id = #{id}
-  </update>
+    <update id="update" parameterType="User">
+        update sys_user set
+        <if test="username != null">
+            username = #{username},
+        </if>
+        <if test="password != null">
+            password = #{password},
+        </if>
+        <if test="email != null">
+            email = #{email},
+        </if>
+        <if test="mobilePhoneNumber != null">
+            mobile_phone_number = #{mobilePhoneNumber},
+        </if>
+        <if test="salt != null">
+            salt = #{salt},
+        </if>
+        <if test="createTime != null">
+            create_time = #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        <if test="deleted != null">
+            deleted = ${deleted},
+        </if>
+        <if test="admin != null">
+            admin = ${admin},
+        </if>
+        modify_time = now()
+        where id = #{id}
+    </update>
 
-  <update id="changePassword" parameterType="java.util.Map">
+    <update id="changePassword" parameterType="java.util.Map">
       update sys_user set password = #{password} where id = #{userId}
   </update>
 
@@ -146,11 +169,49 @@
       delete from sys_user where id = #{userId}
   </delete>
 
-    <delete id="deleteByIds" parameterType="map" >
+    <delete id="deleteByIds" parameterType="map">
         delete from sys_user where id in
         <foreach item="item" index="index" collection="list"
                  open="(" separator="," close=")">
             ${item}
         </foreach>
     </delete>
+
+    <insert id="saveUserRole" parameterType="UserRole" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user_role (user_id,role_id,type,modify_time)
+        values (
+        #{user.id},#{role.id},#{type.info},
+        <if test="modifyTime == null">now()</if>
+        <if test="modifyTime != null">
+            #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+        </if>
+        )
+    </insert>
+
+    <select id="getUserRoleList" parameterType="java.lang.Integer" resultMap="userRoleMap">
+         SELECT
+      su.id,su.username,
+      su.password,
+      su.email,su.mobile_phone_number,
+      su.salt,su.status as user_status,
+      su.deleted,
+      su.admin,su.create_time,
+      su.modify_time,
+      sr.id as role_id,
+      sr.name,
+      sr.role,
+      sr.description,
+      sr.is_show,
+      sr.create_time as role_create_time,
+      sr.modify_time as role_modify_time,
+      rrp.id as rrp_id,
+      rrp.role_id as rrp_role_id,
+      rrp.resource_id as rrp_resource_id,
+      rrp.permission_ids as rrp_permission_ids
+    FROM sys_user as su
+     left join sys_user_role as sur on su.id = sur.user_id
+     left join sys_role as sr on sur.role_id = sr.id
+     left join sys_role_resource_permission as rrp on sr.id = rrp.role_id
+    WHERE su.id = #{id}
+    </select>
 </mapper>

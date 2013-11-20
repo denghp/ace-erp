@@ -273,19 +273,19 @@ insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `per
 insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(16, 6, 34, '1');;
 
 
-delete from `sys_auth` where id>=1 and id<=1000;;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(1, 1, 1, '1', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`,  `role_ids`, `type`)
-  values(2, 1, 2, '2', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`,  `role_ids`, `type`)
-  values(3, 1, 3, '3', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(4, 1, 4, '4', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(5, 1, 5, '5', 'user');;
-insert into sys_auth (`id`, `organization_id`, `user_id`, `role_ids`, `type`)
-  values(6, 1, 6, '6', 'user');;
+delete from `sys_user_role` where id>=1 and id<=1000;;
+insert into sys_user_role (`id`, `user_id`, `role_id`, `type`,`modify_time`)
+  values(1, 1, 1, 'user', sysdate());;
+insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
+  values(2, 2, 2, 'user', sysdate());;
+insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
+  values(3, 3, 3, 'user', sysdate());;
+insert into sys_user_role (`id`,  `user_id`, `role_id`, `type`,`modify_time`)
+  values(4, 4, 4, 'user', sysdate());;
+insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
+  values(5, 5, 5, 'user', sysdate());;
+insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
+  values(6, 6, 6, 'user', sysdate());;
 
 delete from `sys_user_organization` where id>=1 and id<=1000;;
 insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)

@@ -47,9 +47,6 @@ public class UserService extends BaseService<User, Integer> {
     @Autowired
     private RoleMapper roleMapper;
 
-    @Autowired
-    private AuthMapper authMapper;
-
     private Cache loginRecordCache;
 
     @Value(value = "${user.password.maxRetryCount}")
@@ -114,7 +111,7 @@ public class UserService extends BaseService<User, Integer> {
         //step4 分配权限
         //TODO 获取给新注册帐号分配的角色,可以由几个角色组成
         Role role = roleMapper.getSysAdminRole();
-        authMapper.save(new Auth(user.getId(),role.getId()+"",organization.getId()));
+        userMapper.saveUserRole(new UserRole(user,role));
         logger.info("insert successfully, user {}", user);
         return user;
     }
@@ -135,7 +132,7 @@ public class UserService extends BaseService<User, Integer> {
         User user = userMapper.getUserByName(username);
         if (user == null || Boolean.TRUE.equals(user.getDeleted())) {
             logger.warn("{} login failed, user is not exists!!!", username);
-            throw new AceException.NoUserException();
+            throw new AceException.UserNotFoundException();
         }
         if (user.getStatus() == UserStatus.blocked) {
             logger.warn("{} login failed, user is blocked!", username);
@@ -195,6 +192,11 @@ public class UserService extends BaseService<User, Integer> {
 
     public List<User> getAllUser() {
         return userMapper.getList();
+    }
+
+    public List<Role> getUserRoleList(Integer userId) {
+        User user = userMapper.getUserRoleList(userId);
+        return user == null ? null : user.getRoleList();
     }
 
     /**
