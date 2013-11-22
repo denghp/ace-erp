@@ -245,12 +245,12 @@ insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_sho
 insert into `sys_permission` (`id`, `name`, `permission`, `description`, `is_show`) values (6,  '审核', 'audit', '审核数据操作的权限', 1);;
 
 delete from `sys_role` where id>=1 and id<=1000;;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (1,  '超级管理员', 'admin', '拥有所有权限', 1, sysdate(), sysdate());;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (2,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1, sysdate(), sysdate());;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (3,  '销售管理员', 'sales_admin', '拥有销售管理的所有权限', 1, sysdate(), sysdate());;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (4,  '采购管理员', 'purchase_admin', '拥有采购管理的所有权限', 1, sysdate(), sysdate());;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (5,  '库存管理员', 'stock_admin', '拥有库存管理的所有权限', 1, sysdate(), sysdate());;
-insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`,`create_time`,`modify_time`) values (6,  '财务管理员', 'finance_admin', '拥有财务管理的所有权限', 1, sysdate(), sysdate());;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (1,  '超级管理员', 'admin', '拥有所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (2,  '系统管理员', 'sys_admin', '拥有系统管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (3,  '销售管理员', 'sales_admin', '拥有示例管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (4,  '采购管理员', 'purchase_admin', '拥有维护管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (5,  '库存管理员', 'stock_admin', '拥有新增/查看管理的所有权限', 1);;
+insert into `sys_role` (`id`, `name`, `role`, `description`, `is_show`) values (6,  '财务管理员', 'finance_admin', '拥有修改/查看管理的所有权限', 1);;
 
 delete from `sys_role_resource_permission` where id>=1 and id<=1000;;
 insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(1, 2, 2, '1');;
@@ -273,19 +273,19 @@ insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `per
 insert into `sys_role_resource_permission` (`id`, `role_id`, `resource_id`, `permission_ids`) values(16, 6, 34, '1');;
 
 
-delete from `sys_user_role` where id>=1 and id<=1000;;
-insert into sys_user_role (`id`, `user_id`, `role_id`, `type`,`modify_time`)
-  values(1, 1, 1, 'user', sysdate());;
-insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
-  values(2, 2, 2, 'user', sysdate());;
-insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
-  values(3, 3, 3, 'user', sysdate());;
-insert into sys_user_role (`id`,  `user_id`, `role_id`, `type`,`modify_time`)
-  values(4, 4, 4, 'user', sysdate());;
-insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
-  values(5, 5, 5, 'user', sysdate());;
-insert into sys_user_role (`id`, `user_id`,  `role_id`, `type`,`modify_time`)
-  values(6, 6, 6, 'user', sysdate());;
+delete from `sys_user_roles` where id>=1 and id<=1000;;
+insert into sys_user_roles (`id`, `user_id`, `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(1, 1, 1, 1, 'user', sysdate(), sysdate());;
+insert into sys_user_roles (`id`, `user_id`,  `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(2, 2, 2, 1, 'user', sysdate(), sysdate());;
+insert into sys_user_roles (`id`, `user_id`,  `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(3, 3, 3, 1, 'user', sysdate(), sysdate());;
+insert into sys_user_roles (`id`,  `user_id`, `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(4, 4, 4, 1, 'user', sysdate(), sysdate());;
+insert into sys_user_roles (`id`, `user_id`,  `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(5, 5, 5, 1, 'user', sysdate(), sysdate());;
+insert into sys_user_roles (`id`, `user_id`,  `role_id`, `organization_id`, `type`,`create_time`,`modify_time`)
+  values(6, 6, 6, 1, 'user', sysdate(), sysdate());;
 
 delete from `sys_user_organization` where id>=1 and id<=1000;;
 insert into sys_user_organization (`id`, `organization_id`, `user_id`, `modify_time`)

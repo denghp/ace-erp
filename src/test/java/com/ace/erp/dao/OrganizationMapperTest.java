@@ -11,7 +11,6 @@ import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.persistence.sys.OrganizationMapper;
 import com.ace.erp.persistence.sys.UserMapper;
-import com.ace.erp.persistence.sys.UserOrganizationMapper;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class OrganizationMapperTest extends BaseTest {
     @Autowired
     private OrganizationMapper organizationMapper;
-
-    @Autowired
-    private UserOrganizationMapper userOrganizationMapper;
 
     @Autowired
     private UserMapper userMapper;

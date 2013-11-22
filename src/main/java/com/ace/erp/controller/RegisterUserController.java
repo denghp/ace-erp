@@ -17,7 +17,6 @@ import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.OrganizationService;
-import com.ace.erp.service.sys.UserOrganizationService;
 import com.ace.erp.service.sys.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;

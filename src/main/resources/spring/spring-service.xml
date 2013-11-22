@@ -19,6 +19,5 @@
     <bean id="roleService" class="com.ace.erp.service.sys.RoleService"/>
 
     <bean id="organizationService" class="com.ace.erp.service.sys.OrganizationService"/>
-    <bean id="userOrganizationService" class="com.ace.erp.service.sys.UserOrganizationService"/>
 
 </beans>

@@ -22,8 +22,26 @@
     </resultMap>
 
     <resultMap type="Organization" id="userOrganizationMap" extends="organizationMap">
-        <collection property="userList" ofType="User"
-                    resultMap="com.ace.erp.persistence.sys.UserMapper.userMap" />
+        <collection property="userList" ofType="User" >
+                <result property="id" column="id"/>
+                <result property="username" column="username"/>
+                <result property="password" column="password"/>
+                <result property="email" column="email"/>
+                <result property="mobilePhoneNumber" column="mobile_phone_number"/>
+                <result property="createTime" column="create_time" javaType="java.lang.String"
+                        typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+                <result property="modifyTime" column="modify_time" javaType="java.lang.String"
+                        typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+                <result property="salt" column="salt"/>
+                <result property="status" column="status"/>
+                <result property="admin" column="admin"/>
+                <result property="deleted" column="deleted"/>
+                <collection property="roleList" ofType="Role" >
+                    <result property="id" column="role_id"/>
+                    <result property="name" column="role_name"/>
+                    <result property="role" column="role_role"/>
+                </collection>
+        </collection>
     </resultMap>
 
     <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
@@ -53,7 +71,7 @@
     </insert>
 
     <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationMap">
-    SELECT
+   SELECT
       so.id as organ_id,so.name,so.trade_code_id,so.user_count,
       so.logo,so.site,so.description,so.address,so.status as organ_status,
       so.create_time as organ_create_time,
@@ -65,10 +83,14 @@
       su.salt,su.status as user_status,
       su.deleted,
       su.admin,su.create_time,
-      su.modify_time
+      su.modify_time,
+      sr.id as role_id,
+      sr.name as role_name,
+      sr.role as role_role
     FROM sys_organization as so
-    LEFT JOIN sys_user_organization AS suo ON so.id = suo.organization_id
-    LEFT JOIN sys_user AS su ON suo.user_id = su.id
+    LEFT JOIN sys_user_roles AS sur ON so.id = sur.organization_id
+    LEFT JOIN sys_user AS su ON sur.user_id = su.id
+    LEFT JOIN sys_role as sr ON sur.role_id = sr.id
     WHERE so.id = #{id}
   </select>
 
