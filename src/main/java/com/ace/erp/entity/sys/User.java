@@ -82,6 +82,10 @@ public class User implements LogicDeleteable,Serializable {
 
     private List<Role> roleList;
 
+    private String roleIds;
+    private String roleNames;
+    private String roles;
+
     public User() {
     }
 
@@ -101,6 +105,29 @@ public class User implements LogicDeleteable,Serializable {
         this.email = email;
     }
 
+    public String getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String getRoleNames() {
+        return roleNames;
+    }
+
+    public void setRoleNames(String roleNames) {
+        this.roleNames = roleNames;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
 
     public List<Role> getRoleList() {
         return roleList;

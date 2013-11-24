@@ -108,7 +108,7 @@ public class UserService extends BaseService<User, Integer> {
         //step4 分配权限
         //TODO 获取给新注册帐号分配的角色,可以由几个角色组成
         Role role = roleMapper.getSysAdminRole();
-        userMapper.saveUserRole(new UserRole(user,role));
+        userMapper.saveUserRoles(new UserRoles(user,role,organization));
         logger.info("insert successfully, user {}", user);
         return user;
     }

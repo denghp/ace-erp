@@ -177,10 +177,10 @@
         </foreach>
     </delete>
 
-    <insert id="saveUserRole" parameterType="UserRole" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user_role (user_id,role_id,type,modify_time)
+    <insert id="saveUserRoles" parameterType="UserRoles" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user_roles (user_id,role_id,organization_id,type,modify_time)
         values (
-        #{user.id},#{role.id},#{type.info},
+        #{user.id},#{role.id},#{organization_id}, #{type.info},
         <if test="modifyTime == null">now()</if>
         <if test="modifyTime != null">
             #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
@@ -209,7 +209,7 @@
       rrp.resource_id as rrp_resource_id,
       rrp.permission_ids as rrp_permission_ids
     FROM sys_user as su
-     left join sys_user_role as sur on su.id = sur.user_id
+     left join sys_user_roles as sur on su.id = sur.user_id
      left join sys_role as sr on sur.role_id = sr.id
      left join sys_role_resource_permission as rrp on sr.id = rrp.role_id
     WHERE su.id = #{id}

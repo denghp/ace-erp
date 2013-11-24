@@ -9,6 +9,7 @@ import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.controller.BaseCRUDController;
 import com.ace.erp.entity.Response;
+import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.exception.AceException;
@@ -62,21 +63,13 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
         return responseJson;
     }
     @RequestMapping(value = "/addUser")
-    public String save(@CurrentUser User user,User m, BindingResult bindingResult) throws AceException {
+    @ResponseBody
+    public Response save(@CurrentUser User user,User m, BindingResult bindingResult) throws AceException {
         long starTime = System.currentTimeMillis();
         if (user.getOrganizationList() == null || user.getOrganizationList().size() <= 0) {
             throw AceException.create(AceException.Code.BAD_REQUEST,"当前账户没有权限创建用户!");
         }
-        try {
-            organizationService.addUser(user,m);
-        } catch (AceException.BadRequestException e) {
-            String msg = messageSource.getMessage(e.getMessage(),null,null);
-            return msg == null ? e.getMessage() : msg;
-        } catch (AceException.SystemErrorException e) {
-            String msg = messageSource.getMessage(e.getMessage(),null,null);
-            return msg == null ? e.getMessage() : msg;
-        }
-        return "用户添加成功!";
-        //return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
+        organizationService.addUser(user,m);
+        return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 }

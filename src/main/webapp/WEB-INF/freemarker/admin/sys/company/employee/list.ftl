@@ -78,57 +78,16 @@ jQuery(function ($) {
         datatype: "json",
         mtype: 'GET',
         height: 350,
-        colNames: [' ', 'ID', '用户名', '邮箱', '手机号码', '创建时间', '状态'],
+        colNames: ['ID', '用户名', '邮箱', '手机号码','拥有角色','角色','创建时间', '状态'],
         colModel: [
-            {name: 'myac', index: '', width: 80, fixed: true, sortable: false, resize: false,
-                formatter: 'actions',
-                formatoptions: {
-                    keys: true,
-                    delOptions: {url: $path_base + "/admin/sys/company/employee/delete", recreateForm: true, beforeShowForm: beforeDeleteCallback,
-                        afterSubmit: function (response, postdata) {
-                            var resp = response.responseJSON;
-                            if (resp.responseHeader != undefined &&
-                                    resp.responseHeader.status != undefined &&
-                                    resp.responseHeader.status == "200") {
-                                ace.show_msg("删除成功!");
-                                return [true];
-                            }
-                            if (resp.error != undefined) {
-                                return [false, JSON.stringify(resp.error)];
-                            }
-                            return [false, "删除失败,服务器内部的错误! "];
-                        }},
-                    //editformbutton:true,
-                    //editOptions:{url:$path_base+"/admin/sys/user/update",recreateForm: true, beforeShowForm:beforeEditCallback},
-                    onSuccess: function (response) {
-                        var resp = response.responseJSON;
-                        if (resp.responseHeader != undefined &&
-                                resp.responseHeader.status != undefined &&
-                                resp.responseHeader.status == "200") {
-                            ace.show_msg("更新成功!");
-                            return [true];
-                        }
-                        return [false];
-
-                    },
-                    onError: function (response) {
-                        if (response.responseJSON != undefined) {
-                            var resp = response.responseJSON;
-                            //获取error
-                            var errorMsg = JSON.stringify(resp);
-                            ace.show_msg("更新失败! " + errorMsg);
-                        }
-                        ace.show_msg("更新失败! ");
-                        return [true];
-                    }
-                }
-            },
             {name: 'id', index: 'id', width: 60, hidden: true, sorttype: "int", editable: true},
             {name: 'username', index: 'name', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
             {name: 'email', index: 'email', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
-            {name: 'mobilePhoneNumber', index: 'phone', width: 90, editable: true, editoptions: {size: "11", maxlength: "11"}},
+            {name: 'mobilePhoneNumber', index: 'phone', width: 100, editable: true, editoptions: {size: "11", maxlength: "11"}},
+            {name: 'roleNames', index: 'roleNames', width: 280, editable: false},
+            {name: 'roles', index: 'roles', width: 280, editable: false},
             {name: 'createTime', index: 'createTime', width: 90, editable: true, sorttype: "date", formatter: dateFormatter, unformat: pickDate},
-            {name: 'status', index: 'status', width: 70, editable: true, edittype: "select", formatter: "select", editoptions: {value: "normal:正常;blocked:封禁"}},
+            {name: 'status', index: 'status', width: 70, editable: true, edittype: "select", formatter: "select", editoptions: {value: "normal:正常;blocked:封禁"}}
         ],
 
         viewrecords: true,
@@ -239,6 +198,11 @@ jQuery(function ($) {
                 },
                 beforeSubmit: function (posdata, formid) {
                     console.log(posdata);
+                    //设置roleIds值
+                    var roleArray = $('#role').val();
+                    if (roleArray.length > 0) {
+                        posdata.roleIds = roleArray.join();
+                    }
                     return [true, ''];
                 },
                 afterSubmit: function (response, postdata) {
@@ -318,8 +282,6 @@ jQuery(function ($) {
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
         //append role select
-        //form.find('table').append('<tr rowpos="7" class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID"><select class="form-control" style="width:130px;height:80px" id="role" name="role" multiple="multiple"><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>' +
-        //        '<option value="AZ">Arizona</option><option value="AZ">Arizona</option><option value="AZ">Arizona</option></select></td></tr>');
         form.find('table').append('<tr class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID">'+roleSelect+'</td></tr>');
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');

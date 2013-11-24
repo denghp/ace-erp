@@ -2,16 +2,15 @@ package com.ace.erp.service.sys;
 
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
-import com.ace.erp.entity.sys.Organization;
-import com.ace.erp.entity.sys.User;
-import com.ace.erp.entity.sys.UserOrganization;
+import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.persistence.sys.OrganizationMapper;
 import com.ace.erp.persistence.sys.UserMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with smart-erp.
@@ -20,6 +19,7 @@ import java.util.Map;
  * Date: 10/16/13
  * Time: 1:00 AM
  */
+@Service
 public class OrganizationService extends BaseService<Organization,Integer> {
 
     @Autowired
@@ -57,9 +57,19 @@ public class OrganizationService extends BaseService<Organization,Integer> {
         try {
             //添加用户及用户与企业之间的关系数据
             userMapper.save(user);
+            //添加用户与角色的关系数据
+            if (StringUtils.isNotBlank(user.getRoleIds())) {
+                String[] roleIds = user.getRoleIds().split(",");
+                for (String roleId : roleIds) {
+                    userMapper.saveUserRoles(new UserRoles(user, new Role(Integer.valueOf(roleId)),organization));
+                }
+            }
+            //添加用户与企业之间的数据关系
             userMapper.saveUserOrganization(new UserOrganization(user,organization));
+
         } catch (Exception ex) {
-            throw AceException.create(AceException.Code.SYSTEM_ERROR,"添加用户失败!");
+            //throw AceException.create(AceException.Code.SYSTEM_ERROR,"添加用户失败!");
+            throw new RuntimeException("抛出个运行时异常");
         }
 
     }

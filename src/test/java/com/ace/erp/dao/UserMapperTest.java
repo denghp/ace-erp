@@ -2,7 +2,7 @@ package com.ace.erp.dao;
 
 import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
-import com.ace.erp.entity.sys.UserRole;
+import com.ace.erp.entity.sys.UserRoles;
 import com.ace.erp.persistence.sys.RoleMapper;
 import com.ace.erp.service.sys.UserService;
 import com.ace.erp.persistence.sys.UserMapper;
@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Random;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -53,13 +52,13 @@ public class UserMapperTest {
     public void testsaveUserRole() {
         userMapper.save(user);
         List<Role> roleList = roleMapper.getAllRoles();
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(roleList.get(0));
-        userMapper.saveUserRole(userRole);
+        UserRoles userRoles = new UserRoles();
+        userRoles.setUser(user);
+        userRoles.setRole(roleList.get(0));
+        userMapper.saveUserRoles(userRoles);
 
-        userRole.setRole(roleList.get(1));
-        userMapper.saveUserRole(userRole);
+        userRoles.setRole(roleList.get(1));
+        userMapper.saveUserRoles(userRoles);
     }
 
     @Test

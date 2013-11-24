@@ -36,11 +36,9 @@
                 <result property="status" column="status"/>
                 <result property="admin" column="admin"/>
                 <result property="deleted" column="deleted"/>
-                <collection property="roleList" ofType="Role" >
-                    <result property="id" column="role_id"/>
-                    <result property="name" column="role_name"/>
-                    <result property="role" column="role_role"/>
-                </collection>
+                <result property="roleIds" column="roleIds"/>
+                <result property="roleNames" column="roleNames"/>
+                <result property="roles" column="roles"/>
         </collection>
     </resultMap>
 
@@ -84,14 +82,14 @@
       su.deleted,
       su.admin,su.create_time,
       su.modify_time,
-      sr.id as role_id,
-      sr.name as role_name,
-      sr.role as role_role
+      group_concat(sr.name) as roleNames,
+      group_concat(sr.role) as roles,
+      group_concat(sr.id) as roleIds
     FROM sys_organization as so
     LEFT JOIN sys_user_roles AS sur ON so.id = sur.organization_id
     LEFT JOIN sys_user AS su ON sur.user_id = su.id
     LEFT JOIN sys_role as sr ON sur.role_id = sr.id
-    WHERE so.id = #{id}
+    WHERE so.id = #{id} group by su.id;
   </select>
 
   <select id="getUserCount" parameterType="UserOrganization" resultType="java.lang.Integer">

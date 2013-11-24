@@ -53,12 +53,14 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="doReweight" propagation="REQUIRES_NEW"/>
             <tx:method name="doClear*" propagation="REQUIRES_NEW"/>
             <tx:method name="doSend*" propagation="REQUIRES_NEW"/>
-            <tx:method name="doBatchSave*" propagation="REQUIRES_NEW"/>
+            <tx:method name="save*" propagation="REQUIRES_NEW"/>
+            <tx:method name="add*" propagation="REQUIRED" />
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
@@ -67,9 +69,9 @@
         </tx:attributes>
     </tx:advice>
 
-    <!-- 只对业务逻辑层实施事务 -->
+    <!-- 只对业务逻辑层实施事务,其中第一个*代表返回值，第二个*代表service下子包，第三个*代表方法名，“（..）”代表方法参数 -->
     <aop:config expose-proxy="true" proxy-target-class="true">
-        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service..*+.*(..))"/>
+        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service.*.*(..))"/>
         <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 

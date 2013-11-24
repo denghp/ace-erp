@@ -1,12 +1,9 @@
 package com.ace.erp.persistence.sys;
 
 import com.ace.erp.common.mybatis.BaseMapper;
-import com.ace.erp.entity.sys.Role;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.entity.sys.UserOrganization;
-import com.ace.erp.entity.sys.UserRole;
-
-import java.util.List;
+import com.ace.erp.entity.sys.UserRoles;
 
 /**
  * Created with smart-erp.
@@ -23,7 +20,7 @@ public interface UserMapper extends BaseMapper<User,Integer> {
 
     User getByMobilePhoneNumber(String mobilePhoneNumber);
 
-    void saveUserRole(UserRole userRole);
+    void saveUserRoles(UserRoles userRoles);
 
     void saveUserOrganization(UserOrganization userOrganization);
 

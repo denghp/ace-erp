@@ -2,14 +2,14 @@ package com.ace.erp.entity.sys;
 
 /**
  * Project_Name: smart-erp
- * File: UserRole
+ * File: UserRoles
  * User: denghp
  * Date: 10/15/13
  * Time: 6:14 PM
  * Description:
  *  用户  角色 关系表
  */
-public class UserRole {
+public class UserRoles {
 
     private Integer id;
 
@@ -17,15 +17,18 @@ public class UserRole {
 
     private Role role;
 
+    private Organization organization;
+
     private AuthType type;
 
     private String modifyTime;
 
-    public UserRole() {}
+    public UserRoles() {}
 
-    public UserRole(User user, Role role) {
+    public UserRoles(User user, Role role,Organization organization) {
         this.user = user;
         this.role = role;
+        this.organization = organization;
     }
 
     public String getModifyTime() {
@@ -50,6 +53,14 @@ public class UserRole {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 
     public User getUser() {

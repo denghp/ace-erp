@@ -1,14 +1,11 @@
 package com.ace.erp.service.sys;
 
-import com.ace.erp.entity.sys.UserRole;
+import com.ace.erp.entity.sys.UserRoles;
 import com.ace.erp.entity.sys.User;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Project_Name: smart-erp
@@ -23,7 +20,7 @@ public class AuthService {
     @Autowired
     private UserService userService;
 
-    public void addUserAuth(Integer[] userIds, UserRole m) {
+    public void addUserAuth(Integer[] userIds, UserRoles m) {
 
         if (ArrayUtils.isEmpty(userIds)) {
             logger.warn("addUserAuth userIds is null.");
@@ -38,12 +35,12 @@ public class AuthService {
                 return ;
             }
 
-//            //UserRole auth = authRepository.findByUserId(userId);
+//            //UserRoles auth = authRepository.findByUserId(userId);
 //            if (auth != null) {
 //                auth.addRoleIds(m.getRoleIds());
 //                continue;
 //            }
-            UserRole auth = new UserRole();
+            UserRoles auth = new UserRoles();
             //auth.setUserId(userId);
             auth.setType(m.getType());
             //auth.setRoleIds(m.getRoleIds());
