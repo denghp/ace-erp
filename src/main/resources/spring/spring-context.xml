@@ -25,7 +25,7 @@
     </bean>
 
     <!-- 扫描注解Bean 对切入类的方法进行缓存处理-->
-    <context:component-scan base-package="com.ace.**.service,com.ace.**.extra">
+    <context:component-scan base-package="com.ace.**.service">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <!-- 开启AOP监听 只对当前配置文件有效 -->
@@ -60,7 +60,7 @@
             <tx:method name="doClear*" propagation="REQUIRES_NEW"/>
             <tx:method name="doSend*" propagation="REQUIRES_NEW"/>
             <tx:method name="save*" propagation="REQUIRES_NEW"/>
-            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="count*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
@@ -69,9 +69,14 @@
         </tx:attributes>
     </tx:advice>
 
-    <!-- 只对业务逻辑层实施事务,其中第一个*代表返回值，第二个*代表service下子包，第三个*代表方法名，“（..）”代表方法参数 -->
+    <!-- 只对业务逻辑层实施事务,
+    第一个 *  —— 通配 任意返回值类型
+    第二个 .. —— 通配 包com.ace.erp.service下的任意包；
+    第二个 *  —— 通配 包com.ace.erp.service下的任意class，
+    第三个 *  —— 通配 包com.ace.erp.service下的任意class的任意方法
+    第四个 .. —— 通配 方法可以有0个或多个参数代表方法名 -->
     <aop:config expose-proxy="true" proxy-target-class="true">
-        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service.*.*(..))"/>
+        <aop:pointcut id="txPointcut" expression="execution(* com.ace.erp.service..*.*(..))"/>
         <aop:advisor id="txAdvisor" advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 

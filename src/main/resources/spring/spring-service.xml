@@ -18,6 +18,6 @@
     <bean id="resourceService" class="com.ace.erp.service.sys.ResourceService"/>
     <bean id="roleService" class="com.ace.erp.service.sys.RoleService"/>
 
-    <bean id="organizationService" class="com.ace.erp.service.sys.OrganizationService"/>
+    <bean id="organizationService" class="com.ace.erp.service.sys.impl.OrganizationServiceImpl"/>
 
 </beans>

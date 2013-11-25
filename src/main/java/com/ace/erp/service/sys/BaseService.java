@@ -31,6 +31,7 @@ import java.util.Map;
  * Time: 4:47 PM
  */
 public class BaseService<T, ID extends Serializable> implements InitializingBean {
+
     private Logger logger = LoggerFactory.getLogger(BaseService.class);
     private Class<T> entityClass;
     private BaseMapper<T, ID> baseMapper;
