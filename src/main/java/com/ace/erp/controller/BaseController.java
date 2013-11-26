@@ -8,18 +8,14 @@
 package com.ace.erp.controller;
 
 import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
-import com.ace.erp.service.sys.BaseService;
+import com.ace.erp.service.sys.GenericService;
 import com.ace.erp.utils.ReflectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.Serializable;
 
@@ -32,7 +28,7 @@ import java.io.Serializable;
  */
 public abstract class BaseController<M, ID extends Serializable> implements InitializingBean {
 
-    protected BaseService<M,ID> baseService;
+    protected GenericService<M,ID> genericService;
     /**
      * 实体类型
      */
@@ -49,10 +45,10 @@ public abstract class BaseController<M, ID extends Serializable> implements Init
     /**
      * 设置基础service
      *
-     * @param baseService
+     * @param genericService
      */
-    public void setBaseService(BaseService<M,ID> baseService) {
-        this.baseService = baseService;
+    public void setGenericService(GenericService<M,ID> genericService) {
+        this.genericService = genericService;
     }
 
     /**
@@ -136,8 +132,8 @@ public abstract class BaseController<M, ID extends Serializable> implements Init
     @Override
     public void afterPropertiesSet() throws Exception {
         if(this.entityClass != null) {
-            InjectBaseDependencyHelper.findAndInjectBaseServiceDependency(this);
-            Assert.notNull(baseService, "BaseService required, Class is:" + getClass());
+            InjectBaseDependencyHelper.findAndInjectGenericServiceDependency(this);
+            Assert.notNull(genericService, "GenericService required, Class is:" + getClass());
         }
     }
 

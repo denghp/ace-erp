@@ -96,7 +96,7 @@ public class ResourceController extends BaseCRUDController<Resource, Integer> {
     @ResponseBody
     public Response saveResource(Resource m, HttpServletRequest request,BindingResult bindingResult, Model model) throws AceException {
         long starTime = System.currentTimeMillis();
-        baseService.save(m);
+        abstractService.save(m);
         return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
     **/

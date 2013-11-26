@@ -41,7 +41,7 @@ public class OrganizationServiceTest  {
 
     @Test
     public void testAddUser() throws AceException {
-        User currentUser = userService.getOne(7);
+        User currentUser = userService.getOne(1001);
 
         organizationService.addUser(currentUser,user);
     }

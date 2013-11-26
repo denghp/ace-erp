@@ -6,13 +6,11 @@ import com.ace.erp.entity.sys.*;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.persistence.sys.OrganizationMapper;
 import com.ace.erp.persistence.sys.UserMapper;
-import com.ace.erp.service.sys.BaseService;
 import com.ace.erp.service.sys.OrganizationService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,7 +23,9 @@ import java.util.List;
  * Time: 12:58 PM
  * Description:
  */
-public class OrganizationServiceImpl extends BaseService<Organization,Integer> implements OrganizationService   {
+public class OrganizationServiceImpl extends AbstractService<Organization,Integer> implements OrganizationService   {
+
+    private Logger logger = LoggerFactory.getLogger(OrganizationServiceImpl.class);
 
     @Autowired
     @BaseComponent
@@ -73,6 +73,7 @@ public class OrganizationServiceImpl extends BaseService<Organization,Integer> i
             userMapper.saveUserOrganization(new UserOrganization(user,organization));
 
         } catch (Exception ex) {
+            logger.error("Organization addUser error ",ex);
             throw AceException.create(AceException.Code.SYSTEM_ERROR,"添加用户失败!");
         }
 

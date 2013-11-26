@@ -11,12 +11,12 @@
 
 
 
-    <bean id="userService" class="com.ace.erp.service.sys.UserService"/>
+    <bean id="userService" class="com.ace.erp.service.sys.impl.UserServiceImpl"/>
     <bean id="authService" class="com.ace.erp.service.sys.AuthService"/>
-    <bean id="userAuthService" class="com.ace.erp.service.sys.UserAuthService"/>
-    <bean id="permissionService" class="com.ace.erp.service.sys.PermissionService"/>
-    <bean id="resourceService" class="com.ace.erp.service.sys.ResourceService"/>
-    <bean id="roleService" class="com.ace.erp.service.sys.RoleService"/>
+    <bean id="userAuthService" class="com.ace.erp.service.sys.impl.UserAuthServiceImpl"/>
+    <bean id="permissionService" class="com.ace.erp.service.sys.impl.PermissionServiceImpl"/>
+    <bean id="resourceService" class="com.ace.erp.service.sys.impl.ResourceServiceImpl"/>
+    <bean id="roleService" class="com.ace.erp.service.sys.impl.RoleServiceImpl"/>
 
     <bean id="organizationService" class="com.ace.erp.service.sys.impl.OrganizationServiceImpl"/>
 

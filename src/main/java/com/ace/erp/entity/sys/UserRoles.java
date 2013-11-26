@@ -21,6 +21,8 @@ public class UserRoles {
 
     private AuthType type;
 
+    private String createTime;
+
     private String modifyTime;
 
     public UserRoles() {}
@@ -29,6 +31,14 @@ public class UserRoles {
         this.user = user;
         this.role = role;
         this.organization = organization;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getModifyTime() {

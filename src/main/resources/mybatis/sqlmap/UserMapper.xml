@@ -178,12 +178,16 @@
     </delete>
 
     <insert id="saveUserRoles" parameterType="UserRoles" useGeneratedKeys="true" keyProperty="id">
-        insert into sys_user_roles (user_id,role_id,organization_id,type,modify_time)
+        insert into sys_user_roles (user_id,role_id,organization_id,type,create_time,modify_time)
         values (
-        #{user.id},#{role.id},#{organization_id}, #{type.info},
+        #{user.id},#{role.id},#{organization.id}, #{type.info},
+        <if test="createTime == null">now(),</if>
+        <if test="createTime != null">
+            #{createTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+        </if>
         <if test="modifyTime == null">now()</if>
         <if test="modifyTime != null">
-            #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler},
+            #{modifyTime,typeHandler=com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler}
         </if>
         )
     </insert>

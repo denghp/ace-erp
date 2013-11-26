@@ -22,7 +22,7 @@ import java.util.List;
  * Time: 1:00 AM
  */
 @Service
-public interface OrganizationService  {
+public interface OrganizationService extends GenericService<Organization, Integer>  {
 
     public List<User> getUsersByOrganizationId(Integer orgId);
 

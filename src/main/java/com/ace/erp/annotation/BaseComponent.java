@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  * 即
  * 1、查找对象中的注解了@BaseComponent的对象
  * 2、
- * 调用BaseCRUDController.setBaseService 设置BaseService
+ * 调用BaseCRUDController.setAbstractService 设置BaseService
  */
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

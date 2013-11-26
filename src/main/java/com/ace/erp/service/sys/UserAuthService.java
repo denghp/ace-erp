@@ -1,13 +1,7 @@
 package com.ace.erp.service.sys;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Sets;
 import com.ace.erp.entity.sys.*;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
@@ -22,47 +16,13 @@ import java.util.Set;
  * Date: 10/15/13
  * Time: 6:00 PM
  */
-public class UserAuthService {
-    private Logger logger = LoggerFactory.getLogger(UserAuthService.class);
-    @Autowired
-    private OrganizationService organizationService;
 
-    @Autowired
-    private UserService userService;
+@Service
+public interface UserAuthService {
 
-    @Autowired
-    private RoleService roleService;
+    public List<Role> findRoles(User user);
 
-    @Autowired
-    private ResourceService resourceService;
-
-    @Autowired
-    private PermissionService permissionService;
-
-    public List<Role> findRoles(User user) {
-        if (user == null || user.getId() == null) {
-            logger.error("findRoles ");
-            return null;
-        }
-        //获取权限
-        //1.1、获取用户角色
-        return userService.getUserRoleList(user.getId());
-    }
-
-    public Set<String> findStringRoles(User user) {
-        List<Role> roles = findRoles(user);
-        if (roles == null || roles.size() <= 0) {
-            return null;
-        }
-        logger.info("roles : " + roles.size());
-        return Sets.newHashSet(Collections2.transform(roles, new Function<Role, String>() {
-            @Override
-            public String apply(Role input) {
-                System.out.println(input);
-                return input.getRole();
-            }
-        }));
-    }
+    public Set<String> findStringRoles(User user);
 
 
     /**
@@ -71,38 +31,5 @@ public class UserAuthService {
      * @param user
      * @return
      */
-    public Set<String> findStringPermissions(User user) {
-        Set<String> permissions = Sets.newHashSet();
-
-        List<Role> roles = findRoles(user);
-        for (Role role : roles) {
-            for (RoleResourcePermission rrp : role.getResourcePermissions()) {
-                Resource resource = resourceService.getOne(rrp.getResourceId());
-
-                //获取资源identity
-                String actualResourceIdentity = resourceService.findActualResourceIdentity(resource);
-
-                //不可用 即没查到 或者标识字符串不存在
-                if (resource == null || StringUtils.isEmpty(actualResourceIdentity) || Boolean.FALSE.equals(resource.getShow())) {
-                    continue;
-                }
-                if (StringUtils.isNotBlank(rrp.getPermissionIds())) {
-                    String[] permissionIds = rrp.getPermissionIds().split(",");
-                    for (String permissionId : permissionIds) {
-                        //获取权限状态
-                        Permission permission = permissionService.getOne(Integer.valueOf(permissionId));
-                        //不可用
-                        if (permission == null || Boolean.FALSE.equals(permission.getShow())) {
-                            continue;
-                        }
-                        permissions.add(actualResourceIdentity + ":" + permission.getPermission());
-
-                    }
-                }
-            }
-
-        }
-
-        return permissions;
-    }
+    public Set<String> findStringPermissions(User user);
 }

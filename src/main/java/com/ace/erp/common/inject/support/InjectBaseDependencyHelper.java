@@ -6,7 +6,7 @@
 package com.ace.erp.common.inject.support;
 
 /**
- * BaseService 的工具类
+ * GenericService 的工具类
  * Created with ace.
  * User: denghp
  * Date: 11/1/13
@@ -15,7 +15,7 @@ package com.ace.erp.common.inject.support;
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.controller.BaseController;
-import com.ace.erp.service.sys.BaseService;
+import com.ace.erp.service.sys.GenericService;
 import com.google.common.collect.Sets;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.ReflectionUtils;
@@ -29,45 +29,44 @@ import java.util.Set;
 public class InjectBaseDependencyHelper {
 
 
-    public static void findAndInjectBaseRepositoryDependency(BaseService<?,?> baseService) {
+    public static void findAndInjectBaseRepositoryDependency(GenericService<?,?> genericService) {
         final Set<Object> candidates =
-                findDependencies(baseService, BaseComponent.class);
+                findDependencies(genericService, BaseComponent.class);
 
         if (candidates.size() == 0 || candidates.size() > 1) {
             throw new IllegalStateException(
                     "expect 1 @BaseComponent anntation BaseRepository subclass bean, but found " + candidates.size() +
-                            ", please check class [" + baseService.getClass() + "] @BaseComponent annotation.");
+                            ", please check class [" + genericService.getClass() + "] @BaseComponent annotation.");
         }
 
         Object baserMapper = candidates.iterator().next();
 
         if (baserMapper.getClass().isAssignableFrom(BaseComponent.class)) {
-            throw new IllegalStateException("[" + baseService.getClass() + "] @BaseComponent annotation bean " +
+            throw new IllegalStateException("[" + genericService.getClass() + "] @BaseComponent annotation bean " +
                     "must be BaseRepository subclass");
         }
-        //baseService.setBaseRepository((BaseRepository) baseRepository);
-        baseService.setBaseMapper((BaseMapper)baserMapper);
+        genericService.setBaseMapper((BaseMapper) baserMapper);
     }
 
 
-    public static void findAndInjectBaseServiceDependency(BaseController<?,?> baseController) {
+    public static void findAndInjectGenericServiceDependency(BaseController<?, ?> baseController) {
         final Set<Object> candidates =
                 findDependencies(baseController, BaseComponent.class);
 
         if (candidates.size() > 1) {
             throw new IllegalStateException(
-                    "expect 1 @BaseComponent anntation BaseService subclass bean, but found " + candidates.size() +
+                    "expect 1 @BaseComponent anntation AbstractService subclass bean, but found " + candidates.size() +
                             ", please check class [" + baseController.getClass() + "] @BaseComponent annotation.");
         }
 
-        Object baseService = candidates.iterator().next();
+        Object genericService = candidates.iterator().next();
 
-        if (baseService.getClass().isAssignableFrom(BaseComponent.class)) {
+        if (genericService.getClass().isAssignableFrom(BaseComponent.class)) {
             throw new IllegalStateException("[" + baseController.getClass() + "] @BaseComponent annotation bean " +
-                    "must be BaseService subclass");
+                    "must be AbstractService subclass");
         }
 
-        baseController.setBaseService((BaseService) baseService);
+        baseController.setGenericService((GenericService) genericService);
     }
 
 

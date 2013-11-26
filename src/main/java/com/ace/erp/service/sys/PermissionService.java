@@ -8,17 +8,13 @@ import org.springframework.stereotype.Service;
 
 /**
  * Project_Name: smart-erp
- * File: PermissionService
+ * File: PermissionServiceImpl
  * User: denghp
  * Date: 10/15/13
  * Time: 6:11 PM
  * Description:
  */
 @Service
-public class PermissionService extends BaseService<Permission,Integer> {
-
-    @Autowired
-    @BaseComponent
-    private PermissionMapper permissionMapper;
+public interface PermissionService extends GenericService<Permission,Integer>  {
 
 }

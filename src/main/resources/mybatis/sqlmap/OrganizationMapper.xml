@@ -42,7 +42,7 @@
         </collection>
     </resultMap>
 
-    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Organization" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
         sys_organization (name,trade_code_id,user_count,description,address,telephone,logo,site,status,expire_time,create_time,modify_time)
         VALUES

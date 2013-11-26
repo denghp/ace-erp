@@ -5,12 +5,13 @@
  */
 
 
-package com.ace.erp.service.sys;
+package com.ace.erp.service.sys.impl;
 
 import com.ace.erp.common.inject.support.InjectBaseDependencyHelper;
 import com.ace.erp.common.mybatis.BaseMapper;
 import com.ace.erp.entity.LogicDeleteable;
 import com.ace.erp.exception.AceException;
+import com.ace.erp.service.sys.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -25,14 +26,14 @@ import java.util.Map;
 
 /**
  * Project_Name: ace
- * File: BaseService
+ * File: AbstractService
  * User: denghp
  * Date: 11/1/13
  * Time: 4:47 PM
  */
-public class BaseService<T, ID extends Serializable> implements InitializingBean {
+public abstract class AbstractService<T, ID extends Serializable> implements GenericService<T,ID>, InitializingBean {
 
-    private Logger logger = LoggerFactory.getLogger(BaseService.class);
+    private Logger logger = LoggerFactory.getLogger(AbstractService.class);
     private Class<T> entityClass;
     private BaseMapper<T, ID> baseMapper;
 

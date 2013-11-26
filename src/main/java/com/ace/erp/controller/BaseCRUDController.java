@@ -14,7 +14,8 @@ import com.ace.erp.entity.Response;
 import com.ace.erp.entity.ResponseHeader;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.service.sys.BaseService;
+import com.ace.erp.service.sys.GenericService;
+import com.ace.erp.service.sys.impl.AbstractService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -42,23 +42,23 @@ import java.util.List;
 public class BaseCRUDController<M, ID extends Serializable> extends BaseController<M, ID> implements InitializingBean {
     private Logger logger = LoggerFactory.getLogger(BaseCRUDController.class);
 
-    protected BaseService<M, ID> baseService;
+    protected GenericService<M, ID> genericService;
 
     protected PermissionList permissionList = null;
 
     /**
      * 设置基础service
      *
-     * @param baseService
+     * @param genericService
      */
-    public void setBaseService(BaseService<M, ID> baseService) {
-        this.baseService = baseService;
+    public void setGenericService(GenericService<M, ID> genericService) {
+        this.genericService = genericService;
     }
 
     @Override
     public void afterPropertiesSet() {
-        InjectBaseDependencyHelper.findAndInjectBaseServiceDependency(this);
-        Assert.notNull(baseService, "BaseService required, Class is:" + getClass());
+        InjectBaseDependencyHelper.findAndInjectGenericServiceDependency(this);
+        Assert.notNull(genericService, "AbstractService required, Class is:" + getClass());
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -93,7 +93,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
         if (StringUtils.isNotBlank(oper) && oper.equalsIgnoreCase("del") && StringUtils.isNotBlank(ids)) {
             String[] idItems = ids.split(",");
-            baseService.delete(Arrays.asList(idItems));
+            genericService.delete(Arrays.asList(idItems));
             return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
         }
         throw AceException.create(AceException.Code.BAD_REQUEST, "无效的请求!");
@@ -109,7 +109,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
         if (permissionList != null) {
             this.permissionList.assertHasUpdatePermission();
         }
-        baseService.update(m);
+        genericService.update(m);
         return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
 
@@ -117,7 +117,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
     @ResponseBody
     public Response save(@CurrentUser User user,M m, BindingResult bindingResult, Model model) throws AceException {
         long starTime = System.currentTimeMillis();
-        baseService.save(m);
+        genericService.save(m);
 
         return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
@@ -133,7 +133,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
         if (StringUtils.isBlank(rows)) {
             rows = "10";
         }
-        int totalRecord = baseService.count();
+        int totalRecord = genericService.count();
 
         int totalPage = totalRecord % Integer.parseInt(rows) == 0 ? totalRecord
                 / Integer.parseInt(rows) : totalRecord / Integer.parseInt(rows)
@@ -141,7 +141,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
         //计算开始位置
         int start = (Integer.parseInt(page) - 1) * Integer.parseInt(rows); // 开始记录数
         int pageSize = Integer.parseInt(rows);
-        List<M> list = baseService.getPageList(start, pageSize);
+        List<M> list = genericService.getPageList(start, pageSize);
 
         Response responseJson = new Response();
         responseJson.setRows(list);
