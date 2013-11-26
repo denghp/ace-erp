@@ -42,14 +42,6 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
     @BaseComponent
     private OrganizationService organizationService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private MessageSource messageSource;
-    @Autowired
-    private RoleService roleService;
-
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Response list(@CurrentUser User user,

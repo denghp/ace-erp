@@ -64,6 +64,7 @@
     </div>
     <!-- /.row -->
 </div><!-- /.page-content -->
+<script src="${rc.getContextPath()}/assets/js/ace.time.js"></script>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 
@@ -78,15 +79,16 @@ jQuery(function ($) {
         datatype: "json",
         mtype: 'GET',
         height: 350,
-        colNames: ['ID', '用户名', '邮箱', '手机号码','拥有角色','角色','创建时间', '状态'],
+        colNames: ['ID', '用户名', '密码','邮箱', '手机号码','拥有角色','角色','创建时间', '状态'],
         colModel: [
             {name: 'id', index: 'id', width: 60, hidden: true, sorttype: "int", editable: true},
             {name: 'username', index: 'name', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
+            {name: 'password', index: 'password', editable:true,edittype:"password", width: 100, editoptions: {size: "20", maxlength: "20"}},
             {name: 'email', index: 'email', width: 150, editable: true, editoptions: {size: "20", maxlength: "50"}},
             {name: 'mobilePhoneNumber', index: 'phone', width: 100, editable: true, editoptions: {size: "11", maxlength: "11"}},
             {name: 'roleNames', index: 'roleNames', width: 280, editable: false},
             {name: 'roles', index: 'roles', width: 280, editable: false},
-            {name: 'createTime', index: 'createTime', width: 90, editable: true, sorttype: "date", formatter: dateFormatter, unformat: pickDate},
+            {name: 'createTime', index: 'createTime', width: 90, editable: false, sorttype: "date", formatter: dateFormatter, unformat: pickDate},
             {name: 'status', index: 'status', width: 70, editable: true, edittype: "select", formatter: "select", editoptions: {value: "normal:正常;blocked:封禁"}}
         ],
 
@@ -277,12 +279,12 @@ jQuery(function ($) {
 
     function style_edit_form(form) {
         //enable datepicker on "createTime" field and switches for "admin" field
-        form.find('input[name=createTime]').datepicker({format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true})
+        form.find('input[name=createTime]').val(dateFormat(new Date(), "isoDate")).datepicker({format: 'yyyy-mm-dd', language: 'zh-CN', autoclose: true})
                 .end().find('input[name=admin]')
                 .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-
         //append role select
         form.find('table').append('<tr class="FormData" id="tr_role"><td class="CaptionTD">角色</td><td class="DataID">'+roleSelect+'</td></tr>');
+
         //update buttons classes
         var buttons = form.next().find('.EditButton .fm-button');
         buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
