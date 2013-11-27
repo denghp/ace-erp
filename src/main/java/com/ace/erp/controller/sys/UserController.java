@@ -33,6 +33,10 @@ public class UserController  extends BaseCRUDController<User,Integer> {
     private UserService userService;
 
 
+    public UserController() {
+        setResourceIdentity("sys:user");
+    }
+
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String viewPerfectInfo(User user, Model model) {
 

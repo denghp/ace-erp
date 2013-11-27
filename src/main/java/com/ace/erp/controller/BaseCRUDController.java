@@ -58,7 +58,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
     @Override
     public void afterPropertiesSet() {
         InjectBaseDependencyHelper.findAndInjectGenericServiceDependency(this);
-        Assert.notNull(genericService, "AbstractService required, Class is:" + getClass());
+        Assert.notNull(genericService, "GenericService required, Class is:" + getClass());
     }
 
     @RequestMapping(method = RequestMethod.GET)

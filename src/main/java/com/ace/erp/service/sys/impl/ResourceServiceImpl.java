@@ -31,7 +31,7 @@ import java.util.*;
  * Date: 11/25/13
  * Time: 10:39 PM
  */
-public class ResourceServiceImpl extends AbstractService<Resource,Integer> implements ResourceService {
+public class ResourceServiceImpl extends AbstractService<Resource, Integer> implements ResourceService {
 
     private static Logger logger = LoggerFactory.getLogger(ResourceServiceImpl.class);
     @Autowired
@@ -104,12 +104,13 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
     /**
      * 根据登录用户获取菜单权限列表
      * 需要使用缓存实现,不然会影响性能
+     *
      * @return
      */
     public List<Menu> findMenus() {
         String sort = "parent_id desc,weight desc";
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("sort",sort);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("sort", sort);
         List<Resource> resources = resourceMapper.getAllWithSort(params);
 
         return convertToMenus(resources);
@@ -118,23 +119,22 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
     /**
      * 根据登录用户获取菜单权限列表
      * 需要使用缓存实现,不然会影响性能
+     *
      * @param user
      * @return
      */
     public List<Menu> findMenus(User user) {
         String sort = "parent_id desc,weight desc";
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("sort",sort);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("sort", sort);
         List<Resource> resources = resourceMapper.getAllWithSort(params);
 
-        if (!user.getAdmin()) {
-            Set<String> userPermissions = userAuthService.findStringPermissions(user);
+        Set<String> userPermissions = userAuthService.findStringPermissions(user);
 
-            Iterator<Resource> iter = resources.iterator();
-            while (iter.hasNext()) {
-                if (!hasPermission(iter.next(), userPermissions)) {
-                    iter.remove();
-                }
+        Iterator<Resource> iter = resources.iterator();
+        while (iter.hasNext()) {
+            if (!hasPermission(iter.next(), userPermissions)) {
+                iter.remove();
             }
         }
         return convertToMenus(resources);
@@ -181,6 +181,7 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
 
     /**
      * 转换成Menu对象集合
+     *
      * @param resources
      * @return
      */
@@ -229,20 +230,20 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
 
     private static Menu convertToMenu(Resource resource) {
         return new Menu(resource.getId(), resource.getName(), resource.getIcon(), resource.getUrl(),
-                resource.getWeight(),resource.getIdentity(),resource.getShow());
+                resource.getWeight(), resource.getIdentity(), resource.getShow());
     }
 
-    public List<Resource>  getAllWithSort() {
+    public List<Resource> getAllWithSort() {
         return getAllWithSort(null);
     }
 
-    public List<Resource>  getAllWithSort(String sort) {
+    public List<Resource> getAllWithSort(String sort) {
         if (StringUtils.isBlank(sort)) {
             logger.warn("sort is empty, use default sort!!");
             sort = DEFAULT_SORT;
         }
-        Map<String, Object> params = new HashMap<String,Object>();
-        params.put("sort",sort);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("sort", sort);
         return resourceMapper.getAllWithSort(params);
     }
 
@@ -251,9 +252,9 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
         Map<Integer, RoleResourcePermission> rrpMaps = null;
         if (roleId != null) {
             rrpMaps = roleService.getRoleResourceMaps(roleId);
-            return convertToZtreeList(resourceList, async,rrpMaps);
+            return convertToZtreeList(resourceList, async, rrpMaps);
         }
-        return convertToZtreeList(resourceList, async,null);
+        return convertToZtreeList(resourceList, async, null);
     }
 
     private List<ZTree<Integer>> convertToZtreeList(List<Resource> models, boolean async, Map<Integer, RoleResourcePermission> rrpMaps) {
@@ -305,12 +306,12 @@ public class ResourceServiceImpl extends AbstractService<Resource,Integer> imple
         //获取父级
         Resource resource = resourceMapper.getOne(t.getParentId());
         if (resource == null) {
-            throw AceException.create(AceException.Code.NOT_FOUND,"父级资源没有找到!");
+            throw AceException.create(AceException.Code.NOT_FOUND, "父级资源没有找到!");
         }
         if (resource.getParentIds().endsWith("/")) {
-            t.setParentIds(resource.getParentIds()+resource.getId());
+            t.setParentIds(resource.getParentIds() + resource.getId());
         } else {
-            t.setParentIds(resource.getParentIds()+"/"+resource.getId());
+            t.setParentIds(resource.getParentIds() + "/" + resource.getId());
         }
         resourceMapper.save(t);
         return t;
