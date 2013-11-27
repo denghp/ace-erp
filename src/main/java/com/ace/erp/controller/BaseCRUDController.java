@@ -63,6 +63,9 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
 
     @RequestMapping(method = RequestMethod.GET)
     public String view(Model model) {
+        if (permissionList != null) {
+            this.permissionList.assertHasViewPermission();
+        }
         return view("list",model);
     }
 

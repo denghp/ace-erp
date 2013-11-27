@@ -27,8 +27,6 @@ import java.util.Set;
 public class UserAuthServiceImpl implements UserAuthService {
 
     private Logger logger = LoggerFactory.getLogger(UserAuthServiceImpl.class);
-    @Autowired
-    private OrganizationService organizationService;
 
     @Autowired
     private UserService userService;
@@ -61,7 +59,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         return Sets.newHashSet(Collections2.transform(roles, new Function<Role, String>() {
             @Override
             public String apply(Role input) {
-                System.out.println(input);
+                logger.debug(input.toString());
                 return input.getRole();
             }
         }));

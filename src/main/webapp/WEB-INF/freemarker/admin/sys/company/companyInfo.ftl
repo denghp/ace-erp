@@ -31,7 +31,7 @@
                 <div class="space-4"></div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label no-padding-right" ${resource.url} placeholder="菜单跳转地址"
+                    <label class="col-sm-3 control-label no-padding-right"  placeholder="菜单跳转地址"
                            for="form-field-2">
                         URL路径 </label>
 

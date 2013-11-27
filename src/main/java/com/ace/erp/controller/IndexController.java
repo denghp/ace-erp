@@ -9,6 +9,11 @@ import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.entity.sys.Menu;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.ResourceService;
+import com.ace.erp.shiro.realm.AuthenticationRealm;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +32,7 @@ import java.util.List;
  */
 @Controller
 public class IndexController {
+    private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     @Autowired
     private ResourceService resourceService;
@@ -36,7 +42,10 @@ public class IndexController {
         List<Menu> menuList = resourceService.findMenus(user);
         model.addAttribute("menuList", menuList);
 
-
+        Subject subject = SecurityUtils.getSubject();
+        subject.isAuthenticated();
+        subject.getPrincipal();
+        subject.getPreviousPrincipals();
         return "/index";
     }
 
