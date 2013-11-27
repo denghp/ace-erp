@@ -7,6 +7,7 @@ import com.ace.erp.exception.AceException;
 import com.ace.erp.persistence.sys.OrganizationMapper;
 import com.ace.erp.persistence.sys.UserMapper;
 import com.ace.erp.service.sys.OrganizationService;
+import com.ace.erp.service.sys.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class OrganizationServiceImpl extends AbstractService<Organization,Intege
     private OrganizationMapper organizationMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     /**
      * 根据organizationId获取所有的职员列表
@@ -55,27 +56,23 @@ public class OrganizationServiceImpl extends AbstractService<Organization,Intege
         Organization organization = sginUser.getOrganizationList().get(0);
         //获取存在的用户数量
         int existsCount = organizationMapper.getUserCount(new UserOrganization(sginUser,organization));
+
         if (existsCount >= organization.getUserCount()) {
             //已经达到最大用户数
             throw AceException.create(AceException.Code.BAD_REQUEST,"organization.add.user.retry.limit.exceed");
         }
-        try {
-            //添加用户及用户与企业之间的关系数据
-            userMapper.save(user);
-            //添加用户与角色的关系数据
-            if (StringUtils.isNotBlank(user.getRoleIds())) {
-                String[] roleIds = user.getRoleIds().split(",");
-                for (String roleId : roleIds) {
-                    userMapper.saveUserRoles(new UserRoles(user, new Role(Integer.valueOf(roleId)),organization));
-                }
-            }
-            //添加用户与企业之间的数据关系
-            userMapper.saveUserOrganization(new UserOrganization(user,organization));
 
-        } catch (Exception ex) {
-            logger.error("Organization addUser error ",ex);
-            throw AceException.create(AceException.Code.SYSTEM_ERROR,"添加用户失败!");
+        //添加用户及用户与企业之间的关系数据
+        userService.save(user);
+        //添加用户与角色的关系数据
+        if (StringUtils.isNotBlank(user.getRoleIds())) {
+            String[] roleIds = user.getRoleIds().split(",");
+            for (String roleId : roleIds) {
+                userService.saveUserRoles(new UserRoles(user, new Role(Integer.valueOf(roleId)),organization));
+            }
         }
 
+        //添加用户与企业之间的数据关系
+        userService.saveUserOrganization(new UserOrganization(user,organization));
     }
 }

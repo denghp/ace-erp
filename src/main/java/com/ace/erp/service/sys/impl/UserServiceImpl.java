@@ -78,7 +78,6 @@ public class UserServiceImpl extends AbstractService<User, Integer> implements U
         } else {
             user.setCreateTime("2013-10-17");
         }
-        //
         super.save(user);
         logger.info("insert successfully, user {}", user);
         return user;
@@ -214,4 +213,26 @@ public class UserServiceImpl extends AbstractService<User, Integer> implements U
         return Md5Utils.hash(username + password + salt);
     }
 
+    @Override
+    public void saveUserRoles(UserRoles userRoles) throws AceException {
+        try {
+            userMapper.saveUserRoles(userRoles);
+        } catch (Exception ex) {
+            logger.error("saveUserRoles error {}",ex.getMessage(),ex);
+            throw AceException.create(AceException.Code.SYSTEM_ERROR,"存储用户与角色之间的数据失败.");
+        }
+    }
+
+    @Override
+    public void saveUserOrganization(UserOrganization userOrganization) throws AceException {
+        if (userOrganization == null) {
+            throw AceException.create(AceException.Code.BAD_REQUEST,"存储用户与企业之间的关系数据为空.");
+        }
+        try {
+            userMapper.saveUserOrganization(userOrganization);
+        } catch (Exception ex) {
+            logger.error("saveUserOrganization error {}",ex.getMessage(),ex);
+            throw AceException.create(AceException.Code.SYSTEM_ERROR,"存储用户与企业之间的关系数据失败.");
+        }
+    }
 }

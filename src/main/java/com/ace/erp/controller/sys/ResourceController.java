@@ -80,7 +80,7 @@ public class ResourceController extends BaseCRUDController<Resource, Integer> {
 
     @RequestMapping(value = "/children", method = RequestMethod.GET)
     @ResponseBody
-    public Response listGet(
+    public Response children(
             @RequestParam(value = "nodeid", defaultValue = "1",required = false) Integer nodeid,
             HttpServletRequest request,
                          HttpServletResponse response) throws AceException {
