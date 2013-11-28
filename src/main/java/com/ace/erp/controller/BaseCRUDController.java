@@ -70,6 +70,7 @@ public class BaseCRUDController<M, ID extends Serializable> extends BaseControll
     }
 
     public String view(String url, Model model) {
+
         return viewName(url);
     }
 

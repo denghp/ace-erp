@@ -42,10 +42,6 @@ public class IndexController {
         List<Menu> menuList = resourceService.findMenus(user);
         model.addAttribute("menuList", menuList);
 
-        Subject subject = SecurityUtils.getSubject();
-        subject.isAuthenticated();
-        subject.getPrincipal();
-        subject.getPreviousPrincipals();
         return "/index";
     }
 

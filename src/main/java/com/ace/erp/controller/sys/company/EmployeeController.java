@@ -1,9 +1,4 @@
-/**
- * Copyright (c) 2009-2015 http://demi-panda.com
- *
- * Licensed 
- */
-package com.ace.erp.controller.sys;
+package com.ace.erp.controller.sys.company;
 
 import com.ace.erp.annotation.BaseComponent;
 import com.ace.erp.annotation.CurrentUser;
@@ -14,10 +9,7 @@ import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.OrganizationService;
-import com.ace.erp.service.sys.RoleService;
-import com.ace.erp.service.sys.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created with ace.
+ * Project_Name: ace
+ * File: EmployeeController
+ * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
  * User: denghp
- * Date: 11/19/13
- * Time: 9:32 PM
+ * Date: 11/28/13
+ * Time: 10:49 AM
+ * Description:
  */
 @Controller
 @RequestMapping("/admin/sys/company/employee")
-public class OrganizationController extends BaseCRUDController<Organization,Integer> {
+public class EmployeeController extends BaseCRUDController<Organization,Integer> {
 
     @Autowired
     @BaseComponent
@@ -54,6 +49,7 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
         responseJson.setRecords(totalRecord);
         return responseJson;
     }
+
     @RequestMapping(value = "/addUser")
     @ResponseBody
     public Response save(@CurrentUser User user,User m, BindingResult bindingResult) throws AceException {
@@ -64,4 +60,5 @@ public class OrganizationController extends BaseCRUDController<Organization,Inte
         organizationService.addUser(user,m);
         return new Response(new ResponseHeader(200, System.currentTimeMillis() - starTime));
     }
+
 }
