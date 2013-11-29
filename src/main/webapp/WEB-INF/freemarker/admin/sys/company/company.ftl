@@ -30,7 +30,17 @@
             <div id="home" class="tab-pane in active">
                 <form class="form-horizontal" id="validation-form" role="form">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">当前企业logo预览</h3>
+                                </div>
+                                <div class="panel-body center" >
+                                    <img src="${rc.getContextPath()}/assets/images/pic_bg.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
 
                             <div class="form-group">
                                 <label class="col-sm-3 control-label no-padding-right" for="rogan-id">
@@ -125,7 +135,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <div class="space-4"></div>
 
                             <div class="form-group">
@@ -207,9 +217,9 @@
             </div>
 
             <div id="profile" class="tab-pane">
-                <form>
+
                 <div class="row">
-                    <div class="col-sm-8 ">
+                    <div class="col-xs-8 ">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">
@@ -218,46 +228,33 @@
                                 </button>仅支持JPG、JPEG、PNG格式（2M以下）</h3>
                             </div>
                             <div class="panel-body" >
-                                <div class="jc-demo-box">
+                                        <img src="${rc.getContextPath()}/assets/images/sago-1.jpg" id="target" alt="[Jcrop Example]" />
 
-                                    <img src="${rc.getContextPath()}/assets/images/sago.jpg" id="target" alt="[Jcrop Example]" />
-
-                                    <div id="preview-pane">
-                                        <div class="preview-container">
-                                            <img src="${rc.getContextPath()}/assets/images/sago.jpg" class="jcrop-preview" alt="Preview" />
+                                        <div id="preview-pane">
+                                            <div class="preview-container">
+                                                <img src="${rc.getContextPath()}/assets/images/sago.jpg" class="jcrop-preview" alt="Preview" />
+                                            </div>
                                         </div>
-                                    </div>
-                                     <span>
-                                            头像预览区
+                                        <span>
+                                                头像预览区
                                             生成头像大小200px*200px，
                                             上传图片后，左侧选取图片合适大小，
                                             点击下面的提交按钮。
-                                        </span>
-                                    <div class="clearfix"></div>
-
-                                </div>
-
+                                            </span>
+                            </div>
+                        </div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="button">
+                                    <i class="icon-ok bigger-110"></i>
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">当前企业logo预览</h3>
-                            </div>
-                            <div class="panel-body center" >
-                                <img id="target" src="${rc.getContextPath()}/assets/images/pic_bg.png">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-offset-6 col-md-9">
-                        <button class="btn btn-info" type="button">
-                            <i class="icon-ok bigger-110"></i>
-                            Save
-                        </button>
-                    </div>
+
+
                 </div>
-                </form>
             </div>
 
         </div>
@@ -277,7 +274,7 @@
         position: absolute;
         z-index: 2000;
         top: 10px;
-        right: -280px;
+        right: -290px;
         padding: 6px;
         border: 1px rgba(0,0,0,.4) solid;
         background-color: white;
