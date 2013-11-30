@@ -9,10 +9,10 @@
         <result property="tradeCodeId" column="trade_code_id"/>
         <result property="logo" column="logo"/>
         <result property="site" column="site"/>
-        <result property="userCount" column="user_count" />
-        <result property="address" column="address" />
+        <result property="userCount" column="user_count"/>
+        <result property="address" column="address"/>
         <result property="description" column="description"/>
-        <result property="status" column="organ_status" />
+        <result property="status" column="organ_status"/>
         <result property="createTime" column="organ_create_time" javaType="java.lang.String"
                 typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
         <result property="expireTime" column="expire_time" javaType="java.lang.String"
@@ -22,29 +22,30 @@
     </resultMap>
 
     <resultMap type="Organization" id="userOrganizationMap" extends="organizationMap">
-        <collection property="userList" ofType="User" >
-                <result property="id" column="id"/>
-                <result property="username" column="username"/>
-                <result property="password" column="password"/>
-                <result property="email" column="email"/>
-                <result property="mobilePhoneNumber" column="mobile_phone_number"/>
-                <result property="createTime" column="create_time" javaType="java.lang.String"
-                        typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-                <result property="modifyTime" column="modify_time" javaType="java.lang.String"
-                        typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
-                <result property="salt" column="salt"/>
-                <result property="status" column="status"/>
-                <result property="admin" column="admin"/>
-                <result property="deleted" column="deleted"/>
-                <result property="roleIds" column="roleIds"/>
-                <result property="roleNames" column="roleNames"/>
-                <result property="roles" column="roles"/>
+        <collection property="userList" ofType="User">
+            <result property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="email" column="email"/>
+            <result property="mobilePhoneNumber" column="mobile_phone_number"/>
+            <result property="createTime" column="create_time" javaType="java.lang.String"
+                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+            <result property="modifyTime" column="modify_time" javaType="java.lang.String"
+                    typeHandler="com.ace.erp.handler.mybatis.StringISODateTimeTypeHandler"/>
+            <result property="salt" column="salt"/>
+            <result property="status" column="status"/>
+            <result property="admin" column="admin"/>
+            <result property="deleted" column="deleted"/>
+            <result property="roleIds" column="roleIds"/>
+            <result property="roleNames" column="roleNames"/>
+            <result property="roles" column="roles"/>
         </collection>
     </resultMap>
 
     <insert id="save" parameterType="Organization" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO
-        sys_organization (name,trade_code_id,user_count,description,address,telephone,logo,site,status,expire_time,create_time,modify_time)
+        sys_organization
+        (name,trade_code_id,user_count,description,address,telephone,logo,site,status,expire_time,create_time,modify_time)
         VALUES
         (#{name},#{tradeCodeId},#{userCount},#{description},#{address},#{telephone},#{logo},#{site},#{status},
         <if test="expireTime == null">
@@ -67,6 +68,14 @@
         </if>
         )
     </insert>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT count(*) from sys_organization;
+    </select>
+
+   <select id="getPageList" parameterType="java.util.Map" resultMap="organizationMap">
+    SELECT id,name,trade_code_id,user_count,description,address,telephone,logo,site,status,expire_time,create_time as organ_create_time,modify_time as organ_modify_time  FROM sys_organization limit #{offset},#{limit};
+  </select>
 
     <select id="getOne" parameterType="java.lang.Integer" resultMap="userOrganizationMap">
    SELECT
@@ -92,9 +101,36 @@
     WHERE so.id = #{id} group by su.id;
   </select>
 
-  <select id="getUserCount" parameterType="UserOrganization" resultType="java.lang.Integer">
+    <select id="getUserCount" parameterType="UserOrganization" resultType="java.lang.Integer">
         select count(*) from sys_user_organization where organization_id = #{organization.id}
   </select>
 
+
+    <update id="update" parameterType="Organization">
+        UPDATE sys_organization set
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="tradeCodeId != null">
+            trade_code_id = #{tradeCodeId},
+        </if>
+        <if test="description != null">
+            description = #{description},
+        </if>
+        <if test="address != null">
+            address = #{address},
+        </if>
+        <if test="telephone != null">
+            telephone = #{telephone},
+        </if>
+        <if test="logo != null">
+            logo = #{logo},
+        </if>
+        <if test="site != null">
+            site = #{site},
+        </if>
+        modify_time = now()
+        WHERE id = #{id}
+    </update>
 
 </mapper>

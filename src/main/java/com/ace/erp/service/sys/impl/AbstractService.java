@@ -95,7 +95,10 @@ public abstract class AbstractService<T, ID extends Serializable> implements Gen
      *
      * @param id 主键
      */
-    public void delete(final ID id) {
+    public void delete(final ID id) throws AceException {
+        if (id == null) {
+            throw AceException.create(AceException.Code.BAD_REQUEST,"Delete Object ID is Empty!");
+        }
         baseMapper.delete(id);
     }
 
@@ -122,9 +125,9 @@ public abstract class AbstractService<T, ID extends Serializable> implements Gen
      *
      * @param t 实体
      */
-    public void delete(T t) {
+    public void delete(T t) throws AceException{
         if (t == null) {
-            return;
+            throw AceException.create(AceException.Code.BAD_REQUEST,"Update Object is Empty!");
         }
         if (t instanceof LogicDeleteable) {
             ((LogicDeleteable) t).markDeleted();
@@ -164,7 +167,7 @@ public abstract class AbstractService<T, ID extends Serializable> implements Gen
 
     public T update(T t) throws AceException {
         if (t == null) {
-            return null;
+            throw AceException.create(AceException.Code.BAD_REQUEST,"Update Object is Empty!");
         }
         baseMapper.update(t);
         return t;
@@ -179,14 +182,14 @@ public abstract class AbstractService<T, ID extends Serializable> implements Gen
      */
     public T save(T t) throws AceException {
         if (t == null) {
-            return null;
+            throw AceException.create(AceException.Code.BAD_REQUEST,"Update Object is Empty!");
         }
         try {
             baseMapper.save(t);
             return t;
         } catch (Exception ex) {
             logger.error("save {} error, {}",t, ex);
-            throw AceException.create(AceException.Code.SYSTEM_ERROR,"System Save Object Error !");
+            throw AceException.create(AceException.Code.SYSTEM_ERROR,"Save Object Error !");
         }
     }
 

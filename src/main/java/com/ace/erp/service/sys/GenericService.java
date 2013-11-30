@@ -33,7 +33,7 @@ public interface GenericService<T, ID extends Serializable> {
      *
      * @param id 主键
      */
-    public void delete(final ID id);
+    public void delete(final ID id) throws AceException;
 
     /**
      * 根据集合
@@ -52,7 +52,7 @@ public interface GenericService<T, ID extends Serializable> {
      *
      * @param t 实体
      */
-    public void delete(T t);
+    public void delete(T t) throws AceException;
 
     /**
      * 按照主键查询
