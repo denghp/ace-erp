@@ -83,9 +83,10 @@ jQuery(function($) {
         //data: grid_data,
         //datatype: "local",
         height: 400,
+        width:900,
         colNames:[' ', 'ID','公司名称','所属行业','用户数','公司网站','公司地址','描述','创建时间','过期时间','修改时间', '状态'],
         colModel:[
-            {name:'myac',index:'', width:100, fixed:true, sortable:false, resize:false,
+            {name:'myac',index:'', width:70, fixed:true, sortable:false, resize:false,
                 formatter:'actions',
                 formatoptions:{
                     keys:true,
@@ -158,7 +159,6 @@ jQuery(function($) {
             var table = this;
             setTimeout(function(){
                 styleCheckbox(table);
-                customButton(table);
                 updateActionIcons(table);
                 updatePagerIcons(table);
                 enableTooltips(table);
