@@ -222,7 +222,7 @@
         </div>
         <div class="clearfix form-actions">
             <div class="col-md-offset-3 col-md-9">
-                <button id="organ-save" class="btn btn-info" type="button">
+                <button id="organ-save" class="btn btn-info " type="button">
                     <i class="icon-ok bigger-110"></i>
                     Save
                 </button>
@@ -240,13 +240,16 @@
 <div id="profile" class="tab-pane">
 
     <div class="row">
+        <form id="fileupload">
         <div class="col-xs-12 ">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <button class="btn btn-info" type="button">
-                            选择图片
-                        </button>
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择图片</span>
+                            <input type="file" id='file-input' name="file">
+                        </span>
                         仅支持JPG、JPEG、PNG格式（2M以下）
                     </h3>
                 </div>
@@ -276,7 +279,7 @@
                 </div>
             </div>
         </div>
-
+        </form>
 
     </div>
 </div>
@@ -325,10 +328,12 @@
         overflow: hidden;
     }
 
+
 </style>
 <script src="${rc.getContextPath()}/assets/js/jquery.validate.min.js"></script>
 <script src="${rc.getContextPath()}/assets/js/jquery.Jcrop.js"></script>
-
+<script src="${rc.getContextPath()}/assets/js/load-image.js"></script>
+<link rel="stylesheet" href="${rc.getContextPath()}/assets/css/jquery.fileupload.css" />
 <script type="text/javascript">
     eval('debugger');
     jQuery(function($){
@@ -436,6 +441,17 @@
         });
 
     });
+
+    document.getElementById('file-input').onchange = function (e) {
+        loadImage(
+                e.target.files[0],
+                function (img) {
+                    $('#target').empty();
+                    $('#target').append(img);
+                },
+                {maxWidth: 600} // Options
+        );
+    };
 
 
 </script>
