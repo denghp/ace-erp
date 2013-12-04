@@ -253,7 +253,7 @@
                         仅支持JPG、JPEG、PNG格式（2M以下）
                     </h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" id="panel-body">
                     <img src="${rc.getContextPath()}/assets/images/sago.jpg" id="target" alt="[Jcrop Example]"/>
 
                     <div id="preview-pane">
@@ -439,19 +439,25 @@
                 }, 1000);
             }
         });
-
     });
 
-    document.getElementById('file-input').onchange = function (e) {
+    $('#file-input').on('change',function(e){
+        var imageName = e.target.files[0].name;
         loadImage(
                 e.target.files[0],
-                function (img) {
-                    $('#target').empty();
-                    $('#target').append(img);
-                },
-                {maxWidth: 600} // Options
-        );
-    };
 
+                function (img) {
+                    if(img.type === "error") {
+                        console.log("Error loading image ");
+                    } else {
+                        $('#panel-body').find('.jcrop-holder img').attr('src', $(img).attr('src'))
+                    }
+                },
+                {
+                    maxWidth: 600,
+                    noRevoke:true // 默认情况下当前的URL被使用一次就失效
+                } // Options
+        );
+    });
 
 </script>
