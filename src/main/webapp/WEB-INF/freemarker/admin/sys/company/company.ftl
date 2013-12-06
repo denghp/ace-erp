@@ -56,7 +56,8 @@
                         公司帐号： </label>
 
                     <div class="col-sm-9">
-                        <input type="text" name="id" id="id" hidden="true" value="<#if organ.id??>${organ.id}</#if>" placeholder="企业帐号">
+                        <input type="text" name="id" id="id" hidden="true" value="<#if organ.id??>${organ.id}</#if>"
+                               placeholder="企业帐号">
                         <input type="text" name="id-copy" id="id-copy" disabled="true" placeholder="企业帐号"
                                value="<#if organ.id??>${organ.id}</#if>"
                                class="form-control">
@@ -241,44 +242,52 @@
 
     <div class="row">
         <form id="fileupload">
-        <div class="col-xs-12 ">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
+            <div class="inline-labels">
+                <input type="hidden" size="4" id="x1" name="x1"/>
+                <input type="hidden" size="4" id="y1" name="y1"/>
+                <input type="hidden" size="4" id="x2" name="x2"/>
+                <input type="hidden" size="4" id="y2" name="y2"/>
+                <input type="hidden" size="4" id="w" name="w"/>
+                <input type="hidden" size="4" id="h" name="h"/>
+            </div>
+            <div class="col-xs-12 ">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
                         <span class="btn btn-success fileinput-button">
                             <i class="glyphicon glyphicon-plus"></i>
                             <span>选择图片</span>
                             <input type="file" id='file-input' name="file">
                         </span>
-                        仅支持JPG、JPEG、PNG格式（2M以下）
-                    </h3>
-                </div>
-                <div class="panel-body" id="panel-body">
-                    <img src="${rc.getContextPath()}/assets/images/sago.jpg" id="target" alt="[Jcrop Example]"/>
-
-                    <div id="preview-pane">
-                        <div class="preview-container">
-                            <img src="${rc.getContextPath()}/assets/images/sago.jpg" class="jcrop-preview"
-                                 alt="Preview"/>
-                        </div>
+                            仅支持JPG、JPEG、PNG格式（2M以下）
+                        </h3>
                     </div>
+                    <div class="panel-body" id="panel-body">
+                        <img src="${rc.getContextPath()}/assets/images/sago.jpg" id="target" alt="[Jcrop Example]"/>
+
+                        <div id="preview-pane">
+                            <div class="preview-container">
+                                <img src="${rc.getContextPath()}/assets/images/sago.jpg" class="jcrop-preview"
+                                     alt="Preview"/>
+                            </div>
+                        </div>
                                         <span>
                                                 头像预览区
                                             生成头像大小200px*200px，
                                             上传图片后，左侧选取图片合适大小，
                                             点击下面的提交按钮。
                                             </span>
+                    </div>
+                </div>
+                <div class="clearfix form-actions">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button class="btn btn-info" id="uploadLogo" type="button">
+                            <i class="icon-ok bigger-110"></i>
+                            Save
+                        </button>
+                    </div>
                 </div>
             </div>
-            <div class="clearfix form-actions">
-                <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="button">
-                        <i class="icon-ok bigger-110"></i>
-                        Save
-                    </button>
-                </div>
-            </div>
-        </div>
         </form>
 
     </div>
@@ -296,6 +305,14 @@
 <script type="text/javascript">
     var $path_base = "${rc.getContextPath()}";//this will be used in gritter alerts containing images
 </script>
+
+<script src="${rc.getContextPath()}/assets/js/jquery.validate.min.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.Jcrop.js"></script>
+<script src="${rc.getContextPath()}/assets/js/load-image.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.fileupload.js"></script>
+<script src="${rc.getContextPath()}/assets/js/jquery.ui.widget.js"></script>
+<link rel="stylesheet" href="${rc.getContextPath()}/assets/css/jquery.fileupload.css"/>
+<link rel="stylesheet" href="${rc.getContextPath()}/assets/css/jquery.Jcrop.css" type="text/css"/>
 <style type="text/css">
 
         /* Apply these styles only when #preview-pane has
@@ -330,13 +347,9 @@
 
 
 </style>
-<script src="${rc.getContextPath()}/assets/js/jquery.validate.min.js"></script>
-<script src="${rc.getContextPath()}/assets/js/jquery.Jcrop.js"></script>
-<script src="${rc.getContextPath()}/assets/js/load-image.js"></script>
-<link rel="stylesheet" href="${rc.getContextPath()}/assets/css/jquery.fileupload.css" />
 <script type="text/javascript">
     eval('debugger');
-    jQuery(function($){
+    jQuery(function ($) {
 
         // Create variables (in this scope) to hold the API and image size
         var jcrop_api,
@@ -354,8 +367,10 @@
         $('#target').Jcrop({
             onChange: updatePreview,
             onSelect: updatePreview,
-            aspectRatio: xsize / ysize
-        },function(){
+            aspectRatio: 16 / 9
+            //aspectRatio: xsize / ysize
+            //aspectRatio:1
+        }, function () {
             // Use the API to get the real image size
             var bounds = this.getBounds();
             boundx = bounds[0];
@@ -367,10 +382,17 @@
             $preview.appendTo(jcrop_api.ui.holder);
         });
 
-        function updatePreview(c)
-        {
-            if (parseInt(c.w) > 0)
-            {
+        function updatePreview(c) {
+            if (parseInt(c.w) > 0) {
+                //给隐藏参数赋值
+                $('#x1').val(c.x);
+                $('#y1').val(c.y);
+                $('#x2').val(c.x2);
+                $('#y2').val(c.y2);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+
+
                 var rx = xsize / c.w;
                 var ry = ysize / c.h;
 
@@ -413,7 +435,7 @@
             }
         });
 
-        $('#organ-save').on('click',function(e){
+        $('#organ-save').on('click', function (e) {
             if ($('#organ-form').valid()) {
                 var postData = $('#organ-form').serialize();
                 setTimeout(function () {
@@ -426,7 +448,7 @@
                         success: function (response) {
                             if (response.responseHeader != undefined &&
                                     response.responseHeader.status != undefined &&
-                                    response.responseHeader.status == "200" ) {
+                                    response.responseHeader.status == "200") {
                                 ace.show_msg("更新成功!");
                             } else {
                                 ace.show_msg("更新失败,请与系统管理员联系!");
@@ -439,25 +461,136 @@
                 }, 1000);
             }
         });
-    });
 
-    $('#file-input').on('change',function(e){
-        var imageName = e.target.files[0].name;
-        loadImage(
-                e.target.files[0],
+        $('#file-input').on('change', function (e) {
+            var imageName = e.target.files[0].name;
+            if(!/\.(gif|jpg|jpeg|png|JPG|PNG)$/.test(imageName))
+            {
+                ace.show_msg("不支持的图片格式.图片类型必须是.jpeg,jpg,png,gif格式.");
+                return false;
+            }
 
-                function (img) {
-                    if(img.type === "error") {
-                        console.log("Error loading image ");
-                    } else {
-                        $('#panel-body').find('.jcrop-holder img').attr('src', $(img).attr('src'))
-                    }
+            loadImage(
+                    e.target.files[0],
+
+                    function (img) {
+                        if (img.type === "error") {
+                            console.log("Error loading image ");
+                        } else {
+                            $('#panel-body').find('.jcrop-holder img').attr('src', $(img).attr('src'))
+                        }
+                    },
+                    {
+                        maxWidth: 600,
+                        noRevoke: true // 默认情况下当前的URL被使用一次就失效
+                    } // Options
+            );
+
+        });
+
+        $('#uploadLogo').on('click',function(e) {
+            $('#file-input').fileupload({
+                dataType: 'json',
+                url:$path_base + "/admin/sys/company/company/uploadLogo",
+                add: function (e, data) {
+                    data.submit();
                 },
-                {
-                    maxWidth: 600,
-                    noRevoke:true // 默认情况下当前的URL被使用一次就失效
-                } // Options
-        );
+                done: function (e, data) {
+                    if (data.responseHeader != undefined &&
+                            data.responseHeader.status != undefined &&
+                            data.responseHeader.status == "200") {
+                        ace.show_msg("上传成功!");
+                    } else {
+                        ace.show_msg("上传失败,请与系统管理员联系!");
+                    }
+                }
+            })
+        });
+
+        /**
+        $('#uploadLogo').on('click', function(e) {
+            // 初始化数据
+            var x1 = $('#x1').val() == "" ? 0 : $('#x1').val();
+            var y1 = $('#y1').val() == "" ? 0 : $('#y1').val();
+            var x2 = $('#x2').val();
+            var y2 = $('#y2').val();
+            var w = $('#w').val() == "" ? 150 : $('#w').val();
+            var h= $('#h').val() == "" ? 150 : $('#h').val();
+
+            var srcFile = $("#target").attr("src");
+
+            if (srcFile == "" || !srcFile) {
+                ace.show_msg("没有选择任何图片.");
+                return;
+            }
+
+            var showDiv = $(".jcrop-holder > .jcrop-tracker");
+            // 从压缩存放图片的div中获取压缩后显示的宽度和高度，用来交给后台同比例进行裁剪
+            // width: 404px; height: 304px; position: absolute; top: -2px; left: -2px; z-index: 290; cursor: crosshair;
+            var style = showDiv.attr("style");
+            // 原图片页面显示的宽度
+            var showWidth = _getShowWidth(style);
+            // 原图片页面显示的高度
+            var showHeight = _getShowHeight(style);
+            console.log("showDiv : " +showDiv + " showWidth: " + showWidth + " showHeight : " + showHeight);
+            //var postData = $('#organ-form').serialize();
+
+            setTimeout(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: $path_base + "/admin/sys/company/company/uploadLogo",
+                    dataType: "json",
+                    fileElementId : 'file-input',
+                    data: {
+                        srcImageFile : srcFile,
+                        x : x1,
+                        y : y1,
+                        destWidth : w,
+                        destHeight : h,
+                        srcShowWidth : showWidth,
+                        srcShowHeight : showHeight
+                    },
+                    traditional: true,
+                    success: function (response) {
+                        if (response.responseHeader != undefined &&
+                                response.responseHeader.status != undefined &&
+                                response.responseHeader.status == "200") {
+                            ace.show_msg("保存成功!");
+                        } else {
+                            ace.show_msg("保存失败,请与系统管理员联系!");
+                        }
+                    },
+                    error: function () {
+                        ace.show_msg('操作错误,请与系统管理员联系!');
+                    }
+                });
+            }, 1000);
+        });
+        **/
     });
 
+    function _getShowWidth(str) {
+        return _getValue(str, "width");
+    }
+
+    function _getShowHeight(str) {
+        return _getValue(str, "height");
+    }
+
+    function _getValue (str, key) {
+        var str = str.replace(/\:|\;|\s/g, '').toLowerCase();
+        var pos = str.indexOf(key);
+        if (pos >= 0) {
+            // 截取
+            var tmp = str.substring(pos, str.length);
+            var px = tmp.indexOf("px");
+            if (px > 0){
+                var width = tmp.substring(key.length, px);
+                return width;
+            }
+            return 0;
+        }
+        return 0;
+    }
 </script>
+

@@ -63,3 +63,5 @@
 
 <script src="${rc.getContextPath()}/assets/js/bootstrap-modal.js"></script>
 <script src="${rc.getContextPath()}/assets/js/bootstrap-modalmanager.js"></script>
+
+

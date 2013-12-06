@@ -1,10 +1,10 @@
 <#assign shiro=JspTaglibs["http://shiro.apache.org/tags"]>
 <!DOCTYPE html>
 <html lang="en">
-<#include "commons/header.ftl" >
+<#include "./commons/header.ftl" >
 
 <body >
-<#include "commons/navbar.ftl" >
+<#include "./commons/navbar.ftl" >
 
 <div class="main-container" id="main-container">
     <script type="text/javascript">
@@ -16,7 +16,7 @@
             <span class="menu-text"></span>
         </a>
 
-    <#include "commons/sidebar.ftl" >
+    <#include "./commons/sidebar.ftl" >
 
         <div class="main-content" id="main-content" style="height: 100%">
             <#include "./main.ftl">
@@ -30,7 +30,7 @@
     </a>
 </div><!-- /.main-container -->
 
-<#include "commons/common-script.ftl" >
+<#include "./commons/common-script.ftl" >
 
 
 <script type="text/javascript">
