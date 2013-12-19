@@ -1,5 +1,5 @@
 #如果复制到mysql中执行时 加上
-#DELIMITER ;;
+DELIMITER ;;
 ##use ace;
 delete from `sys_user` where id>=1 and id<=1000;;
 /*默认admin/123456*/
@@ -203,14 +203,14 @@ insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `ide
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (72, 71, '0/1/71/', 1, '参数设置', 'parameter', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (73, 72, '0/1/71/72', 1, '货币类型', 'currency', '/admin/sys/parameter/currency', true);;;;
+  values (73, 72, '0/1/71/72', 1, '货币类型', 'currency', '/admin/sys/parameter/currency', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (74, 72, '0/1/72/72', 2, '单据编码规则', 'receipt', '/admin/sys/parameter/receipt', true);;
 
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (75, 71, '0/1/71/', 2, '公司管理', 'company', '', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
-  values (76, 75, '0/1/71/75/', 1, '公司档案', 'companyInfo', '/admin/sys/company/companyInfo', true);;
+  values (76, 75, '0/1/71/75/', 1, '公司档案', 'company', '/admin/sys/company/company', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
   values (77, 75, '0/1/71/75/', 2, '职员档案', 'employee', '/admin/sys/company/employee', true);;
 insert into `sys_resource`(`id`, `parent_id`, `parent_ids`, weight, `name`, `identity`, `url`, `is_show`)
