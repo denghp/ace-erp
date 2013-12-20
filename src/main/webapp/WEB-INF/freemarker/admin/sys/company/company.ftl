@@ -358,18 +358,15 @@
 
         // Grab some information about the preview pane
                 $preview = $('#preview-pane'),
-                $pcnt = $('#preview-pane .preview-container'),
-                $pimg = $('#preview-pane .preview-container img'),
+                $pimg = $('#preview-pane .preview-container img');
 
-                xsize = $pcnt.width(),
-                ysize = $pcnt.height();
 
         $('#target').Jcrop({
             onChange: updatePreview,
             onSelect: updatePreview,
-            aspectRatio: 16 / 9
+            //aspectRatio: 16 / 9
             //aspectRatio: xsize / ysize
-            //aspectRatio:1
+            aspectRatio:1
         }, function () {
             // Use the API to get the real image size
             var bounds = this.getBounds();
@@ -383,6 +380,9 @@
         });
 
         function updatePreview(c) {
+            $pcnt = $('#preview-pane .preview-container')
+            xsize = $pcnt.width()
+            ysize = $pcnt.height()
             if (parseInt(c.w) > 0) {
                 //给隐藏参数赋值
                 $('#x1').val(c.x);
@@ -462,7 +462,7 @@
             }
         });
 
-        $('#file-input').on('change', function (e) {
+       $('#file-input').change(function (e) {
             var imageName = e.target.files[0].name;
             if(!/\.(gif|jpg|jpeg|png|JPG|PNG)$/.test(imageName))
             {
@@ -488,26 +488,27 @@
 
         });
 
-        $('#uploadLogo').on('click',function(e) {
-            $('#file-input').fileupload({
-                dataType: 'json',
-                url:$path_base + "/admin/sys/company/company/uploadLogo",
-                add: function (e, data) {
-                    data.submit();
-                },
-                done: function (e, data) {
-                    if (data.responseHeader != undefined &&
-                            data.responseHeader.status != undefined &&
-                            data.responseHeader.status == "200") {
-                        ace.show_msg("上传成功!");
-                    } else {
-                        ace.show_msg("上传失败,请与系统管理员联系!");
-                    }
-                }
-            })
-        });
-
         /**
+        $('#file-input').fileupload({
+            dataType: 'json',
+            url:$path_base + "/admin/sys/company/company/upload",
+            add: function (e, data) {
+                $('#uploadLogo').click(function(e) {
+                    data.submit();
+                });
+            },
+            done: function (e, data) {
+                if (data.responseHeader != undefined &&
+                        data.responseHeader.status != undefined &&
+                        data.responseHeader.status == "200") {
+                    ace.show_msg("上传成功!");
+                } else {
+                    ace.show_msg("上传失败,请与系统管理员联系!");
+                }
+            }
+        });
+        **/
+
         $('#uploadLogo').on('click', function(e) {
             // 初始化数据
             var x1 = $('#x1').val() == "" ? 0 : $('#x1').val();
@@ -517,7 +518,7 @@
             var w = $('#w').val() == "" ? 150 : $('#w').val();
             var h= $('#h').val() == "" ? 150 : $('#h').val();
 
-            var srcFile = $("#target").attr("src");
+            var srcFile = $(".jcrop-preview").attr("src");
 
             if (srcFile == "" || !srcFile) {
                 ace.show_msg("没有选择任何图片.");
@@ -534,13 +535,14 @@
             var showHeight = _getShowHeight(style);
             console.log("showDiv : " +showDiv + " showWidth: " + showWidth + " showHeight : " + showHeight);
             //var postData = $('#organ-form').serialize();
-
             setTimeout(function () {
                 $.ajax({
                     type: 'POST',
                     url: $path_base + "/admin/sys/company/company/uploadLogo",
                     dataType: "json",
                     fileElementId : 'file-input',
+                    contentType: false,
+                    processData: false,        //不可缺参数
                     data: {
                         srcImageFile : srcFile,
                         x : x1,
@@ -550,6 +552,7 @@
                         srcShowWidth : showWidth,
                         srcShowHeight : showHeight
                     },
+                    data:data,
                     traditional: true,
                     success: function (response) {
                         if (response.responseHeader != undefined &&
@@ -566,7 +569,7 @@
                 });
             }, 1000);
         });
-        **/
+
     });
 
     function _getShowWidth(str) {

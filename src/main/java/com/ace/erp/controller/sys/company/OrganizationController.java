@@ -15,8 +15,11 @@ import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
 import com.ace.erp.service.sys.GenericService;
 import com.ace.erp.service.sys.OrganizationService;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.imageio.ImageIO;
@@ -36,6 +40,7 @@ import java.awt.image.CropImageFilter;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageFilter;
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -53,6 +58,8 @@ public class OrganizationController extends BaseController<Organization, Integer
     private OrganizationService organizationService;
 
     protected GenericService<Organization, Integer> genericService;
+
+    private Logger logger = LoggerFactory.getLogger(OrganizationController.class);
 
     /**
      * 设置基础service
@@ -117,11 +124,19 @@ public class OrganizationController extends BaseController<Organization, Integer
 
     @RequestMapping(value="/company/upload",method = RequestMethod.POST)
     @ResponseBody
-    public Response upload(MultipartHttpServletRequest request, HttpServletResponse response) {
+    public Response upload(@CurrentUser User user,String srcFile,MultipartHttpServletRequest request, HttpServletResponse response) {
 
-        request.getFileNames();
-
-
+        try {
+            MultipartFile realPicFile = request.getFile(srcFile);
+            InputStream in = realPicFile.getInputStream();
+            String path = request.getSession().getServletContext().getRealPath("/");
+            String fileName = user.getUsername() + "." + FilenameUtils.getExtension(realPicFile.getOriginalFilename());
+            File f = new File(path + "/" + fileName);
+            FileUtils.copyInputStreamToFile(in, f);
+            logger.info("path : " + f.getAbsolutePath());
+        } catch (Exception e) {
+            logger.error("upload header picture error : ", e);
+        }
         return null;
     }
 
