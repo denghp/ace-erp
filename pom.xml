@@ -8,7 +8,7 @@
     <name>ace</name>
 
     <properties>
-	<ehcache.core.version>2.6.5</ehcache.core.version>
+        <ehcache.core.version>2.6.5</ehcache.core.version>
         <spring.version>3.2.4.RELEASE</spring.version>
         <mysql.version>5.1.9</mysql.version>
         <shiro.version>1.2.2</shiro.version>
@@ -48,9 +48,9 @@
                     </connectors>
                     <webAppConfig>
                         <contextPath>/${name}</contextPath>
-			<!--
-                        <defaultsDescriptor>webdefault.xml</defaultsDescriptor>
-			-->
+                        <!--
+                                    <defaultsDescriptor>webdefault.xml</defaultsDescriptor>
+                        -->
                     </webAppConfig>
                     <stopPort>${jetty.stopPort}</stopPort>
                     <stopKey>jetty</stopKey>
@@ -148,7 +148,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-              <db.name>${name}</db.name>
+                <db.name>${name}</db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
@@ -170,7 +170,7 @@
             <!--正式环境-->
             <id>production</id>
             <properties>
-              <db.name>${name}</db.name>
+                <db.name>${name}</db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
@@ -349,18 +349,6 @@
 
 
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>${common-collections.version}</version>
-        </dependency>
-        -->
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>13.0.1</version>
@@ -383,12 +371,12 @@
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-       <dependency>
-           <groupId>org.apache.shiro</groupId>
-           <artifactId>shiro-ehcache</artifactId>
-           <version>${shiro.version}</version>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
 
-       </dependency>
+        </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
@@ -449,5 +437,13 @@
         -->
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>maven-db-plugin-repo</id>
+            <name>maven db plugin repository</name>
+            <url>http://maven-db-plugin.googlecode.com/svn/maven/repo</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 
 </project>
