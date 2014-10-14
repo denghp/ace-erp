@@ -7,21 +7,12 @@
 
 package com.ace.erp.controller;
 
-import com.ace.erp.annotation.CurrentUser;
-import com.ace.erp.common.Constants;
 import com.ace.erp.entity.Response;
 import com.ace.erp.entity.ResponseHeader;
-import com.ace.erp.entity.ValidateResponse;
-import com.ace.erp.entity.sys.Organization;
 import com.ace.erp.entity.sys.User;
-import com.ace.erp.entity.sys.UserOrganization;
 import com.ace.erp.exception.AceException;
-import com.ace.erp.service.sys.OrganizationService;
 import com.ace.erp.service.sys.UserService;
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +20,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Project_Name: smart-erp

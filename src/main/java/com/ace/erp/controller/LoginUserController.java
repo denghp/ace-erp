@@ -9,9 +9,7 @@ package com.ace.erp.controller;
 
 import com.ace.erp.annotation.CurrentUser;
 import com.ace.erp.common.Constants;
-import com.ace.erp.entity.Response;
 import com.ace.erp.entity.sys.User;
-import com.ace.erp.exception.AceException;
 import com.ace.erp.service.sys.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -25,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Project_Name: smart-erp

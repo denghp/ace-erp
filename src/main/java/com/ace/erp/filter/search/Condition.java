@@ -10,7 +10,7 @@ package com.ace.erp.filter.search;
 import com.ace.erp.exception.InvlidSearchOperatorException;
 import com.ace.erp.exception.SearchException;
 import com.ace.erp.utils.SearchOperator;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import java.util.List;
