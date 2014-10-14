@@ -8,6 +8,7 @@ drop table if exists `sys_permission`;;
 drop table if exists `sys_role`;;
 drop table if exists `sys_role_resource_permission`;;
 drop table if exists `sys_user_roles`;;
+drop table if exists `sys_trade_code`;;
 ##user
 create table `sys_user`(
   `id`         bigint not null auto_increment,
