@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ace</groupId>
-    <artifactId>ace</artifactId>
+    <artifactId>ace-erp</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>ace</name>
+    <name>ace-erp</name>
 
     <properties>
         <ehcache.core.version>2.6.5</ehcache.core.version>
