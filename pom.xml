@@ -148,7 +148,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <db.name>${name}</db.name>
+                <db.name>ace_erp/db.name>
                 <connection.driver_class>com.mysql.jdbc.Driver</connection.driver_class>
                 <connection.admin.url>
                     <![CDATA[ jdbc:mysql://localhost:3306?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8 ]]>
