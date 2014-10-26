@@ -33,7 +33,6 @@ public class User implements LogicDeleteable,Serializable {
     public static final int PASSWORD_MAX_LENGTH = 50;
 
     private Integer id;
-
     @NotNull(message = "{not.null}")
     @Pattern(regexp = USERNAME_PATTERN, message = "{user.username.not.valid}")
     private String username;

@@ -1,5 +1,5 @@
 #如果复制到mysql中执行时 加上
-use ace;;
+DELIMITER ;;
 drop table if exists `sys_user`;;
 drop table if exists `sys_organization`;;
 drop table if exists `sys_user_organization`;;
