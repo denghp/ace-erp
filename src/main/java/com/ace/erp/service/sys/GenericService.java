@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Project_Name: ace
  * File: GenericService
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/26/13
  * Time: 2:47 PM

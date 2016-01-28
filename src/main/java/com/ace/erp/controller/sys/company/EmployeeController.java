@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Project_Name: ace
  * File: EmployeeController
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/28/13
  * Time: 10:49 AM

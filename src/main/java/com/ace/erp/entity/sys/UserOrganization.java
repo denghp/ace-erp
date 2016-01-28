@@ -5,7 +5,7 @@ import org.joda.time.DateTime;
 /**
  * Project_Name: ace
  * File: UserOrganization
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/18/13
  * Time: 5:20 PM

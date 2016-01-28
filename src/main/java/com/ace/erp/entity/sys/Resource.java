@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created with smart-erp.
- * (C) Copyright haiping Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 10/16/13
  * Time: 1:02 AM

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Project_Name: ace
  * File: ValidateResponseTest
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/19/13
  * Time: 11:38 AM

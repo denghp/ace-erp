@@ -3,7 +3,7 @@ package com.ace.erp.utils;
 /**
  * Project_Name: ace
  * File: ImageCut
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/28/13
  * Time: 3:41 PM

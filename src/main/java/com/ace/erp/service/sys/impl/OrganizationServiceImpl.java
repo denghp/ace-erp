@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Project_Name: ace
  * File: OrganizationServiceImpl
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/25/13
  * Time: 12:58 PM

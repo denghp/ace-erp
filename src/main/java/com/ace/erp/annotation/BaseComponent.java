@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Project_Name: ace
  * File: BaseComponent
- * (C) Copyright tuan800 Corporation 2013 All Rights Reserved.
+ * 
  * User: denghp
  * Date: 11/1/13
  * Time: 6:21 PM
